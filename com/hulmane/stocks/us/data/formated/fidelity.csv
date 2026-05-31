@@ -1,0 +1,52 @@
+txn_id,ticker,quantity,purchase_price,purchase_date,broker,account,account_no,account_desc,account_src,action,row_type,source_file
+777489c66b8c0a65,AVGO,50.0,0.0,2023-12-15,fidelity,Fidelity Z30241698,9,OLD,Z30241698,Buy,trade,Accounts_History.csv
+5122a8efbe2480c5,AVGO,7.0,0.0,2024-03-15,fidelity,Fidelity Z30241698,9,OLD,Z30241698,Buy,trade,Accounts_History (1).csv
+de14cba77106bcb2,AVGO,4.0,0.0,2024-06-03,fidelity,Fidelity Z30241698,9,OLD,Z30241698,Buy,trade,Accounts_History (1).csv
+a78de92b388954b5,AVGO,1.0,0.0,2024-06-17,fidelity,Fidelity Z30241698,9,OLD,Z30241698,Buy,trade,Accounts_History (1).csv
+ebc4a988738a2603,AVGO,7.0,0.0,2024-06-17,fidelity,Fidelity Z30241698,9,OLD,Z30241698,Buy,trade,Accounts_History (1).csv
+b1c5a1daf4887690,AVGO,54.0,0.0,2024-06-17,fidelity,Fidelity Z30241698,9,OLD,Z30241698,Buy,trade,Accounts_History (1).csv
+ee326a31bff0bafc,AVGO,1107.0,171.42,2024-07-15,fidelity,Fidelity Z30241698,9,OLD,Z30241698,Buy,distribution,Accounts_History (1).csv
+7fdbdbda3b494098,AVGO,13.0,0.0,2024-09-16,fidelity,Fidelity Z30241698,9,OLD,Z30241698,Buy,trade,Accounts_History (1).csv
+64394296d63b9541,AVGO,85.0,0.0,2024-09-16,fidelity,Fidelity Z30241698,9,OLD,Z30241698,Buy,trade,Accounts_History (1).csv
+e664f2c0cc48c90f,AVGO,13.0,0.0,2024-12-16,fidelity,Fidelity Z30241698,9,OLD,Z30241698,Buy,trade,Accounts_History (1).csv
+c5b803b50c111821,AVGO,85.0,0.0,2024-12-16,fidelity,Fidelity Z30241698,9,OLD,Z30241698,Buy,trade,Accounts_History (1).csv
+622e911f80348f67,AVGO,549.0,0.0,2024-12-16,fidelity,Fidelity Z30241698,9,OLD,Z30241698,Buy,trade,Accounts_History (1).csv
+e46ee55a8c07dfc1,PLTR,10.0,74.14,2024-12-17,fidelity,Fidelity Z30241698,9,OLD,Z30241698,Buy,trade,Accounts_History (1).csv
+d825ee53c6f2bb1f,JPM,1.0,231.92,2024-12-20,fidelity,Fidelity Z30241698,9,OLD,Z30241698,Buy,trade,Accounts_History (1).csv
+5428a2f9c203006e,JPM,3.0,238.0,2024-12-20,fidelity,Fidelity Z30241698,9,OLD,Z30241698,Buy,trade,Accounts_History (1).csv
+0ae016c85e5b79d6,PLTR,3.0,78.14,2024-12-20,fidelity,Fidelity Z30241698,9,OLD,Z30241698,Buy,trade,Accounts_History (1).csv
+c1ee7425292d86c8,JPM,0.019,299.24,2025-07-31,fidelity,Fidelity Z30241698,9,OLD,Z30241698,Buy,drip,Accounts_History (2).csv
+54dbb33ec4781940,JPM,0.019,310.48,2025-10-31,fidelity,Fidelity Z30241698,9,OLD,Z30241698,Buy,drip,Accounts_History (2).csv
+4bfd7eb516092ecd,NFLX,0.185,1147.78,2025-11-12,fidelity,Fidelity Z30241698,9,OLD,Z30241698,Buy,trade,Accounts_History (2).csv
+6807d30ac4bd5073,NFLX,1.665,110.2883,2025-11-17,fidelity,Fidelity Z30241698,9,OLD,Z30241698,Buy,distribution,Accounts_History (2).csv
+f473100131cddbcb,PL,40.0,28.42,2026-01-16,fidelity,Fidelity Z30241698,9,OLD,Z30241698,Buy,trade,Accounts_History (3).csv
+c2a7b84616863929,PLTR,-13.0,169.6,2026-01-23,fidelity,Fidelity Z30241698,9,OLD,Z30241698,Sell,transfer,Accounts_History (3).csv
+b3a3b8ffcd4afbc3,PLTR,13.0,169.6,2026-01-23,fidelity,Fidelity Z32887965,10,New 500k,Z32887965,Buy,transfer,Accounts_History (3).csv
+0afdb76ea615c4cd,AVGO,-1600.0,324.85,2026-01-26,fidelity,Fidelity Z30241698,9,OLD,Z30241698,Sell,transfer,Accounts_History (3).csv
+2c4bcfe76737cb24,AVGO,1600.0,324.85,2026-01-26,fidelity,Fidelity Z32887965,10,New 500k,Z32887965,Buy,transfer,Accounts_History (3).csv
+8766500d461d8450,JPM,0.02,305.13,2026-02-02,fidelity,Fidelity Z30241698,9,OLD,Z30241698,Buy,drip,Accounts_History (3).csv
+09edda9b80b32436,AVGO,0.827,294.75,2026-03-31,fidelity,Fidelity Z30241698,9,OLD,Z30241698,Buy,drip,Accounts_History (3).csv
+63cadbc81fabd051,AVGO,3.528,294.75,2026-03-31,fidelity,Fidelity Z32887965,10,New 500k,Z32887965,Buy,drip,Accounts_History (3).csv
+e362a6cfc5c6bb76,JPM,0.02,309.0,2026-04-30,fidelity,Fidelity Z30241698,9,OLD,Z30241698,Buy,drip,Accounts_History (3).csv
+ad0c164bd70117a2,AMD,20.847,239.84,2026-05-28,fidelity,Fidelity 653454258,12,Brokerage 401K 50K,653454258,Buy,position,Portfolio_Positions_May-28-2026 (1).csv
+ae4740025040c37d,ASML,0.996,1005.87,2026-05-28,fidelity,Fidelity 653454258,12,Brokerage 401K 50K,653454258,Buy,position,Portfolio_Positions_May-28-2026 (1).csv
+d01d9407f5db7b83,AVGO,14.174,352.74,2026-05-28,fidelity,Fidelity 653454258,12,Brokerage 401K 50K,653454258,Buy,position,Portfolio_Positions_May-28-2026 (1).csv
+d7675be4436b2044,COPX,11.339,88.19,2026-05-28,fidelity,Fidelity 653454258,12,Brokerage 401K 50K,653454258,Buy,position,Portfolio_Positions_May-28-2026 (1).csv
+aaf931a8847b0617,FDRXX**,0.03,1.0,2026-05-28,fidelity,Fidelity 653454258,12,Brokerage 401K 50K,653454258,Buy,position,Portfolio_Positions_May-28-2026 (1).csv
+71f6cd84e338b263,GOLD,20.46,48.87,2026-05-28,fidelity,Fidelity 653454258,12,Brokerage 401K 50K,653454258,Buy,position,Portfolio_Positions_May-28-2026 (1).csv
+f0cdd1b1064d790c,GS,6.241,801.09,2026-05-28,fidelity,Fidelity 653454258,12,Brokerage 401K 50K,653454258,Buy,position,Portfolio_Positions_May-28-2026 (1).csv
+f761ffef9e4638a0,MDB,2.674,373.86,2026-05-28,fidelity,Fidelity 653454258,12,Brokerage 401K 50K,653454258,Buy,position,Portfolio_Positions_May-28-2026 (1).csv
+8ab6fb5fa8d3c9ee,META,7.705,648.9,2026-05-28,fidelity,Fidelity 653454258,12,Brokerage 401K 50K,653454258,Buy,position,Portfolio_Positions_May-28-2026 (1).csv
+f2626bb33492ac7a,MOH,6.96,143.66,2026-05-28,fidelity,Fidelity 653454258,12,Brokerage 401K 50K,653454258,Buy,position,Portfolio_Positions_May-28-2026 (1).csv
+3d41ee06bce016a5,NFLX,44.04,113.53,2026-05-28,fidelity,Fidelity 653454258,12,Brokerage 401K 50K,653454258,Buy,position,Portfolio_Positions_May-28-2026 (1).csv
+bebb76e50f9cd12d,NVDA,49.124,203.56,2026-05-28,fidelity,Fidelity 653454258,12,Brokerage 401K 50K,653454258,Buy,position,Portfolio_Positions_May-28-2026 (1).csv
+cb318bc24787ad39,PEN,3.594,278.19,2026-05-28,fidelity,Fidelity 653454258,12,Brokerage 401K 50K,653454258,Buy,position,Portfolio_Positions_May-28-2026 (1).csv
+0f3612bca673aab5,PLTR,25.145,199.69,2026-05-28,fidelity,Fidelity 653454258,12,Brokerage 401K 50K,653454258,Buy,position,Portfolio_Positions_May-28-2026 (1).csv
+e87ca55218daf6af,SLV,20.881,95.78,2026-05-28,fidelity,Fidelity 653454258,12,Brokerage 401K 50K,653454258,Buy,position,Portfolio_Positions_May-28-2026 (1).csv
+542928c172da54c8,TSM,3.449,289.89,2026-05-28,fidelity,Fidelity 653454258,12,Brokerage 401K 50K,653454258,Buy,position,Portfolio_Positions_May-28-2026 (1).csv
+aa331db2e55d27cf,URA,3.896,55.99,2026-05-28,fidelity,Fidelity 653454258,12,Brokerage 401K 50K,653454258,Buy,position,Portfolio_Positions_May-28-2026 (1).csv
+7f63e00b71134bb4,AVGO,375.827,224.95,2026-05-28,fidelity,Fidelity Z30241698,9,OLD,Z30241698,Buy,position,Portfolio_Positions_May-28-2026.csv
+321fe6a6cdb59185,FCASH**,149.52,1.0,2026-05-28,fidelity,Fidelity Z30241698,9,OLD,Z30241698,Buy,position,Portfolio_Positions_May-28-2026.csv
+bee9fdfe33ff2b97,JPM,4.078,237.79,2026-05-28,fidelity,Fidelity Z30241698,9,OLD,Z30241698,Buy,position,Portfolio_Positions_May-28-2026.csv
+8ad6e077c08b5ebb,NFLX,1.85,114.78,2026-05-28,fidelity,Fidelity Z30241698,9,OLD,Z30241698,Buy,position,Portfolio_Positions_May-28-2026.csv
+a0a0a83cfd4da532,PL,40.0,28.42,2026-05-28,fidelity,Fidelity Z30241698,9,OLD,Z30241698,Buy,position,Portfolio_Positions_May-28-2026.csv

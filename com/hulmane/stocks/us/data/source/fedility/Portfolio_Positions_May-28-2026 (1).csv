@@ -1,0 +1,24 @@
+﻿Account Number,Account Name,Symbol,Description,Quantity,Last Price,Last Price Change,Current Value,Today's Gain/Loss Dollar,Today's Gain/Loss Percent,Total Gain/Loss Dollar,Total Gain/Loss Percent,Percent Of Account,Cost Basis Total,Average Cost Basis,Type
+653454258,BrokerageLink,FDRXX**,HELD IN MONEY MARKET,,,,$0.03,,,,,0.00%,,,Cash,
+653454258,BrokerageLink,AMD,ADVANCED MICRO DEVICES INC,20.847,$495.54,-$8.35,$10330.52,-$174.08,-1.66%,+$5330.63,+106.61%,18.88%,$4999.89,$239.84,Cash,
+653454258,BrokerageLink,ASML,ASML HOLDING NV EUR0.09 NY REGISTRY SHS 2012,0.996,$1597.87,-$34.16,$1591.47,-$34.03,-2.10%,+$589.62,+58.85%,2.91%,$1001.85,$1005.87,Cash,
+653454258,BrokerageLink,TSM,TAIWAN SEMICONDUCTOR MANUFACTURING SPON ADS EACH REP 5 ORD TWD10,3.449,$422.73,+$10.41,$1457.99,+$35.90,+2.52%,+$458.17,+45.82%,2.66%,$999.82,$289.89,Cash,
+653454258,BrokerageLink,GS,GOLDMAN SACHS GROUP INC COM USD0.01,6.241,$996.47,+$1.95,$6218.96,+$12.16,+0.19%,+$1219.37,+24.38%,11.37%,$4999.59,$801.09,Cash,
+653454258,BrokerageLink,MOH,MOLINA HEALTHCARE INC,6.96,$177.87,+$1.67,$1237.97,+$11.62,+0.94%,+$238.08,+23.81%,2.26%,$999.89,$143.66,Cash,
+653454258,BrokerageLink,AVGO,BROADCOM INC COM,14.174,$421.86,-$0.15,$5979.44,-$2.13,-0.04%,+$979.73,+19.59%,10.93%,$4999.71,$352.74,Cash,
+653454258,BrokerageLink,PEN,PENUMBRA INC COM,3.594,$320.34,-$7.86,$1151.30,-$28.25,-2.40%,+$151.47,+15.14%,2.10%,$999.83,$278.19,Cash,
+653454258,BrokerageLink,NVDA,NVIDIA CORPORATION COM,49.124,$212.60,-$2.26,$10443.76,-$111.03,-1.06%,+$443.85,+4.43%,19.09%,$9999.91,$203.56,Cash,
+653454258,BrokerageLink,META,META PLATFORMS INC CLASS A COMMON STOCK,7.705,$635.255,+$22.915,$4894.63,+$176.56,+3.74%,-$105.17,-2.11%,8.95%,$4999.80,$648.90,Cash,
+653454258,BrokerageLink,COPX,GLOBAL X FDS GLOBAL X COPPER,11.339,$86.09,-$1.42,$976.17,-$16.11,-1.63%,-$23.82,-2.39%,1.78%,$999.99,$88.19,Cash,
+653454258,BrokerageLink,URA,GLOBAL X FDS GLOBAL X URANIUM,3.896,$50.16,-$0.70,$195.42,-$2.73,-1.38%,-$22.73,-10.42%,0.36%,$218.15,$55.99,Cash,
+653454258,BrokerageLink,GOLD,GOLD COM INC COM,20.46,$42.31,-$0.82,$865.66,-$16.78,-1.91%,-$134.29,-13.43%,1.58%,$999.95,$48.87,Cash,
+653454258,BrokerageLink,MDB,MONGODB INC CL A,2.674,$294.46,-$12.89,$787.38,-$34.47,-4.20%,-$212.33,-21.24%,1.44%,$999.71,$373.86,Cash,
+653454258,BrokerageLink,NFLX,NETFLIX INC,44.04,$87.35,-$0.33,$3846.89,-$14.54,-0.38%,-$1152.97,-23.06%,7.03%,$4999.86,$113.53,Cash,
+653454258,BrokerageLink,SLV,ISHARES SILVER TR ISHARES,20.881,$67.50,-$2.22,$1409.46,-$46.36,-3.19%,-$590.50,-29.53%,2.58%,$1999.96,$95.78,Cash,
+653454258,BrokerageLink,PLTR,PALANTIR TECHNOLOGIES INC CL A,25.145,$132.51,-$4.09,$3331.96,-$102.85,-3.00%,-$1689.20,-33.65%,6.09%,$5021.16,$199.69,Cash,
+
+"The data and information in this spreadsheet is provided to you solely for your use and is not for distribution. The spreadsheet is provided for informational purposes only, and is not intended to provide advice, nor should it be construed as an offer to sell, a solicitation of an offer to buy or a recommendation for any security by Fidelity or any third party. Data and information shown is based on information known to Fidelity as of the date it was exported and is subject to change. It should not be used in place of your account statements or trade confirmations and is not intended for tax reporting purposes. For more information on the data included in this spreadsheet, including any limitations thereof, go to Fidelity.com."
+
+"Brokerage services are provided by Fidelity Brokerage Services LLC (FBS), 900 Salem Street, Smithfield, RI 02917. Custody and other services provided by National Financial Services LLC (NFS). Both are Fidelity Investment companies and members SIPC, NYSE. Neither FBS nor NFS offer crypto as a direct investment nor provide trading or custody services for such assets."
+
+"Date downloaded May-28-2026 12:07 a.m ET"

@@ -1,0 +1,54 @@
+﻿
+
+Run Date,Account,Account Number,Action,Symbol,Description,Type,Price ($),Quantity,Commission ($),Fees ($),Accrued Interest ($),Amount ($),Settlement Date
+12/31/2025,"Individual - TOD","Z30241698","DIVIDEND RECEIVED BROADCOM INC COM (AVGO) (Cash)",AVGO,"BROADCOM INC COM",Cash,,0.000,,,,1283.75,
+11/28/2025,"Individual - TOD","Z30241698","REINVESTMENT CASH (315994103) (Cash)",315994103,"CASH",Cash,1,0.15,,,,-0.15,
+11/28/2025,"Individual - TOD","Z30241698","INTEREST EARNED CASH (315994103) (Cash)",315994103,"CASH",Cash,,0.000,,,,0.15,
+11/17/2025,"Individual - TOD","Z30241698","DISTRIBUTION NETFLIX INC (NFLX) (Cash)",NFLX,"NETFLIX INC",Shares,,1.665,,,,183.63,
+11/12/2025,"Individual - TOD","Z30241698","YOU BOUGHT NETFLIX INC (NFLX) (Cash)",NFLX,"NETFLIX INC",Cash,1147.78,0.185,,,,-212.34,11/13/2025
+10/31/2025,"Individual - TOD","Z30241698","REINVESTMENT JPMORGAN CHASE &CO. COM (JPM) (Cash)",JPM,"JPMORGAN CHASE &CO. COM",Cash,310.48,0.019,,,,-6.03,
+10/31/2025,"Individual - TOD","Z30241698","DIVIDEND RECEIVED JPMORGAN CHASE &CO. COM (JPM) (Cash)",JPM,"JPMORGAN CHASE &CO. COM",Cash,,0.000,,,,6.03,
+10/31/2025,"Individual - TOD","Z30241698","REINVESTMENT CASH (315994103) (Cash)",315994103,"CASH",Cash,1,0.66,,,,-0.66,
+10/31/2025,"Individual - TOD","Z30241698","INTEREST EARNED CASH (315994103) (Cash)",315994103,"CASH",Cash,,0.000,,,,0.66,
+10/03/2025,"Individual - TOD","Z30241698","Electronic Funds Transfer Paid (Cash)",,"No Description",Cash,,0.000,,,,-1000,
+09/30/2025,"Individual - TOD","Z30241698","REINVESTMENT CASH (315994103) (Cash)",315994103,"CASH",Cash,1,0.76,,,,-0.76,
+09/30/2025,"Individual - TOD","Z30241698","DIVIDEND RECEIVED BROADCOM INC COM (AVGO) (Cash)",AVGO,"BROADCOM INC COM",Cash,,0.000,,,,1165.25,
+09/30/2025,"Individual - TOD","Z30241698","INTEREST EARNED CASH (315994103) (Cash)",315994103,"CASH",Cash,,0.000,,,,0.76,
+09/23/2025,"Individual - TOD","Z30241698","Electronic Funds Transfer Paid (Cash)",,"No Description",Cash,,0.000,,,,-500,
+08/29/2025,"Individual - TOD","Z30241698","REINVESTMENT CASH (315994103) (Cash)",315994103,"CASH",Cash,1,1.01,,,,-1.01,
+08/29/2025,"Individual - TOD","Z30241698","INTEREST EARNED CASH (315994103) (Cash)",315994103,"CASH",Cash,,0.000,,,,1.01,
+07/31/2025,"Individual - TOD","Z30241698","REINVESTMENT JPMORGAN CHASE &CO. COM (JPM) (Cash)",JPM,"JPMORGAN CHASE &CO. COM",Cash,299.24,0.019,,,,-5.6,
+07/31/2025,"Individual - TOD","Z30241698","DIVIDEND RECEIVED JPMORGAN CHASE &CO. COM (JPM) (Cash)",JPM,"JPMORGAN CHASE &CO. COM",Cash,,0.000,,,,5.6,
+07/31/2025,"Individual - TOD","Z30241698","REINVESTMENT CASH (315994103) (Cash)",315994103,"CASH",Cash,1,6.04,,,,-6.04,
+07/31/2025,"Individual - TOD","Z30241698","INTEREST EARNED CASH (315994103) (Cash)",315994103,"CASH",Cash,,0.000,,,,6.04,
+07/28/2025,"Individual - TOD","Z30241698","Electronic Funds Transfer Paid (Cash)",,"No Description",Cash,,0.000,,,,-3000,
+06/30/2025,"Individual - TOD","Z30241698","REINVESTMENT CASH (315994103) (Cash)",315994103,"CASH",Cash,1,4.26,,,,-4.26,
+06/30/2025,"Individual - TOD","Z30241698","DIVIDEND RECEIVED BROADCOM INC COM (AVGO) (Cash)",AVGO,"BROADCOM INC COM",Cash,,0.000,,,,1165.25,
+06/30/2025,"Individual - TOD","Z30241698","INTEREST EARNED CASH (315994103) (Cash)",315994103,"CASH",Cash,,0.000,,,,4.26,
+05/30/2025,"Individual - TOD","Z30241698","REINVESTMENT CASH (315994103) (Cash)",315994103,"CASH",Cash,1,4.4,,,,-4.4,
+05/30/2025,"Individual - TOD","Z30241698","INTEREST EARNED CASH (315994103) (Cash)",315994103,"CASH",Cash,,0.000,,,,4.4,
+04/30/2025,"Individual - TOD","Z30241698","DIVIDEND RECEIVED JPMORGAN CHASE &CO. COM (JPM) (Cash)",JPM,"JPMORGAN CHASE &CO. COM",Cash,,0.000,,,,5.6,
+04/30/2025,"Individual - TOD","Z30241698","REINVESTMENT CASH (315994103) (Cash)",315994103,"CASH",Cash,1,4.24,,,,-4.24,
+04/30/2025,"Individual - TOD","Z30241698","INTEREST EARNED CASH (315994103) (Cash)",315994103,"CASH",Cash,,0.000,,,,4.24,
+03/31/2025,"Individual - TOD","Z30241698","REINVESTMENT CASH (315994103) (Cash)",315994103,"CASH",Cash,1,2.21,,,,-2.21,
+03/31/2025,"Individual - TOD","Z30241698","DIVIDEND RECEIVED BROADCOM INC COM (AVGO) (Cash)",AVGO,"BROADCOM INC COM",Cash,,0.000,,,,1165.25,
+03/31/2025,"Individual - TOD","Z30241698","INTEREST EARNED CASH (315994103) (Cash)",315994103,"CASH",Cash,,0.000,,,,2.21,
+02/28/2025,"Individual - TOD","Z30241698","REINVESTMENT CASH (315994103) (Cash)",315994103,"CASH",Cash,1,1.99,,,,-1.99,
+02/28/2025,"Individual - TOD","Z30241698","INTEREST EARNED CASH (315994103) (Cash)",315994103,"CASH",Cash,,0.000,,,,1.99,
+01/31/2025,"Individual - TOD","Z30241698","DIVIDEND RECEIVED JPMORGAN CHASE &CO. COM (JPM) (Cash)",JPM,"JPMORGAN CHASE &CO. COM",Cash,,0.000,,,,5,
+01/31/2025,"Individual - TOD","Z30241698","REINVESTMENT CASH (315994103) (Cash)",315994103,"CASH",Cash,1,2.12,,,,-2.12,
+01/31/2025,"Individual - TOD","Z30241698","INTEREST EARNED CASH (315994103) (Cash)",315994103,"CASH",Cash,,0.000,,,,2.12,
+
+
+
+"The data and information in this spreadsheet is provided to you solely for your use and is not for distribution. The spreadsheet is provided for"
+"informational purposes only, and is not intended to provide advice, nor should it be construed as an offer to sell, a solicitation of an offer to buy or a"
+"recommendation for any security or insurance product by Fidelity or any third party. Data and information shown is based on information known to Fidelity as of the date it was"
+"exported and is subject to change. It should not be used in place of your account statements or trade confirmations and is not intended for tax reporting"
+"purposes. For more information on the data included in this spreadsheet, including any limitations thereof, go to Fidelity.com."
+
+"Brokerage services are provided by Fidelity Brokerage Services LLC (FBS), 900 Salem Street, Smithfield, RI 02917. Custody and other services provided by National"
+"Financial Services LLC (NFS). Both are Fidelity Investment companies and members SIPC, NYSE. Insurance products at Fidelity are distributed by"
+"Fidelity Insurance Agency, Inc., and, for certain products, by Fidelity Brokerage Services, Member NYSE, SIPC."
+
+Date downloaded 05/28/2026 8:29 am

@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 import json
-from concurrent.futures import ThreadPoolExecutor, as_completed
+from concurrent.futures import ThreadPoolExecutor, TimeoutError as FuturesTimeoutError, as_completed
 from dataclasses import asdict, dataclass
 from datetime import datetime, timezone
 from pathlib import Path
@@ -81,7 +81,7 @@ def get_quotes(
                     out[tk] = fut.result()
                 except Exception as e:
                     out[tk] = _nan_quote(tk, f"error: {type(e).__name__}")
-        except TimeoutError:
+        except FuturesTimeoutError:
             for fut, tk in futures.items():
                 if not fut.done():
                     out[tk] = _nan_quote(tk, "timeout")

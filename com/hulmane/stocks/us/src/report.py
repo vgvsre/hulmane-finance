@@ -221,6 +221,40 @@ def monthly_activity(transactions: pd.DataFrame) -> pd.DataFrame:
     return out
 
 
+def yearly_activity(transactions: pd.DataFrame) -> pd.DataFrame:
+    """Per-calendar-year invested (buys) and sold (sell proceeds).
+
+    Columns: year, invested, sold, n_buys, n_sells. As with
+    monthly_activity, position-snapshot/transfer/distribution rows are
+    excluded so figures reflect real cash buys and sells, not share movements.
+    """
+    cols = ["year", "invested", "sold", "n_buys", "n_sells"]
+    if transactions.empty:
+        return pd.DataFrame(columns=cols)
+    df = transactions.copy()
+    if "row_type" in df.columns:
+        df = df[~df["row_type"].isin(["position", "transfer", "distribution"])]
+    if not pd.api.types.is_datetime64_any_dtype(df["purchase_date"]):
+        df["purchase_date"] = pd.to_datetime(df["purchase_date"])
+    if "cost_basis" not in df.columns:
+        df["cost_basis"] = df["quantity"] * df["purchase_price"]
+    if df.empty:
+        return pd.DataFrame(columns=cols)
+    df["year"] = df["purchase_date"].dt.year
+    buys = df[df["quantity"] > 0]
+    sells = df[df["quantity"] < 0]
+    inv = (buys.groupby("year")
+           .agg(invested=("cost_basis", "sum"), n_buys=("ticker", "size")))
+    sld = (sells.groupby("year")
+           # cost_basis on sells is negative; report proceeds as a positive number.
+           .agg(sold=("cost_basis", lambda s: float(-s.sum())),
+                n_sells=("ticker", "size")))
+    out = (inv.join(sld, how="outer").reset_index()
+           .fillna({"invested": 0.0, "sold": 0.0, "n_buys": 0, "n_sells": 0}))
+    out[["n_buys", "n_sells"]] = out[["n_buys", "n_sells"]].astype(int)
+    return out.sort_values("year")[cols].reset_index(drop=True)
+
+
 def all_tags_summary(app_root: Path) -> pd.DataFrame:
     """One row per tag: invested, current value, P&L, %."""
     rows = []

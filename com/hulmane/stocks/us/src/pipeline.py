@@ -24,9 +24,14 @@ import pandas as pd
 
 from . import accounts as accounts_mod
 from . import portfolio
+from . import tags as tags_mod
 from .importers import etrade as etrade_imp
 from .importers import fidelity as fidelity_imp
 from .importers import robinhood as robinhood_imp
+
+# Auto-applied to every transaction whose row_type marks it a dividend reinvestment.
+DRIP_TAG = "Dividend Reinvestment"
+DRIP_ROW_TYPE = "dividend_reinvestment"
 
 # source subfolder -> (tag written to data/formated, broker label, kind)
 BROKERS: list[tuple[str, str, str]] = [
@@ -81,6 +86,7 @@ class RunResult:
     formated_dir: str
     log_path: str
     tags: list[TagResult] = field(default_factory=list)
+    dividend_reinvestments_tagged: int = 0
 
     @property
     def total_rows(self) -> int:
@@ -359,6 +365,29 @@ def _assign_txn_id(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 
+# ── auto-tagging ──────────────────────────────────────────────────────────────
+
+def _auto_tag_dividend_reinvestments(app_root: Path) -> int:
+    """Attach the '{DRIP_TAG}' tag to every dividend-reinvestment transaction.
+
+    Reads the freshly-written data/formated CSVs, finds rows whose row_type is
+    'dividend_reinvestment', and adds the tag to their txn_ids in the persistent
+    tag store. Because txn_ids are rebuild-stable, this is idempotent and the tag
+    survives every ground-zero rebuild. Other tags on those rows are preserved.
+    Returns the number of transactions newly tagged this run.
+    """
+    df = portfolio.load_all(app_root)
+    if df.empty or "row_type" not in df.columns or "txn_id" not in df.columns:
+        return 0
+    drip_ids = df.loc[df["row_type"] == DRIP_ROW_TYPE, "txn_id"].dropna().tolist()
+    if not drip_ids:
+        return 0
+    store = tags_mod.load(app_root)
+    n = tags_mod.add_to_many(store, drip_ids, DRIP_TAG)
+    tags_mod.save(app_root, store)
+    return n
+
+
 # ── logging ───────────────────────────────────────────────────────────────────
 
 def _write_log(app_root: Path, run: RunResult) -> Path:
@@ -422,6 +451,9 @@ def run(app_root: Path) -> RunResult:
     )
     for src_subdir, tag, broker in BROKERS:
         run_result.tags.append(_process_broker(app_root, src_subdir, tag, broker, registry))
+
+    # Re-attach the auto-managed Dividend Reinvestment tag now that txn_ids exist.
+    run_result.dividend_reinvestments_tagged = _auto_tag_dividend_reinvestments(app_root)
 
     log_path = _write_log(app_root, run_result)
     run_result.log_path = str(log_path)

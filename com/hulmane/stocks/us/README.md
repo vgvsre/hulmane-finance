@@ -76,7 +76,18 @@ python3 -m venv .venv
 | **Upload**        | Drop a tagged CSV (filename stem = tag) into `data/transactions/`           |
 | **All-tag summary** | Live cross-tag P&L: invested vs current value, % return per cohort        |
 | **Tag detail**    | Per-position breakdown for one tag, with pie chart and CSV report export    |
+| **Stocks performance** | Best→worst ranking by annualized return (Good ≥ +20%/yr · Average 0–20% · Poor < 0%), per-stock yearly returns, decision quality vs the S&P 500, and a lump-sum vs monthly-DCA simulator |
 | **Live price**    | Ad-hoc `yfinance` lookup for any US ticker(s)                               |
+
+> The **Stocks performance** tab needs the daily close-price history. Build it
+> once (and refresh periodically) with:
+> ```sh
+> .venv/bin/python history.py
+> ```
+> This writes `data/history/close_prices.csv` (EOD closes for every portfolio
+> ticker since the `start_date` in `config.json`, default 2019-06-01). The
+> ranking annualizes only holdings held ≥ 1 year; newer positions are shown with
+> total return only.
 
 > Live prices need outbound HTTPS to `query1.finance.yahoo.com` and
 > `query2.finance.yahoo.com`. If you're inside a sandbox/proxy that blocks

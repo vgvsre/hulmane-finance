@@ -10,6 +10,11 @@ Quirks:
 We keep only rows that affect cost basis at this broker:
     Buy, Sell                     -> emitted (Sell as negative quantity)
 
+A Buy whose Description says "Dividend Reinvestment" (a DRIP — dividend cash
+auto-reinvested into shares) is still emitted as a Buy (it is real cost basis),
+but tagged via ``row_type="dividend_reinvestment"`` so reports/tags can single
+it out. Plain trades carry ``row_type="trade"``.
+
 We deliberately drop:
     CDIV, DTAX, DFEE, SLIP        -> dividend / lending cash events
     ACH, RTP, ABIP                -> bank transfers / promo cash
@@ -40,9 +45,10 @@ from pathlib import Path
 import pandas as pd
 
 APP_COLS = ["ticker", "quantity", "purchase_price", "purchase_date", "broker",
-            "account", "action", "source_file"]
+            "account", "action", "row_type", "source_file"]
 
 KEEP_CODES = {"Buy", "Sell"}
+DRIP_MARKER = "dividend reinvestment"  # matched case-insensitively in Description
 SKIP_CODES = {
     "CDIV", "DTAX", "DFEE", "SLIP",
     "ACH", "RTP",
@@ -63,6 +69,7 @@ class ImportSummary:
     skipped_by_code: dict[str, int]
     unrecognized_codes: dict[str, int]
     accounts_seen: dict[str, int]
+    dividend_reinvestments: int = 0
 
 
 def _load_account_map(robinhood_dir: Path) -> dict[str, str]:
@@ -121,6 +128,7 @@ def parse(path: Path, account_label: str) -> tuple[pd.DataFrame, ImportSummary]:
     out_rows: list[dict] = []
     skipped: Counter[str] = Counter()
     unrecognized: Counter[str] = Counter()
+    n_drip = 0
 
     for _, r in raw.iterrows():
         code = str(r.get("Trans Code", "")).strip()
@@ -142,6 +150,11 @@ def parse(path: Path, account_label: str) -> tuple[pd.DataFrame, ImportSummary]:
             skipped[f"{code}:incomplete"] += 1
             continue
 
+        # A Buy flagged "Dividend Reinvestment" in its Description is a DRIP.
+        is_drip = code == "Buy" and DRIP_MARKER in str(r.get("Description", "")).lower()
+        if is_drip:
+            n_drip += 1
+
         signed_qty = qty if code == "Buy" else -qty
         out_rows.append(
             {
@@ -152,6 +165,7 @@ def parse(path: Path, account_label: str) -> tuple[pd.DataFrame, ImportSummary]:
                 "broker": "robinhood",
                 "account": account_label,
                 "action": code,
+                "row_type": "dividend_reinvestment" if is_drip else "trade",
                 "source_file": path.name,
             }
         )
@@ -162,6 +176,7 @@ def parse(path: Path, account_label: str) -> tuple[pd.DataFrame, ImportSummary]:
         skipped_by_code=dict(skipped),
         unrecognized_codes=dict(unrecognized),
         accounts_seen={account_label: len(df)} if len(df) else {},
+        dividend_reinvestments=n_drip,
     )
     return df, summary
 
@@ -181,6 +196,7 @@ def import_to_tag(app_root: Path, source: Path, tag: str) -> tuple[Path, ImportS
     total_skipped: Counter[str] = Counter()
     total_unrecognized: Counter[str] = Counter()
     accounts_seen: Counter[str] = Counter()
+    total_drip = 0
 
     for p in files:
         label = _account_label(p, account_map)
@@ -189,6 +205,7 @@ def import_to_tag(app_root: Path, source: Path, tag: str) -> tuple[Path, ImportS
         total_skipped.update(summary.skipped_by_code)
         total_unrecognized.update(summary.unrecognized_codes)
         accounts_seen.update(summary.accounts_seen)
+        total_drip += summary.dividend_reinvestments
 
     df = pd.concat(frames, ignore_index=True) if frames else pd.DataFrame(columns=APP_COLS)
     if df.empty:
@@ -224,5 +241,6 @@ def import_to_tag(app_root: Path, source: Path, tag: str) -> tuple[Path, ImportS
         skipped_by_code=dict(total_skipped),
         unrecognized_codes=dict(total_unrecognized),
         accounts_seen=dict(accounts_seen),
+        dividend_reinvestments=total_drip,
     )
     return dest, summary

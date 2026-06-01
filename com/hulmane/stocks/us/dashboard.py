@@ -3,8 +3,11 @@
 Tabs:
     1. Dashboard            — filters, headline metrics, activity heatmap, charts
     2. All stocks           — consolidated per-ticker view across every tag/account/broker
-    3. Single stock         — full buy/sell history + P&L for one ticker
-    4. Pinned tickers       — one tab per pinned ticker (e.g. AVGO). Edit
+    3. Stocks performance   — best/worst ranking, annualized-return buckets, yearly
+                              returns, vs-S&P500 decision quality, lump-sum vs DCA
+    4. Transactions         — consolidated buy/sell ledger with per-txn tagging
+    5. Single stock         — full buy/sell history + P&L for one ticker
+    6. Pinned tickers       — one tab per pinned ticker (e.g. AVGO). Edit
                               data/_pinned.json or use the sidebar to manage.
 
 Sidebar = Live toggle, refresh, optional tag/account/broker filters, upload, pinned.
@@ -28,6 +31,7 @@ from src import portfolio, pricing, report  # noqa: E402
 from src import media as media_mod  # noqa: E402
 from src import pipeline  # noqa: E402
 from src import tags as txn_tags  # noqa: E402
+from src import performance as perf  # noqa: E402
 
 st.set_page_config(page_title="Hulmane US Stocks", layout="wide", page_icon="📈")
 
@@ -212,6 +216,18 @@ def _format_age(iso_ts: str | None) -> str:
         return f"{secs // 86400}d ago"
     except Exception:
         return iso_ts
+
+
+def _compact_usd(v: float) -> str:
+    """Short dollar label for tight spaces: $950, $1.2K, $3.4M."""
+    if v is None or pd.isna(v):
+        return ""
+    v = float(v)
+    if abs(v) >= 1_000_000:
+        return f"${v / 1_000_000:,.1f}M"
+    if abs(v) >= 1_000:
+        return f"${v / 1_000:,.1f}K"
+    return f"${v:,.0f}"
 
 
 def _render_status_badge(live: bool, summary: dict) -> None:
@@ -421,13 +437,15 @@ with st.sidebar:
 # ── Tabs ──────────────────────────────────────────────────────────────────────
 pinned_existing = [t for t in _read_pinned() if t in all_tickers]
 pinned_missing = [t for t in _read_pinned() if t not in all_tickers]
-_tab_labels = ["Dashboard", "All stocks", "Transactions", "Single stock"] + pinned_existing
+_tab_labels = (["Dashboard", "All stocks", "Stocks performance", "Transactions",
+                "Single stock"] + pinned_existing)
 _tabs = st.tabs(_tab_labels)
 tab_dash = _tabs[0]
 tab_stocks = _tabs[1]
-tab_tx = _tabs[2]
-tab_single = _tabs[3]
-pinned_tabs = _tabs[4:]
+tab_perf = _tabs[2]
+tab_tx = _tabs[3]
+tab_single = _tabs[4]
+pinned_tabs = _tabs[5:]
 
 if pinned_missing:
     st.sidebar.caption(
@@ -526,32 +544,107 @@ with tab_dash:
                                 "Jul","Aug","Sep","Oct","Nov","Dec"], ordered=True,
                 )
                 mo["year_str"] = mo["year"].astype(str)
+                mo["invested_label"] = mo["invested"].apply(_compact_usd)
+                # Dark text on the bright (high-invested) cells, light on the dark ones.
+                # Cast to plain float: a numpy scalar serializes into the Vega
+                # predicate as "np.float64(...)" (invalid JS) and blanks the chart.
+                label_mid = float(mo["invested"].max()) * 0.55
+                base = alt.Chart(mo).encode(
+                    x=alt.X("month_label:O", title=None,
+                            axis=alt.Axis(labelFontWeight="bold")),
+                    y=alt.Y("year_str:O", title=None, sort="descending",
+                            axis=alt.Axis(labelFontWeight="bold")),
+                )
+                rects = base.mark_rect(
+                    stroke="white", strokeWidth=2, cornerRadius=4
+                ).encode(
+                    color=alt.Color(
+                        "invested:Q",
+                        scale=alt.Scale(scheme="plasma"),
+                        title="Invested",
+                        legend=alt.Legend(orient="bottom", gradientLength=240),
+                    ),
+                    tooltip=[
+                        alt.Tooltip("year:O"),
+                        alt.Tooltip("month_label:O", title="Month"),
+                        alt.Tooltip("invested:Q", format="$,.2f"),
+                        alt.Tooltip("n_trades:Q", title="Trades"),
+                    ],
+                )
+                labels = base.mark_text(fontWeight="bold", fontSize=12).encode(
+                    text=alt.Text("invested_label:N"),
+                    color=alt.condition(
+                        alt.datum.invested > label_mid,
+                        alt.value("#1e293b"), alt.value("white"),
+                    ),
+                )
                 heat = (
-                    alt.Chart(mo)
-                    .mark_rect(stroke="white", strokeWidth=2, cornerRadius=4)
-                    .encode(
-                        x=alt.X("month_label:O", title=None,
-                                axis=alt.Axis(labelFontWeight="bold")),
-                        y=alt.Y("year_str:O", title=None, sort="descending",
-                                axis=alt.Axis(labelFontWeight="bold")),
-                        color=alt.Color(
-                            "invested:Q",
-                            scale=alt.Scale(scheme="plasma"),
-                            title="Invested",
-                            legend=alt.Legend(orient="bottom", gradientLength=240),
-                        ),
-                        tooltip=[
-                            alt.Tooltip("year:O"),
-                            alt.Tooltip("month_label:O", title="Month"),
-                            alt.Tooltip("invested:Q", format="$,.2f"),
-                            alt.Tooltip("n_trades:Q", title="Trades"),
-                        ],
-                    )
+                    (rects + labels)
+                    # rects color by a quantitative scale, labels by a fixed value —
+                    # keep the two color encodings from being merged into one scale.
+                    .resolve_scale(color="independent")
                     .properties(height=max(120, 40 * mo["year"].nunique()))
                     .configure_view(strokeWidth=0)
                     .configure_axis(domainColor="#cbd5e1", tickColor="#cbd5e1")
                 )
                 st.altair_chart(heat, use_container_width=True)
+
+            # Invested vs sold, by year
+            st.subheader("Invested vs sold, by year")
+            yr = report.yearly_activity(filtered)
+            if yr.empty:
+                st.caption("No buys or sells in this window.")
+            else:
+                yr["year_str"] = yr["year"].astype(int).astype(str)
+                yr_long = yr.melt(
+                    id_vars=["year_str"], value_vars=["invested", "sold"],
+                    var_name="flow", value_name="usd",
+                )
+                yr_long["flow"] = yr_long["flow"].map(
+                    {"invested": "Invested (buys)", "sold": "Sold (proceeds)"})
+                yr_bars = (
+                    alt.Chart(yr_long).mark_bar(cornerRadiusEnd=3)
+                    .encode(
+                        x=alt.X("year_str:O", title=None,
+                                axis=alt.Axis(labelFontWeight="bold")),
+                        xOffset=alt.XOffset("flow:N"),
+                        y=alt.Y("usd:Q", title="USD"),
+                        color=alt.Color(
+                            "flow:N", title=None,
+                            scale=alt.Scale(
+                                domain=["Invested (buys)", "Sold (proceeds)"],
+                                range=[GREEN, RED]),
+                            legend=alt.Legend(orient="top")),
+                        tooltip=[
+                            alt.Tooltip("year_str:O", title="Year"),
+                            alt.Tooltip("flow:N", title=None),
+                            alt.Tooltip("usd:Q", format="$,.2f"),
+                        ],
+                    )
+                    .properties(height=260)
+                    .configure_view(strokeWidth=0)
+                    .configure_axis(grid=True, gridColor="#f1f5f9",
+                                    domainColor="#cbd5e1", tickColor="#cbd5e1")
+                )
+                st.altair_chart(yr_bars, use_container_width=True)
+
+                yr_tbl = yr.copy()
+                yr_tbl["net"] = yr_tbl["invested"] - yr_tbl["sold"]
+                yr_show = yr_tbl[["year", "invested", "sold", "net",
+                                  "n_buys", "n_sells"]].rename(columns={
+                    "year": "Year", "invested": "Invested (buys)",
+                    "sold": "Sold (proceeds)", "net": "Net invested",
+                    "n_buys": "Buys", "n_sells": "Sells",
+                })
+                st.dataframe(
+                    yr_show, hide_index=True, use_container_width=True,
+                    column_config={
+                        "Year": st.column_config.NumberColumn(format="%d"),
+                        "Invested (buys)": st.column_config.NumberColumn(format="$%.2f"),
+                        "Sold (proceeds)": st.column_config.NumberColumn(format="$%.2f"),
+                        "Net invested": st.column_config.NumberColumn(format="$%.2f"),
+                    },
+                )
 
             # Cumulative invested over time
             st.subheader("Cumulative invested over time")
@@ -809,7 +902,264 @@ with tab_stocks:
             )
 
 
-# ─── TAB 3: Single stock detail ──────────────────────────────────────────────
+# ─── TAB 3: Stocks performance ───────────────────────────────────────────────
+with tab_perf:
+    st.subheader("Stocks performance")
+    st.caption("How each pick has performed, ranked best → worst. "
+               "Uses your cost-weighted buy date to today; respects the sidebar "
+               "Tags/Accounts/Brokers filters and the Live-prices toggle.")
+
+    perf_tx = _apply_filters(_all_transactions(), start=None, end=None,
+                             tags=flt_tags, accounts=flt_accounts, brokers=flt_brokers)
+    close_hist = perf.load_close_history(APP_ROOT)
+
+    if perf_tx.empty:
+        st.info("No transactions match the current filters.")
+    else:
+        perf_tickers = sorted(perf_tx["ticker"].unique().tolist())
+        quotes_perf = _quotes_for(perf_tickers, live_mode)
+        prices_perf = {t: q.price for t, q in quotes_perf.items()}
+        scored = perf.scorecard(perf_tx, prices_perf)
+        scored = perf.benchmark_comparison(scored, close_hist, benchmark="VOO")
+
+        priced = scored[scored["current_price"].notna()].copy()
+        ranked = priced[priced["annualized_pct"].notna()].copy()
+        n_new = int((priced["category"] == perf.CATEGORY_NEW).sum())
+
+        if priced.empty:
+            if not live_mode:
+                st.warning("No current prices in the cache for these tickers. "
+                           "Turn on **Live prices** in the sidebar to compute returns.")
+            else:
+                st.warning("Couldn't fetch live prices (network blocked?). "
+                           "Returns can't be computed right now.")
+
+        if priced.empty:
+            st.info("Nothing to rank yet.")
+        else:
+            # ── 1. Category buckets ──────────────────────────────────────────
+            st.markdown("#### Verdict on your picks (annualized return per year)")
+            bc1, bc2, bc3 = st.columns(3)
+            for col, cat in ((bc1, perf.CATEGORY_GOOD),
+                             (bc2, perf.CATEGORY_AVERAGE),
+                             (bc3, perf.CATEGORY_POOR)):
+                sub = ranked[ranked["category"] == cat]
+                inv = float(sub["invested"].sum())
+                desc = {"Good": "≥ +20%/yr", "Average": "0–20%/yr", "Poor": "< 0%/yr"}[cat]
+                col.metric(f"{cat} · {desc}", f"{len(sub)} stocks",
+                           f"${inv:,.0f} invested", delta_color="off")
+            if n_new:
+                st.caption(f"➕ {n_new} holding(s) held under 1 year are shown in the "
+                           "table below with total return only — too new to annualize.")
+
+            if ranked.empty:
+                st.info("No holding has a full year of history yet, so there's "
+                        "nothing to annualize. See total returns in the table below.")
+
+            # ── 2. Ranked bar chart (best → worst) ───────────────────────────
+            if not ranked.empty:
+                st.markdown("#### Ranking — best to worst")
+                chart_df = ranked[["ticker", "annualized_pct", "category",
+                                   "total_return_pct", "invested", "current_value"]].copy()
+                bars = (
+                    alt.Chart(chart_df)
+                    .mark_bar(cornerRadius=3)
+                    .encode(
+                        x=alt.X("annualized_pct:Q", title="Annualized return (%/yr)"),
+                        y=alt.Y("ticker:N", sort="-x", title=None),
+                        color=alt.Color(
+                            "category:N",
+                            scale=alt.Scale(
+                                domain=[perf.CATEGORY_GOOD, perf.CATEGORY_AVERAGE, perf.CATEGORY_POOR],
+                                range=[GREEN, ORANGE, RED]),
+                            legend=alt.Legend(orient="top", title=None)),
+                        tooltip=[
+                            alt.Tooltip("ticker:N", title="Ticker"),
+                            alt.Tooltip("annualized_pct:Q", title="Annualized %/yr", format=".1f"),
+                            alt.Tooltip("total_return_pct:Q", title="Total return %", format=".1f"),
+                            alt.Tooltip("invested:Q", title="Invested", format="$,.0f"),
+                            alt.Tooltip("current_value:Q", title="Current value", format="$,.0f"),
+                        ],
+                    )
+                    .properties(height=max(180, 22 * len(chart_df)))
+                    .configure_view(strokeWidth=0)
+                )
+                st.altair_chart(bars, use_container_width=True)
+
+                # Best / worst callouts.
+                best, worst = ranked.iloc[0], ranked.iloc[-1]
+                wc1, wc2 = st.columns(2)
+                wc1.success(f"🏆 **Best:** {best['ticker']} · "
+                            f"{best['annualized_pct']:+.1f}%/yr "
+                            f"({best['total_return_pct']:+.1f}% total)")
+                wc2.error(f"🐢 **Worst:** {worst['ticker']} · "
+                          f"{worst['annualized_pct']:+.1f}%/yr "
+                          f"({worst['total_return_pct']:+.1f}% total)")
+
+            # ── 3. Key indicators table (incl. decision quality vs S&P 500) ──
+            st.markdown("#### Key indicators per stock")
+            st.caption("**vs S&P 500** compares your annualized return to VOO over "
+                       "the same holding window — positive means the pick beat just "
+                       "buying the index (good stock-picking).")
+            tbl = priced.copy()
+            tbl["beat"] = tbl["beat_market"].map(
+                lambda b: "✅ Beat" if b is True else ("❌ Lagged" if b is False else "—"))
+            show = tbl[[
+                "ticker", "category", "invested", "current_value", "pnl",
+                "total_return_pct", "annualized_pct", "holding_years",
+                "benchmark_annualized_pct", "alpha_pp", "beat", "weighted_buy_date",
+            ]].rename(columns={
+                "ticker": "Ticker", "category": "Verdict", "invested": "Invested",
+                "current_value": "Current value", "pnl": "P&L",
+                "total_return_pct": "Total %", "annualized_pct": "Annualized %/yr",
+                "holding_years": "Years held", "benchmark_annualized_pct": "S&P500 %/yr",
+                "alpha_pp": "vs S&P500 (pp)", "beat": "Decision",
+                "weighted_buy_date": "Avg buy date",
+            })
+            st.dataframe(
+                show, hide_index=True, use_container_width=True,
+                column_config={
+                    "Ticker": st.column_config.TextColumn(width="small"),
+                    "Invested": st.column_config.NumberColumn(format="$%.0f"),
+                    "Current value": st.column_config.NumberColumn(format="$%.0f"),
+                    "P&L": st.column_config.NumberColumn(format="$%.0f"),
+                    "Total %": st.column_config.NumberColumn(format="%.1f%%"),
+                    "Annualized %/yr": st.column_config.NumberColumn(format="%.1f%%"),
+                    "Years held": st.column_config.NumberColumn(format="%.2f"),
+                    "S&P500 %/yr": st.column_config.NumberColumn(format="%.1f%%"),
+                    "vs S&P500 (pp)": st.column_config.NumberColumn(format="%.1f"),
+                    "Avg buy date": st.column_config.DateColumn(format="YYYY-MM-DD"),
+                },
+            )
+            beat_n = int((tbl["beat_market"] == True).sum())  # noqa: E712
+            rated = int(tbl["beat_market"].isin([True, False]).sum())
+            if rated:
+                st.caption(f"You beat the S&P 500 on **{beat_n} of {rated}** "
+                           f"rated holdings ({beat_n / rated * 100:.0f}%).")
+
+            # ── 4. Yearly return per stock (price history) ───────────────────
+            st.markdown("#### How each stock returned, year by year")
+            if close_hist.empty:
+                st.info("No price history yet. Run `python history.py` to build "
+                        "`data/history/close_prices.csv`, then reload.")
+            else:
+                held = [t for t in priced["ticker"] if t in close_hist.columns]
+                ymat = perf.yearly_return_matrix(close_hist, held)
+                if ymat.empty:
+                    st.caption("Not enough history to compute yearly returns.")
+                else:
+                    long = (ymat.reset_index()
+                            .melt(id_vars="index", var_name="year", value_name="ret")
+                            .rename(columns={"index": "ticker"}).dropna(subset=["ret"]))
+                    long["label"] = long["ret"].map(lambda v: f"{v:+.0f}%")
+                    heat = (
+                        alt.Chart(long)
+                        .mark_rect(stroke="white", strokeWidth=1)
+                        .encode(
+                            x=alt.X("year:O", title=None,
+                                    axis=alt.Axis(labelFontWeight="bold", orient="top")),
+                            y=alt.Y("ticker:N", title=None, sort=held),
+                            color=alt.Color(
+                                "ret:Q", title="Year return %",
+                                scale=alt.Scale(scheme="redyellowgreen", domainMid=0),
+                                legend=alt.Legend(orient="bottom", gradientLength=240)),
+                            tooltip=[
+                                alt.Tooltip("ticker:N"),
+                                alt.Tooltip("year:O", title="Year"),
+                                alt.Tooltip("ret:Q", title="Return %", format="+.1f"),
+                            ],
+                        )
+                        .properties(height=max(180, 24 * len(held)))
+                    )
+                    text = (
+                        alt.Chart(long)
+                        .mark_text(fontSize=10)
+                        .encode(
+                            x=alt.X("year:O"), y=alt.Y("ticker:N", sort=held),
+                            text="label:N",
+                            color=alt.condition(
+                                "abs(datum.ret) > 60", alt.value("white"), alt.value("#1e293b")),
+                        )
+                    )
+                    st.altair_chart(
+                        (heat + text).resolve_scale(color="independent")
+                        .configure_view(strokeWidth=0),
+                        use_container_width=True,
+                    )
+
+            # ── 5. Lump sum vs monthly DCA (the "9th of every month" question) ─
+            st.markdown("#### Lump sum vs buying monthly")
+            st.caption("Would investing a fixed amount on the same day each month "
+                       "have beaten putting it all in at once? Simulated on actual "
+                       "daily closes.")
+            if close_hist.empty:
+                st.info("Needs price history — run `python history.py` first.")
+            else:
+                sim_tickers = [t for t in (["VOO"] if "VOO" in close_hist.columns else [])
+                               ] + [t for t in priced["ticker"] if t in close_hist.columns
+                                    and t != "VOO"]
+                if not sim_tickers:
+                    st.caption("No held tickers have price history to simulate.")
+                else:
+                    dc1, dc2, dc3, dc4 = st.columns([2, 1, 1, 1])
+                    sim_ticker = dc1.selectbox("Ticker", sim_tickers, key="dca_ticker")
+                    sim_amt = dc2.number_input("Monthly $", min_value=50, value=1000,
+                                               step=50, key="dca_amt")
+                    hist_min = close_hist[sim_ticker].dropna().index.min().date()
+                    default_start = max(hist_min, date(2020, 1, 1))
+                    sim_start = dc3.date_input("Start", value=default_start,
+                                               min_value=hist_min,
+                                               max_value=close_hist.index.max().date(),
+                                               key="dca_start")
+                    sim_day = dc4.number_input("Day of month", min_value=1, max_value=28,
+                                               value=9, key="dca_day")
+                    comp = perf.simulate_lump_vs_dca(
+                        close_hist, sim_ticker, float(sim_amt), sim_start,
+                        day_of_month=int(sim_day))
+                    if comp is None:
+                        st.caption("Not enough price history for that window.")
+                    else:
+                        st.caption(f"{comp.n_buys} monthly buys of ${comp.monthly_amount:,.0f} "
+                                   f"= ${comp.dca.invested:,.0f} total, "
+                                   f"{comp.start} → {comp.end}.")
+                        m1, m2, m3 = st.columns(3)
+                        m1.metric("Lump sum value",
+                                  f"${comp.lump.final_value:,.0f}",
+                                  f"{comp.lump.return_pct:+.1f}%")
+                        m2.metric(f"Monthly (DCA, {comp.day_of_month}th)",
+                                  f"${comp.dca.final_value:,.0f}",
+                                  f"{comp.dca.return_pct:+.1f}%")
+                        diff = comp.dca.final_value - comp.lump.final_value
+                        m3.metric("Winner", comp.winner, f"${diff:+,.0f} vs lump",
+                                  delta_color="normal" if comp.winner == "DCA" else "inverse")
+                        curve = comp.curve.copy()
+                        line = (
+                            alt.Chart(curve)
+                            .mark_line()
+                            .encode(
+                                x=alt.X("date:T", title=None),
+                                y=alt.Y("value:Q", title="Position value (USD)"),
+                                color=alt.Color("strategy:N", title=None,
+                                                scale=alt.Scale(
+                                                    domain=["Lump sum", "DCA"],
+                                                    range=[BLUE, ORANGE]),
+                                                legend=alt.Legend(orient="top")),
+                                tooltip=[
+                                    alt.Tooltip("date:T", title="Date"),
+                                    alt.Tooltip("strategy:N", title="Strategy"),
+                                    alt.Tooltip("value:Q", title="Value", format="$,.0f"),
+                                ],
+                            )
+                            .properties(height=300)
+                            .configure_view(strokeWidth=0)
+                        )
+                        st.altair_chart(line, use_container_width=True)
+                        st.caption("Note: lump sum deploys the full total on the start "
+                                   "date, so in a steadily rising market it usually wins; "
+                                   "monthly buying mainly cuts the risk of a bad entry.")
+
+
+# ─── TAB 4: Single stock detail ──────────────────────────────────────────────
 def _render_single_stock(ticker: str) -> None:
     """Render the full per-stock view: header, metrics, LT/ST chips,
     per-account rollup, transactions, and scatter chart."""

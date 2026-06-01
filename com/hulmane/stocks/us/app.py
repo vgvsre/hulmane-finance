@@ -48,6 +48,9 @@ def cmd_rebuild(_args: argparse.Namespace) -> int:
         flag = f"  !! {unmatched} rows unmatched to accounts.csv" if unmatched else ""
         print(f"=> {tag.tag}.csv: {tag.rows} rows{flag}\n")
     print(f"Total {result.total_rows} rows across {len(result.tags)} tags.")
+    if result.dividend_reinvestments_tagged:
+        print(f"Tagged {result.dividend_reinvestments_tagged} dividend-reinvestment "
+              f"transactions as 'Dividend Reinvestment'.")
     print(f"Formatted data -> {result.formated_dir}")
     print(f"Log -> {result.log_path}")
     return 0

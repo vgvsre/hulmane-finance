@@ -2,5 +2,6 @@
   "start_date": "2019-06-01",
   "end_date": null,
   "interval": "1d",
-  "output_csv": "data/history/close_prices.csv"
+  "output_csv": "data/history/close_prices.csv",
+  "excluded_tickers": ["AVGO"]
 }

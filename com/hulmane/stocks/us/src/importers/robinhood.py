@@ -48,6 +48,7 @@ APP_COLS = ["ticker", "quantity", "purchase_price", "purchase_date", "broker",
             "account", "action", "row_type", "source_file"]
 
 KEEP_CODES = {"Buy", "Sell"}
+SPLIT_CODE = "SPL"  # stock-split share distribution: extra shares added, no cash
 DRIP_MARKER = "dividend reinvestment"  # matched case-insensitively in Description
 SKIP_CODES = {
     "CDIV", "DTAX", "DFEE", "SLIP",
@@ -136,6 +137,32 @@ def parse(path: Path, account_label: str) -> tuple[pd.DataFrame, ImportSummary]:
             continue
         if code in SKIP_CODES:
             skipped[code] += 1
+            continue
+        # Stock split: Robinhood books the extra shares as an SPL row whose
+        # Quantity is the *added* shares (e.g. AMZN 20:1 → 19× the held qty) and
+        # whose Price/Amount are blank — no cash changes hands. Emitting it as a
+        # zero-cost share addition makes the running share count match the broker
+        # without distorting cost basis (invested $ unchanged, avg cost drops).
+        if code == SPLIT_CODE:
+            sym = str(r.get("Instrument", "")).strip().upper()
+            qty = _money(r.get("Quantity"))
+            d = _parse_date(r.get("Activity Date"))
+            if not sym or pd.isna(qty) or qty == 0 or d is None:
+                skipped[f"{code}:incomplete"] += 1
+                continue
+            out_rows.append(
+                {
+                    "ticker": sym,
+                    "quantity": round(qty, 6),
+                    "purchase_price": 0.0,
+                    "purchase_date": d.isoformat(),
+                    "broker": "robinhood",
+                    "account": account_label,
+                    "action": "Split",
+                    "row_type": "split",
+                    "source_file": path.name,
+                }
+            )
             continue
         if code not in KEEP_CODES:
             unrecognized[code] += 1

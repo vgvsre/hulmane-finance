@@ -14,7 +14,9 @@ distinct from a buy of AAPL in may26 so per-cohort returns are visible.
 """
 from __future__ import annotations
 
+import json
 from datetime import date, datetime
+from functools import lru_cache
 from pathlib import Path
 
 import pandas as pd
@@ -32,6 +34,27 @@ def formated_dir(app_root: Path) -> Path:
     deleted, every reader (CLI + dashboard) still works off these files.
     """
     return app_root / "data" / "formated"
+
+
+@lru_cache(maxsize=8)
+def excluded_tickers(app_root: Path) -> frozenset[str]:
+    """Tickers to drop from every calculation, read from config.json.
+
+    The ``excluded_tickers`` key (a list of symbols) lets the user keep a stock
+    in the raw/formatted data but hold it out of all totals, reports, charts and
+    drill-downs — handy for a position that distorts the picture (e.g. AVGO).
+    Matching is case-insensitive; symbols are normalized the same way tickers
+    are at load time (upper-cased and stripped).
+    """
+    cfg_path = Path(app_root) / "config.json"
+    if not cfg_path.exists():
+        return frozenset()
+    try:
+        cfg = json.loads(cfg_path.read_text())
+    except (json.JSONDecodeError, OSError):
+        return frozenset()
+    raw = cfg.get("excluded_tickers") or []
+    return frozenset(str(t).upper().strip() for t in raw if str(t).strip())
 
 
 def transactions_dir(app_root: Path) -> Path:
@@ -55,6 +78,9 @@ def load_tag(app_root: Path, tag: str) -> pd.DataFrame:
     if missing:
         raise ValueError(f"{path.name} missing columns: {missing}")
     df["ticker"] = df["ticker"].str.upper().str.strip()
+    excluded = excluded_tickers(app_root)
+    if excluded:
+        df = df[~df["ticker"].isin(excluded)].reset_index(drop=True)
     df["quantity"] = pd.to_numeric(df["quantity"])
     df["purchase_price"] = pd.to_numeric(df["purchase_price"])
     df["purchase_date"] = pd.to_datetime(df["purchase_date"])

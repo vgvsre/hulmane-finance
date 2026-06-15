@@ -47,8 +47,13 @@ AAPL buy in `may26.csv`.
 ```sh
 cd com/hulmane/stocks/us
 python3 -m venv .venv
-.venv/bin/pip install -r requirements.txt
+source .venv/bin/activate          # Windows: .venv\Scripts\activate
+pip install -r requirements.txt
 ```
+
+Once activated, you can drop the `.venv/bin/` prefix and just run `streamlit`,
+`python`, `pip`, etc. (the examples below keep the prefix so they work with or
+without activation). Run `deactivate` to leave the venv.
 
 ## Quick start — UI
 

@@ -31,6 +31,7 @@ from src import portfolio, pricing, report  # noqa: E402
 from src import media as media_mod  # noqa: E402
 from src import pipeline  # noqa: E402
 from src import tags as txn_tags  # noqa: E402
+from src import validation as txn_validation  # noqa: E402
 from src import performance as perf  # noqa: E402
 
 st.set_page_config(page_title="Hulmane US Stocks", layout="wide", page_icon="📈")
@@ -1160,6 +1161,51 @@ with tab_perf:
 
 
 # ─── TAB 4: Single stock detail ──────────────────────────────────────────────
+def _position_metrics(lots: pd.DataFrame, price: float) -> dict:
+    """Average-cost position accounting for a set of lots.
+
+    Acquisitions (buys + zero-cost split shares, qty > 0) define the average
+    cost; disposals (sells, qty < 0) realize P&L against that average. Using the
+    signed sum of cost_basis as "invested" is wrong once any shares are sold — a
+    fully-sold winner nets to a NEGATIVE cost basis, which made avg cost and
+    return% nonsensical (e.g. a profitable, fully-exited TSLA showing -100%).
+
+    Average cost includes split shares in the denominator, so the per-share cost
+    correctly drops after a split. Realized P&L uses the average-cost method.
+    """
+    acq = lots[lots["quantity"] > 0]
+    disp = lots[lots["quantity"] < 0]
+    acq_qty = float(acq["quantity"].sum())
+    acq_cost = float(acq["cost_basis"].sum())       # dollars paid for shares (>= 0)
+    sold_qty = float(-disp["quantity"].sum())        # shares sold (>= 0)
+    proceeds = float(-disp["cost_basis"].sum())      # sale proceeds (>= 0)
+
+    avg_cost = (acq_cost / acq_qty) if acq_qty else 0.0
+    net_qty = acq_qty - sold_qty
+    if abs(net_qty) < 1e-4:                           # rounding dust ⇒ fully closed
+        net_qty = 0.0
+
+    cost_of_sold = avg_cost * sold_qty
+    realized_pnl = proceeds - cost_of_sold
+    realized_pct = (realized_pnl / cost_of_sold * 100.0) if cost_of_sold > 0 else float("nan")
+
+    remaining_cost = avg_cost * net_qty               # cost basis still invested
+    current_value = (net_qty * price) if pd.notna(price) else float("nan")
+    unrealized_pnl = (current_value - remaining_cost) if pd.notna(current_value) else float("nan")
+    unrealized_pct = (unrealized_pnl / remaining_cost * 100.0
+                      if (pd.notna(unrealized_pnl) and remaining_cost > 0) else float("nan"))
+    total_pnl = realized_pnl + (unrealized_pnl if pd.notna(unrealized_pnl) else 0.0)
+
+    return {
+        "net_qty": net_qty, "avg_cost": avg_cost, "invested": remaining_cost,
+        "sold_qty": sold_qty, "proceeds": proceeds, "cost_of_sold": cost_of_sold,
+        "acq_cost": acq_cost, "current_value": current_value,
+        "realized_pnl": realized_pnl, "realized_pct": realized_pct,
+        "unrealized_pnl": unrealized_pnl, "unrealized_pct": unrealized_pct,
+        "total_pnl": total_pnl,
+    }
+
+
 def _render_single_stock(ticker: str) -> None:
     """Render the full per-stock view: header, metrics, LT/ST chips,
     per-account rollup, transactions, and scatter chart."""
@@ -1173,26 +1219,42 @@ def _render_single_stock(ticker: str) -> None:
     quotes = _quotes_for([ticker], live_mode)
     q = quotes.get(ticker)
 
-    net_qty = float(lots["quantity"].sum())
-    net_invested = float(lots["cost_basis"].sum())
-    avg_cost = (net_invested / net_qty) if net_qty else 0.0
     current_price = q.price if q else float("nan")
-    current_value = (net_qty * current_price) if pd.notna(current_price) else float("nan")
-    pnl = current_value - net_invested if pd.notna(current_value) else float("nan")
-    pct = (pnl / net_invested * 100.0) if (pd.notna(pnl) and net_invested) else float("nan")
-    n_buys = int((lots["quantity"] > 0).sum())
-    n_sells = int((lots["quantity"] < 0).sum())
+    m = _position_metrics(lots, current_price)
+    net_qty = m["net_qty"]
+    avg_cost = m["avg_cost"]
+    current_value = m["current_value"]
+    n_buys = int((lots["action"] == "Buy").sum())
+    n_sells = int((lots["action"] == "Sell").sum())
 
     mc = st.columns(6)
     mc[0].metric("Holding", f"{net_qty:,.4f}")
-    mc[1].metric("Invested", f"${net_invested:,.2f}")
-    mc[2].metric("Avg cost", f"${avg_cost:,.2f}")
+    mc[1].metric("Avg cost", f"${avg_cost:,.2f}",
+                 help="Total paid ÷ total shares acquired (split shares included).")
+    mc[2].metric("Invested", f"${m['invested']:,.2f}",
+                 help="Cost basis of shares still held (avg cost × holding).")
     mc[3].metric("Last price", f"${current_price:,.2f}" if pd.notna(current_price) else "—")
     mc[4].metric("Current value", f"${current_value:,.2f}" if pd.notna(current_value) else "—")
-    if pd.notna(pnl):
-        mc[5].metric("Unrealized P&L", f"${pnl:,.2f}", f"{pct:+.2f}%")
+    if net_qty > 0 and pd.notna(m["unrealized_pnl"]):
+        mc[5].metric("Unrealized P&L", f"${m['unrealized_pnl']:,.2f}",
+                     f"{m['unrealized_pct']:+.2f}%" if pd.notna(m["unrealized_pct"]) else None)
     else:
-        mc[5].metric("Unrealized P&L", "—")
+        mc[5].metric("Unrealized P&L", "—",
+                     help="No shares currently held." if net_qty == 0 else None)
+
+    # Realized P&L from sells (average-cost method) — only when something was sold.
+    if m["sold_qty"] > 0:
+        rc1, rc2 = st.columns([1, 5])
+        rc1.metric("Realized P&L", f"${m['realized_pnl']:,.2f}",
+                   f"{m['realized_pct']:+.2f}%" if pd.notna(m["realized_pct"]) else None)
+        rc2.caption(
+            f"Sold {m['sold_qty']:,.4f} sh for ${m['proceeds']:,.2f} against "
+            f"${m['cost_of_sold']:,.2f} cost ⇒ realized "
+            f"${m['realized_pnl']:,.2f}. Average-cost method; split shares fold "
+            "into the per-share cost. Total P&L (realized + unrealized): "
+            f"${m['total_pnl']:,.2f}."
+        )
+    pnl = m["total_pnl"]  # used by the LT/ST pill color below
 
     open_buys = lots[lots["quantity"] > 0]
     if "tax_term" in open_buys.columns and not open_buys.empty:
@@ -1212,29 +1274,24 @@ def _render_single_stock(ticker: str) -> None:
                 unsafe_allow_html=True,
             )
 
-    per_acct = (
-        lots.groupby(["broker", "account"], as_index=False)
-        .agg(qty=("quantity", "sum"),
-              invested=("cost_basis", "sum"),
-              buys=("action", lambda s: int((s == "Buy").sum())),
-              sells=("action", lambda s: int((s == "Sell").sum())),
-              first=("purchase_date", "min"),
-              last=("purchase_date", "max"))
-    )
-    per_acct["avg_cost"] = per_acct.apply(
-        lambda r: r["invested"] / r["qty"] if r["qty"] else 0.0, axis=1
-    )
-    if pd.notna(current_price):
-        per_acct["current_value"] = per_acct["qty"] * current_price
-        per_acct["pnl"] = per_acct["current_value"] - per_acct["invested"]
-        per_acct["pnl_pct"] = per_acct.apply(
-            lambda r: r["pnl"] / r["invested"] * 100.0 if r["invested"] else 0.0, axis=1
-        )
+    pa_rows = []
+    for (brk, acct), grp in lots.groupby(["broker", "account"]):
+        gm = _position_metrics(grp, current_price)
+        pa_rows.append({
+            "broker": brk, "account": acct,
+            "qty": gm["net_qty"], "avg_cost": gm["avg_cost"],
+            "invested": gm["invested"],
+            "buys": int((grp["action"] == "Buy").sum()),
+            "sells": int((grp["action"] == "Sell").sum()),
+            "first": grp["purchase_date"].min(), "last": grp["purchase_date"].max(),
+            "current_value": gm["current_value"],
+            "unrealized": gm["unrealized_pnl"], "realized": gm["realized_pnl"],
+        })
+    per_acct = pd.DataFrame(pa_rows)
     st.subheader("Per-account holdings")
     cols_pa = ["broker", "account", "qty", "avg_cost", "invested",
-               "buys", "sells", "first", "last"]
-    if "current_value" in per_acct.columns:
-        cols_pa += ["current_value", "pnl", "pnl_pct"]
+               "buys", "sells", "first", "last",
+               "current_value", "unrealized", "realized"]
     st.dataframe(
         per_acct[cols_pa],
         hide_index=True,
@@ -1244,8 +1301,8 @@ def _render_single_stock(ticker: str) -> None:
             "avg_cost": st.column_config.NumberColumn("Avg cost", format="$%.2f"),
             "invested": st.column_config.NumberColumn("Invested", format="$%.2f"),
             "current_value": st.column_config.NumberColumn("Current", format="$%.2f"),
-            "pnl": st.column_config.NumberColumn("P&L", format="$%.2f"),
-            "pnl_pct": st.column_config.NumberColumn("P&L %", format="%.2f%%"),
+            "unrealized": st.column_config.NumberColumn("Unrealized P&L", format="$%.2f"),
+            "realized": st.column_config.NumberColumn("Realized P&L", format="$%.2f"),
             "first": st.column_config.DateColumn("First", format="YYYY-MM-DD"),
             "last": st.column_config.DateColumn("Last", format="YYYY-MM-DD"),
             "buys": st.column_config.NumberColumn("Buys"),
@@ -1254,30 +1311,122 @@ def _render_single_stock(ticker: str) -> None:
     )
 
     st.subheader("All transactions")
-    cols_tx = ["purchase_date", "action", "quantity", "purchase_price",
-               "cost_basis", "broker", "account", "tag"]
-    if "tax_term" in lots.columns:
-        cols_tx.append("tax_term")
-    tx_show = lots[cols_tx].rename(columns={
-        "purchase_date": "Date", "action": "Action", "quantity": "Qty",
-        "purchase_price": "Price", "cost_basis": "Cost",
-        "broker": "Broker", "account": "Account",
-        "tag": "Tag", "tax_term": "Tax term",
-    })
 
-    def _row_color_tx(row):
-        bg = "rgba(16,185,129,0.08)" if row["Action"] == "Buy" else "rgba(239,68,68,0.08)"
-        return [f"background-color: {bg}"] * len(row)
+    validated = txn_validation.load(APP_ROOT)
 
-    styler_tx = (
-        tx_show.style
-        .apply(_row_color_tx, axis=1)
-        .format({"Qty": "{:+.4f}", "Price": "${:,.4f}", "Cost": "${:,.2f}"})
-    )
-    st.dataframe(
-        styler_tx, hide_index=True, use_container_width=True,
-        column_config={"Date": st.column_config.DateColumn(format="YYYY-MM-DD")},
-    )
+    # ── Filters (account / broker / action / date / quantity / amount / validation) ──
+    fl = lots.copy()
+    fl["_amount"] = (fl["quantity"] * fl["purchase_price"]).abs()
+    dmin = fl["purchase_date"].min().date()
+    dmax = fl["purchase_date"].max().date()
+    with st.expander("Filters", expanded=False):
+        fr1, fr2, fr3 = st.columns(3)
+        accts = sorted(fl["account"].dropna().unique().tolist())
+        brks = sorted(fl["broker"].dropna().unique().tolist())
+        sel_acct = fr1.multiselect("Accounts", accts, default=[], key=f"ss_acct_{ticker}")
+        sel_brk = fr2.multiselect("Brokers", brks, default=[], key=f"ss_brk_{ticker}")
+        sel_action = fr3.radio("Action", ["All", "Buy", "Sell"], horizontal=True,
+                               key=f"ss_action_{ticker}")
+
+        dr1, dr2, dr3 = st.columns([1, 1, 1])
+        d_start = dr1.date_input("From", value=dmin, min_value=dmin, max_value=dmax,
+                                 key=f"ss_start_{ticker}")
+        d_end = dr2.date_input("To", value=dmax, min_value=dmin, max_value=dmax,
+                               key=f"ss_end_{ticker}")
+        val_choice = dr3.radio("Validation", ["All", "Validated", "Not validated"],
+                               key=f"ss_val_{ticker}")
+
+        st.caption("Quantity & amount filter by absolute size, so sells (stored "
+                   "negative) match by magnitude. Leave a bound at 0 to disable it.")
+        rr1, rr2, rr3, rr4 = st.columns(4)
+        q_lo = rr1.number_input("Min qty (shares)", min_value=0.0, value=0.0,
+                                step=1.0, key=f"ss_qlo_{ticker}")
+        q_hi = rr2.number_input("Max qty (0 = no max)", min_value=0.0, value=0.0,
+                                step=1.0, key=f"ss_qhi_{ticker}")
+        a_lo = rr3.number_input("Min amount ($)", min_value=0.0, value=0.0,
+                                step=100.0, key=f"ss_alo_{ticker}")
+        a_hi = rr4.number_input("Max amount (0 = no max)", min_value=0.0, value=0.0,
+                                step=100.0, key=f"ss_ahi_{ticker}")
+
+    mask = pd.Series(True, index=fl.index)
+    if sel_acct:
+        mask &= fl["account"].isin(sel_acct)
+    if sel_brk:
+        mask &= fl["broker"].isin(sel_brk)
+    if sel_action != "All":
+        mask &= fl["action"] == sel_action
+    mask &= fl["purchase_date"] >= pd.Timestamp(d_start)
+    mask &= fl["purchase_date"] <= pd.Timestamp(d_end) + pd.Timedelta(days=1)
+    if q_lo > 0:
+        mask &= fl["quantity"].abs() >= q_lo
+    if q_hi > 0:
+        mask &= fl["quantity"].abs() <= q_hi
+    if a_lo > 0:
+        mask &= fl["_amount"] >= a_lo
+    if a_hi > 0:
+        mask &= fl["_amount"] <= a_hi
+    if "txn_id" in fl.columns:
+        if val_choice == "Validated":
+            mask &= fl["txn_id"].isin(validated)
+        elif val_choice == "Not validated":
+            mask &= ~fl["txn_id"].isin(validated)
+    fl = fl[mask]
+    st.caption(f"{len(fl):,} of {len(lots):,} transactions match.")
+
+    if fl.empty:
+        st.info("No transactions match the current filters.")
+    else:
+        cols_tx = ["purchase_date", "action", "quantity", "purchase_price",
+                   "cost_basis", "broker", "account", "tag"]
+        if "tax_term" in fl.columns:
+            cols_tx.append("tax_term")
+        tx_show = fl[cols_tx].rename(columns={
+            "purchase_date": "Date", "action": "Action", "quantity": "Qty",
+            "purchase_price": "Price", "cost_basis": "Cost",
+            "broker": "Broker", "account": "Account",
+            "tag": "Tag", "tax_term": "Tax term",
+        })
+
+        # ── Manual validation: a permanent per-transaction "confirmed correct" tick.
+        # Keyed by the rebuild-stable txn_id and saved to data/_txn_validation.json,
+        # so ticks survive restarts and the ground-zero rebuild of data/formated.
+        val_ids = (fl["txn_id"].tolist() if "txn_id" in fl.columns
+                   else [""] * len(fl))
+        tx_show.insert(0, "Validated", [vid in validated for vid in val_ids])
+
+        n_done = sum(1 for vid in val_ids if vid in validated)
+        vc1, vc2 = st.columns([3, 1])
+        vc1.caption(
+            "Tick **Validated** once you've manually confirmed a transaction against "
+            "the broker statement, then click *Save validation*. Ticks are permanent — "
+            "stored in data/_txn_validation.json and re-attached after every rebuild."
+        )
+        vc2.metric("Validated (in view)", f"{n_done}/{len(val_ids)}")
+
+        locked_tx = [c for c in tx_show.columns if c != "Validated"]
+        edited_tx = st.data_editor(
+            tx_show, hide_index=True, use_container_width=True,
+            num_rows="fixed", disabled=locked_tx,
+            key=f"single_val_editor_{ticker}",
+            column_config={
+                "Validated": st.column_config.CheckboxColumn(
+                    "Validated",
+                    help="Manually confirmed correct. Permanent across rebuilds.",
+                    width="small"),
+                "Date": st.column_config.DateColumn(format="YYYY-MM-DD"),
+                "Qty": st.column_config.NumberColumn(format="%+.4f"),
+                "Price": st.column_config.NumberColumn(format="$%.4f"),
+                "Cost": st.column_config.NumberColumn(format="$%.2f"),
+            },
+        )
+        if st.button("💾 Save validation", type="primary",
+                     key=f"single_val_save_{ticker}",
+                     disabled=not any(val_ids)):
+            for vid, is_val in zip(val_ids, edited_tx["Validated"].tolist()):
+                txn_validation.set_for(validated, vid, bool(is_val))
+            txn_validation.save(APP_ROOT, validated)
+            st.success("Validation saved.")
+            st.rerun()
 
     if len(lots) > 1:
         scatter_df = lots.assign(
@@ -1450,7 +1599,7 @@ with tab_tx:
         # Cash totals exclude share transfers and corporate-action distributions
         # (e.g. stock splits) — those are real rows in the ledger but not cash.
         if "row_type" in view.columns:
-            cash = view[~view["row_type"].isin(["transfer", "distribution", "position"])]
+            cash = view[~view["row_type"].isin(["transfer", "distribution", "position", "split"])]
         else:
             cash = view
         bought = cash.loc[cash["quantity"] > 0, "amount"].sum()
@@ -1541,7 +1690,7 @@ with tab_tx:
                     sub = trades[trades["txn_id"].isin(tids)].copy()
                     sub["amount"] = sub["quantity"] * sub["purchase_price"]
                     if "row_type" in sub.columns:
-                        c = sub[~sub["row_type"].isin(["transfer", "distribution", "position"])]
+                        c = sub[~sub["row_type"].isin(["transfer", "distribution", "position", "split"])]
                     else:
                         c = sub
                     rows.append({

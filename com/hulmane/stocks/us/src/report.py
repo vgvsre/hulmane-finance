@@ -204,7 +204,7 @@ def monthly_activity(transactions: pd.DataFrame) -> pd.DataFrame:
         # Keep only real purchases. Exclude position snapshots (dated the export
         # day), share transfers, and corporate-action distributions (e.g. stock
         # splits) — they move/create shares but are not invested cash.
-        df = df[~df["row_type"].isin(["position", "transfer", "distribution"])]
+        df = df[~df["row_type"].isin(["position", "transfer", "distribution", "split"])]
     if not pd.api.types.is_datetime64_any_dtype(df["purchase_date"]):
         df["purchase_date"] = pd.to_datetime(df["purchase_date"])
     if "cost_basis" not in df.columns:
@@ -233,7 +233,7 @@ def yearly_activity(transactions: pd.DataFrame) -> pd.DataFrame:
         return pd.DataFrame(columns=cols)
     df = transactions.copy()
     if "row_type" in df.columns:
-        df = df[~df["row_type"].isin(["position", "transfer", "distribution"])]
+        df = df[~df["row_type"].isin(["position", "transfer", "distribution", "split"])]
     if not pd.api.types.is_datetime64_any_dtype(df["purchase_date"]):
         df["purchase_date"] = pd.to_datetime(df["purchase_date"])
     if "cost_basis" not in df.columns:

@@ -1,0 +1,555 @@
+[
+  {
+    "account_no": "575947536",
+    "nickname": "Venu Main",
+    "symbol": "INTC",
+    "quantity": 12.010187,
+    "average_buy_price": 45.49
+  },
+  {
+    "account_no": "575947536",
+    "nickname": "Venu Main",
+    "symbol": "AMD",
+    "quantity": 29.010961,
+    "average_buy_price": 296.79
+  },
+  {
+    "account_no": "575947536",
+    "nickname": "Venu Main",
+    "symbol": "MSFT",
+    "quantity": 27.120823,
+    "average_buy_price": 370.72
+  },
+  {
+    "account_no": "575947536",
+    "nickname": "Venu Main",
+    "symbol": "AMAT",
+    "quantity": 2.728408,
+    "average_buy_price": 191.87
+  },
+  {
+    "account_no": "575947536",
+    "nickname": "Venu Main",
+    "symbol": "VRTX",
+    "quantity": 1.0,
+    "average_buy_price": 245.14
+  },
+  {
+    "account_no": "575947536",
+    "nickname": "Venu Main",
+    "symbol": "GOOGL",
+    "quantity": 0.579106,
+    "average_buy_price": 362.63
+  },
+  {
+    "account_no": "575947536",
+    "nickname": "Venu Main",
+    "symbol": "META",
+    "quantity": 0.183276,
+    "average_buy_price": 277.5
+  },
+  {
+    "account_no": "575947536",
+    "nickname": "Venu Main",
+    "symbol": "NFLX",
+    "quantity": 11.085127,
+    "average_buy_price": 68.56
+  },
+  {
+    "account_no": "575947536",
+    "nickname": "Venu Main",
+    "symbol": "MDB",
+    "quantity": 0.133022,
+    "average_buy_price": 375.88
+  },
+  {
+    "account_no": "575947536",
+    "nickname": "Venu Main",
+    "symbol": "JPM",
+    "quantity": 0.223518,
+    "average_buy_price": 310.44
+  },
+  {
+    "account_no": "575947536",
+    "nickname": "Venu Main",
+    "symbol": "CSCO",
+    "quantity": 1.785835,
+    "average_buy_price": 61.11
+  },
+  {
+    "account_no": "575947536",
+    "nickname": "Venu Main",
+    "symbol": "WMT",
+    "quantity": 76.266449,
+    "average_buy_price": 61.13
+  },
+  {
+    "account_no": "575947536",
+    "nickname": "Venu Main",
+    "symbol": "ORCL",
+    "quantity": 0.302791,
+    "average_buy_price": 165.13
+  },
+  {
+    "account_no": "575947536",
+    "nickname": "Venu Main",
+    "symbol": "NVDA",
+    "quantity": 1.001246,
+    "average_buy_price": 144.02
+  },
+  {
+    "account_no": "575947536",
+    "nickname": "Venu Main",
+    "symbol": "JNJ",
+    "quantity": 0.426803,
+    "average_buy_price": 163.87
+  },
+  {
+    "account_no": "575947536",
+    "nickname": "Venu Main",
+    "symbol": "GS",
+    "quantity": 0.432879,
+    "average_buy_price": 741.73
+  },
+  {
+    "account_no": "575947536",
+    "nickname": "Venu Main",
+    "symbol": "RTX",
+    "quantity": 11.692027,
+    "average_buy_price": 191.84
+  },
+  {
+    "account_no": "575947536",
+    "nickname": "Venu Main",
+    "symbol": "EA",
+    "quantity": 1.021214,
+    "average_buy_price": 140.69
+  },
+  {
+    "account_no": "575947536",
+    "nickname": "Venu Main",
+    "symbol": "NOC",
+    "quantity": 0.155934,
+    "average_buy_price": 648.8
+  },
+  {
+    "account_no": "575947536",
+    "nickname": "Venu Main",
+    "symbol": "BRK.B",
+    "quantity": 0.207963,
+    "average_buy_price": 480.85
+  },
+  {
+    "account_no": "575947536",
+    "nickname": "Venu Main",
+    "symbol": "VOO",
+    "quantity": 0.169918,
+    "average_buy_price": 594.23
+  },
+  {
+    "account_no": "575947536",
+    "nickname": "Venu Main",
+    "symbol": "BLK",
+    "quantity": 0.378595,
+    "average_buy_price": 1121.3
+  },
+  {
+    "account_no": "575947536",
+    "nickname": "Venu Main",
+    "symbol": "UNH",
+    "quantity": 1.767555,
+    "average_buy_price": 343.47
+  },
+  {
+    "account_no": "575947536",
+    "nickname": "Venu Main",
+    "symbol": "PLTR",
+    "quantity": 0.333108,
+    "average_buy_price": 150.1
+  },
+  {
+    "account_no": "575947536",
+    "nickname": "Venu Main",
+    "symbol": "ASML",
+    "quantity": 4.480512,
+    "average_buy_price": 1440.34
+  },
+  {
+    "account_no": "575947536",
+    "nickname": "Venu Main",
+    "symbol": "ASTS",
+    "quantity": 13.926961,
+    "average_buy_price": 107.89
+  },
+  {
+    "account_no": "575947536",
+    "nickname": "Venu Main",
+    "symbol": "RKLB",
+    "quantity": 6.767116,
+    "average_buy_price": 90.14
+  },
+  {
+    "account_no": "575947536",
+    "nickname": "Venu Main",
+    "symbol": "PL",
+    "quantity": 4.059628,
+    "average_buy_price": 24.63
+  },
+  {
+    "account_no": "575947536",
+    "nickname": "Venu Main",
+    "symbol": "KTOS",
+    "quantity": 1.71702,
+    "average_buy_price": 116.48
+  },
+  {
+    "account_no": "575947536",
+    "nickname": "Venu Main",
+    "symbol": "SNDK",
+    "quantity": 3.344696,
+    "average_buy_price": 1064.37
+  },
+  {
+    "account_no": "575947536",
+    "nickname": "Venu Main",
+    "symbol": "ATRO",
+    "quantity": 2.615801,
+    "average_buy_price": 63.22
+  },
+  {
+    "account_no": "575947536",
+    "nickname": "Venu Main",
+    "symbol": "BE",
+    "quantity": 1.0,
+    "average_buy_price": 148.15
+  },
+  {
+    "account_no": "575947536",
+    "nickname": "Venu Main",
+    "symbol": "IREN",
+    "quantity": 1.80511,
+    "average_buy_price": 55.4
+  },
+  {
+    "account_no": "575947536",
+    "nickname": "Venu Main",
+    "symbol": "HOOD",
+    "quantity": 1.140514,
+    "average_buy_price": 96.45
+  },
+  {
+    "account_no": "575947536",
+    "nickname": "Venu Main",
+    "symbol": "RDDT",
+    "quantity": 0.220123,
+    "average_buy_price": 227.15
+  },
+  {
+    "account_no": "575947536",
+    "nickname": "Venu Main",
+    "symbol": "QBTS",
+    "quantity": 3.696174,
+    "average_buy_price": 27.06
+  },
+  {
+    "account_no": "575947536",
+    "nickname": "Venu Main",
+    "symbol": "RGTI",
+    "quantity": 1.0,
+    "average_buy_price": 24.96
+  },
+  {
+    "account_no": "575947536",
+    "nickname": "Venu Main",
+    "symbol": "SLV",
+    "quantity": 8.177929,
+    "average_buy_price": 74.59
+  },
+  {
+    "account_no": "575947536",
+    "nickname": "Venu Main",
+    "symbol": "IAU",
+    "quantity": 5.331016,
+    "average_buy_price": 93.79
+  },
+  {
+    "account_no": "575947536",
+    "nickname": "Venu Main",
+    "symbol": "COPX",
+    "quantity": 28.307759,
+    "average_buy_price": 89.28
+  },
+  {
+    "account_no": "575947536",
+    "nickname": "Venu Main",
+    "symbol": "URA",
+    "quantity": 9.440783,
+    "average_buy_price": 52.96
+  },
+  {
+    "account_no": "575947536",
+    "nickname": "Venu Main",
+    "symbol": "CAT",
+    "quantity": 2.509199,
+    "average_buy_price": 682.93
+  },
+  {
+    "account_no": "575947536",
+    "nickname": "Venu Main",
+    "symbol": "TCGL",
+    "quantity": 0.050625,
+    "average_buy_price": 192.0
+  },
+  {
+    "account_no": "575947536",
+    "nickname": "Venu Main",
+    "symbol": "CCJ",
+    "quantity": 0.826468,
+    "average_buy_price": 121.0
+  },
+  {
+    "account_no": "575947536",
+    "nickname": "Venu Main",
+    "symbol": "LEU",
+    "quantity": 0.748685,
+    "average_buy_price": 267.14
+  },
+  {
+    "account_no": "575947536",
+    "nickname": "Venu Main",
+    "symbol": "UUUU",
+    "quantity": 2.35054,
+    "average_buy_price": 21.27
+  },
+  {
+    "account_no": "575947536",
+    "nickname": "Venu Main",
+    "symbol": "UEC",
+    "quantity": 3.079765,
+    "average_buy_price": 16.24
+  },
+  {
+    "account_no": "575947536",
+    "nickname": "Venu Main",
+    "symbol": "CVX",
+    "quantity": 1.687658,
+    "average_buy_price": 180.71
+  },
+  {
+    "account_no": "575947536",
+    "nickname": "Venu Main",
+    "symbol": "SLB",
+    "quantity": 1.048038,
+    "average_buy_price": 48.3
+  },
+  {
+    "account_no": "575947536",
+    "nickname": "Venu Main",
+    "symbol": "VLO",
+    "quantity": 0.561759,
+    "average_buy_price": 180.4
+  },
+  {
+    "account_no": "575947536",
+    "nickname": "Venu Main",
+    "symbol": "ADPT",
+    "quantity": 2.727768,
+    "average_buy_price": 18.33
+  },
+  {
+    "account_no": "575947536",
+    "nickname": "Venu Main",
+    "symbol": "GH",
+    "quantity": 0.43599,
+    "average_buy_price": 114.68
+  },
+  {
+    "account_no": "575947536",
+    "nickname": "Venu Main",
+    "symbol": "WDC",
+    "quantity": 1.23879,
+    "average_buy_price": 331.21
+  },
+  {
+    "account_no": "575947536",
+    "nickname": "Venu Main",
+    "symbol": "MU",
+    "quantity": 4.961349,
+    "average_buy_price": 647.05
+  },
+  {
+    "account_no": "575947536",
+    "nickname": "Venu Main",
+    "symbol": "STX",
+    "quantity": 0.82023,
+    "average_buy_price": 500.51
+  },
+  {
+    "account_no": "575947536",
+    "nickname": "Venu Main",
+    "symbol": "GOLD",
+    "quantity": 14.63906,
+    "average_buy_price": 49.82
+  },
+  {
+    "account_no": "575947536",
+    "nickname": "Venu Main",
+    "symbol": "LRCX",
+    "quantity": 0.712588,
+    "average_buy_price": 294.85
+  },
+  {
+    "account_no": "575947536",
+    "nickname": "Venu Main",
+    "symbol": "TSM",
+    "quantity": 1.689313,
+    "average_buy_price": 355.91
+  },
+  {
+    "account_no": "575947536",
+    "nickname": "Venu Main",
+    "symbol": "NOK",
+    "quantity": 14.579485,
+    "average_buy_price": 6.83
+  },
+  {
+    "account_no": "575947536",
+    "nickname": "Venu Main",
+    "symbol": "PEN",
+    "quantity": 0.139731,
+    "average_buy_price": 357.83
+  },
+  {
+    "account_no": "575947536",
+    "nickname": "Venu Main",
+    "symbol": "MOH",
+    "quantity": 0.276717,
+    "average_buy_price": 180.69
+  },
+  {
+    "account_no": "575947536",
+    "nickname": "Venu Main",
+    "symbol": "RIVN",
+    "quantity": 1.187655,
+    "average_buy_price": 16.84
+  },
+  {
+    "account_no": "575947536",
+    "nickname": "Venu Main",
+    "symbol": "SLAB",
+    "quantity": 0.194908,
+    "average_buy_price": 207.79
+  },
+  {
+    "account_no": "575947536",
+    "nickname": "Venu Main",
+    "symbol": "NBIS",
+    "quantity": 22.296305,
+    "average_buy_price": 263.58
+  },
+  {
+    "account_no": "575947536",
+    "nickname": "Venu Main",
+    "symbol": "MRVL",
+    "quantity": 3.537318,
+    "average_buy_price": 282.7
+  },
+  {
+    "account_no": "575947536",
+    "nickname": "Venu Main",
+    "symbol": "SPCX",
+    "quantity": 4.480276,
+    "average_buy_price": 177.44
+  },
+  {
+    "account_no": "575947536",
+    "nickname": "Venu Main",
+    "symbol": "ALAB",
+    "quantity": 1.189189,
+    "average_buy_price": 370.0
+  },
+  {
+    "account_no": "575947536",
+    "nickname": "Venu Main",
+    "symbol": "CRWV",
+    "quantity": 1.061673,
+    "average_buy_price": 103.61
+  },
+  {
+    "account_no": "632375721",
+    "nickname": "Hulmane",
+    "symbol": "GOOGL",
+    "quantity": 50.990215,
+    "average_buy_price": 131.64
+  },
+  {
+    "account_no": "632375721",
+    "nickname": "Hulmane",
+    "symbol": "AMZN",
+    "quantity": 52.828052,
+    "average_buy_price": 145.75
+  },
+  {
+    "account_no": "632375721",
+    "nickname": "Hulmane",
+    "symbol": "AAPL",
+    "quantity": 46.094306,
+    "average_buy_price": 166.79
+  },
+  {
+    "account_no": "632375721",
+    "nickname": "Hulmane",
+    "symbol": "MSFT",
+    "quantity": 25.796648,
+    "average_buy_price": 294.56
+  },
+  {
+    "account_no": "632375721",
+    "nickname": "Hulmane",
+    "symbol": "AVGO",
+    "quantity": 19.133857,
+    "average_buy_price": 168.33
+  },
+  {
+    "account_no": "632375721",
+    "nickname": "Hulmane",
+    "symbol": "NVDA",
+    "quantity": 158.185771,
+    "average_buy_price": 34.89
+  },
+  {
+    "account_no": "632375721",
+    "nickname": "Hulmane",
+    "symbol": "BLK",
+    "quantity": 5.642094,
+    "average_buy_price": 773.15
+  },
+  {
+    "account_no": "632375721",
+    "nickname": "Hulmane",
+    "symbol": "JPM",
+    "quantity": 12.770093,
+    "average_buy_price": 201.33
+  },
+  {
+    "account_no": "632375721",
+    "nickname": "Hulmane",
+    "symbol": "GS",
+    "quantity": 0.56039,
+    "average_buy_price": 900.21
+  },
+  {
+    "account_no": "756962569",
+    "nickname": "VMware",
+    "symbol": "AVGO",
+    "quantity": 875.815596,
+    "average_buy_price": 4.36
+  },
+  {
+    "account_no": "756962569",
+    "nickname": "VMware",
+    "symbol": "NBIS",
+    "quantity": 2.0,
+    "average_buy_price": 175.88
+  }
+]

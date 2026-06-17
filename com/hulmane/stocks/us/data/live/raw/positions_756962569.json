@@ -1,0 +1,16 @@
+{
+"data": {
+"positions": [
+{
+"symbol": "AVGO",
+"quantity": "875.815596",
+"average_buy_price": "4.36"
+},
+{
+"symbol": "NBIS",
+"quantity": "2.000000",
+"average_buy_price": "175.88"
+}
+]
+}
+}

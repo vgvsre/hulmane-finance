@@ -1,154 +1,97 @@
 # Hulmane — US Stocks
 
-Python app for tracking US-market stock investments across multiple brokers
-(Fidelity, E*Trade, Robinhood, …) with **tag-based cohorts** so you can see
-how each batch of investments performs without merging older buys with newer
-ones.
+Streamlit dashboard for tracking the **Venu Robinhood** US-stock accounts, fed
+by a **live Robinhood snapshot** and live Yahoo Finance prices. Runs in a
+container on **port 8182**.
+
+## How live data works
+
+The Robinhood MCP connector is only reachable by the Claude agent, **not** by
+the running app. So the data flow is:
+
+```
+Robinhood MCP (agent) ──▶ data/live/raw/*.json   (positions + orders, 4 Venu accounts)
+        │  python app.py snapshot
+        ▼
+   data/formated/robinhood.csv   transaction ledger (buys/sells/splits/DRIP)
+   data/live/positions.json      current holdings + Robinhood average cost
+        │  python history.py     (daily closes via yfinance)
+        ▼
+   data/history/close_prices.csv
+        ▼
+   dashboard (container) reads the files + fetches live prices from Yahoo
+```
+
+- **Holdings & returns** use `positions.json` (Robinhood average cost) — correct
+  even for shares transferred in from another account.
+- **Activity & the Transactions page** use the order ledger. Shares transferred
+  in have no buy row, so "invested by year" can understate them (flagged in-app).
+- To refresh Robinhood data, ask the agent to re-pull and run `python app.py
+  snapshot`; the container picks it up via the bind-mounted `data/` dir.
 
 ## Layout
 
 ```
 us/
-├── app.py              # CLI entry
-├── dashboard.py        # Streamlit UI
-├── requirements.txt
+├── app.py              # CLI: snapshot / price / report / dashboard
+├── dashboard.py        # Streamlit UI (Home / Transactions / Single stock)
+├── Dockerfile, docker-compose.yml
+├── config.json         # history start date, excluded_tickers
 ├── data/
-│   ├── transactions/   # one CSV per tag — the app reads these
-│   │   ├── jan26.csv
-│   │   └── fidelity_may26.csv
-│   ├── fedility/       # raw Fidelity exports go here (then run import-fidelity)
-│   └── robinhood/      # raw Robinhood exports go here (then run import-robinhood)
-├── reports/            # CSV + chart output (auto-created)
+│   ├── live/raw/       # raw MCP dumps (orders_*, positions_*, splits.json)
+│   ├── live/           # positions.json, _refreshed_at.json
+│   ├── formated/       # robinhood.csv (the ledger the app reads)
+│   ├── history/        # close_prices.csv
+│   ├── _txn_tags.json  # per-transaction tags (survive refreshes)
+│   └── _price_cache.json
 └── src/
-    ├── pricing.py      # yfinance wrapper for live prices
-    ├── portfolio.py    # tagged-CSV loader
-    ├── report.py       # per-tag P&L
-    ├── visualize.py    # matplotlib charts
-    └── importers/
-        ├── fidelity.py  # Fidelity Portfolio Positions importer
-        └── robinhood.py # Robinhood transaction-history importer
+    ├── snapshot.py     # raw MCP dumps -> ledger + positions
+    ├── portfolio.py    # ledger + positions loaders
+    ├── pricing.py      # yfinance prices (disk-cached)
+    ├── report.py       # activity aggregations
+    ├── performance.py  # yearly returns + portfolio-vs-market
+    ├── tags.py         # transaction tagging
+    └── media.py        # ticker logos / auto-icons
 ```
 
-## CSV schema (per tag)
-
-Each file `data/transactions/<tag>.csv` represents one cohort. **Filename stem
-becomes the tag.** Required columns:
-
-```
-ticker,quantity,purchase_price,purchase_date,broker
-AAPL,10,185.50,2026-01-08,fidelity
-```
-
-Tags are kept distinct: an AAPL buy in `jan26.csv` is *not* averaged with an
-AAPL buy in `may26.csv`.
-
-## First-time setup
+## Run with Docker (port 8182)
 
 ```sh
 cd com/hulmane/stocks/us
-python3 -m venv .venv
-source .venv/bin/activate          # Windows: .venv\Scripts\activate
-pip install -r requirements.txt
+docker compose up -d --build
+# open http://localhost:8182
 ```
 
-Once activated, you can drop the `.venv/bin/` prefix and just run `streamlit`,
-`python`, `pip`, etc. (the examples below keep the prefix so they work with or
-without activation). Run `deactivate` to leave the venv.
+`data/` is bind-mounted, so after a fresh snapshot the running container shows it
+on the next refresh — no rebuild needed.
 
-## Quick start — UI
+## Run locally (no Docker)
 
-1. **Start the dashboard** (defaults to port 8501; pass `--server.port` to override):
-
-   ```sh
-   cd com/hulmane/stocks/us
-   .venv/bin/streamlit run dashboard.py --server.port 44551
-   ```
-
-   You'll see:
-
-   ```
-   You can now view your Streamlit app in your browser.
-   Local URL:   http://localhost:44551
-   ```
-
-2. **Open it in your browser:** http://localhost:44551
-3. **Stop the server:** `Ctrl+C` in the terminal.
-
-### Dashboard tabs
-
-| Tab               | What it does                                                                |
-|-------------------|-----------------------------------------------------------------------------|
-| **Upload**        | Drop a tagged CSV (filename stem = tag) into `data/transactions/`           |
-| **All-tag summary** | Live cross-tag P&L: invested vs current value, % return per cohort        |
-| **Tag detail**    | Per-position breakdown for one tag, with pie chart and CSV report export    |
-| **Stocks performance** | Best→worst ranking by annualized return (Good ≥ +20%/yr · Average 0–20% · Poor < 0%), per-stock yearly returns, decision quality vs the S&P 500, and a lump-sum vs monthly-DCA simulator |
-| **Live price**    | Ad-hoc `yfinance` lookup for any US ticker(s)                               |
-
-> The **Stocks performance** tab needs the daily close-price history. Build it
-> once (and refresh periodically) with:
-> ```sh
-> .venv/bin/python history.py
-> ```
-> This writes `data/history/close_prices.csv` (EOD closes for every portfolio
-> ticker since the `start_date` in `config.json`, default 2019-06-01). The
-> ranking annualizes only holdings held ≥ 1 year; newer positions are shown with
-> total return only.
-
-> Live prices need outbound HTTPS to `query1.finance.yahoo.com` and
-> `query2.finance.yahoo.com`. If you're inside a sandbox/proxy that blocks
-> Yahoo Finance, you'll see "possibly delisted" errors and prices come back
-> as NaN — allowlist those hosts (or run outside the sandbox).
+```sh
+cd com/hulmane/stocks/us
+python3 -m venv .venv && source .venv/bin/activate
+pip install -r requirements.txt
+python app.py snapshot        # build data files from data/live/raw
+python history.py             # refresh close-price history (needs Yahoo access)
+streamlit run dashboard.py    # serves on 8182 (see .streamlit/config.toml)
+```
 
 ## CLI
 
 ```sh
-.venv/bin/python app.py list-tags
-.venv/bin/python app.py price AAPL MSFT NVDA
-.venv/bin/python app.py report                          # cross-tag summary
-.venv/bin/python app.py report fidelity_may26           # detail for one tag
-.venv/bin/python app.py viz                             # cross-tag charts
-.venv/bin/python app.py viz fidelity_may26              # holdings breakdown
-.venv/bin/python app.py upload my_export.csv may26      # generic CSV upload
-.venv/bin/python app.py import-fidelity data/fedility fidelity_may26
-.venv/bin/python app.py import-robinhood data/robinhood/<file>.csv robinhood_may26
-.venv/bin/python app.py dashboard                       # launches Streamlit
+python app.py snapshot                 # rebuild ledger + positions from data/live/raw
+python app.py price AAPL MSFT NVDA     # ad-hoc live quote
+python app.py report                   # tag P&L summary
+python app.py dashboard                # launch Streamlit
 ```
 
-Reports and charts land in `reports/` (CSV) and `reports/charts/` (PNG).
+## Dashboard tabs
 
-## Importing Fidelity exports
+| Tab             | What it shows |
+|-----------------|---------------|
+| **Home**        | Headline metrics, investment heatmap, invested-vs-sold by year, portfolio-vs-market since 2019, holdings, and how each stock returned year-by-year |
+| **Transactions**| Full buy/sell/split/DRIP ledger with per-transaction tags + a tag-based cash report |
+| **Single stock**| Current position (avg cost, value, unrealized P&L) + full transaction history for one ticker |
 
-Drop the Fidelity *Portfolio Positions* CSV(s) into `data/fedility/`, then:
-
-```sh
-.venv/bin/python app.py import-fidelity data/fedility fidelity_may26
-```
-
-You can pass either a single file or the whole directory. The importer:
-- handles UTF-8 BOM and trailing-comma rows Fidelity emits
-- maps `Symbol → ticker`, `Quantity → quantity`, `Average Cost Basis → purchase_price`
-- parses the export date from the filename (`May-28-2026` → `2026-05-28`)
-- treats cash sweeps (FCASH, FDRXX, SPAXX, …) as $1.00 with no P&L
-
-## Importing Robinhood exports
-
-Drop the Robinhood *Account Activity* CSV into `data/robinhood/`, then:
-
-```sh
-.venv/bin/python app.py import-robinhood data/robinhood/<file>.csv robinhood_may26
-```
-
-Robinhood exports are full **transaction histories** (one row per event), not
-position snapshots. The importer:
-- emits one row per `Buy` (positive qty) and `Sell` (negative qty), so each
-  cohort's `purchase_date` and `purchase_price` are preserved exactly as they
-  occurred — sells naturally net out the cost basis
-- handles multi-line cells (Robinhood embeds `CUSIP:` lines inside Description)
-- skips, with a printed summary, all non-trade events:
-  - `CDIV`, `DTAX`, `DFEE`, `SLIP` — dividend / lending cash
-  - `ACH`, `RTP`, `ABIP` — bank transfers / promo cash
-  - `ITRF` — internal Robinhood transfers
-  - `ACATI` — incoming ACAT shares (no Robinhood-side cost basis)
-
-If you want ACAT-transferred holdings tracked, look up their cost basis at the
-prior broker and add a separate tagged CSV for them.
+> Live prices need outbound HTTPS to `query1/query2.finance.yahoo.com`. Behind a
+> proxy that blocks Yahoo, prices come back NaN — allowlist those hosts.

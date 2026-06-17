@@ -1,63 +1,69 @@
 {
   "AAL": {
     "currency": "USD",
-    "fetched_at": "2026-06-01T04:39:02+00:00",
+    "fetched_at": "2026-06-17T02:05:09+00:00",
     "name": "American Airlines Group, Inc.",
-    "price": 14.640000343322754
+    "price": 15.710000038146973
   },
   "AAPL": {
     "currency": "USD",
-    "fetched_at": "2026-06-01T04:38:58+00:00",
+    "fetched_at": "2026-06-17T02:05:09+00:00",
     "name": "Apple Inc.",
-    "price": 312.05999755859375
+    "price": 299.239990234375
   },
   "ADBE": {
     "currency": "USD",
-    "fetched_at": "2026-06-01T04:38:58+00:00",
+    "fetched_at": "2026-06-17T02:05:09+00:00",
     "name": "Adobe Inc.",
-    "price": 259.2099914550781
+    "price": 207.32000732421875
   },
   "ADPT": {
     "currency": "USD",
-    "fetched_at": "2026-06-01T04:38:58+00:00",
+    "fetched_at": "2026-06-17T02:05:09+00:00",
     "name": "Adaptive Biotechnologies Corpor",
-    "price": 15.149999618530273
+    "price": 17.219999313354492
+  },
+  "ALAB": {
+    "currency": "USD",
+    "fetched_at": "2026-06-17T02:05:09+00:00",
+    "name": "Astera Labs, Inc.",
+    "price": 361.7099914550781
   },
   "AMAT": {
     "currency": "USD",
-    "fetched_at": "2026-06-01T04:38:58+00:00",
+    "fetched_at": "2026-06-17T02:05:09+00:00",
     "name": "Applied Materials, Inc.",
-    "price": 450.05999755859375
+    "price": 568.22998046875
   },
   "AMD": {
     "currency": "USD",
-    "fetched_at": "2026-06-01T04:38:58+00:00",
+    "fetched_at": "2026-06-17T02:05:09+00:00",
     "name": "Advanced Micro Devices, Inc.",
-    "price": 516.0999755859375
+    "price": 507.2900085449219
   },
   "AMZN": {
     "currency": "USD",
-    "fetched_at": "2026-06-01T04:38:58+00:00",
+    "fetched_at": "2026-06-17T02:05:09+00:00",
     "name": "Amazon.com, Inc.",
-    "price": 270.6400146484375
+    "price": 246.0
   },
   "ASML": {
     "currency": "USD",
-    "fetched_at": "2026-06-01T04:38:58+00:00",
+    "fetched_at": "2026-06-17T02:05:09+00:00",
     "name": "ASML Holding N.V. - New York Re",
-    "price": 1612.760009765625
+    "price": 1803.8900146484375
   },
   "ASTS": {
     "currency": "USD",
-    "fetched_at": "2026-06-01T04:38:58+00:00",
+    "fetched_at": "2026-06-17T02:05:09+00:00",
     "name": "AST SpaceMobile, Inc.",
-    "price": 113.41000366210938
+    "price": 82.25
   },
   "ATRO": {
     "currency": "USD",
-    "fetched_at": "2026-06-01T04:38:58+00:00",
+    "fetched_at": "2026-06-17T02:05:09+00:00",
     "name": "Astronics Corporation",
-    "price": 87.0
+    "price": 75.5
   },
   "AVGO": {
     "currency": "USD",
@@ -67,81 +73,87 @@
   },
   "BE": {
     "currency": "USD",
-    "fetched_at": "2026-06-01T04:38:58+00:00",
+    "fetched_at": "2026-06-17T02:05:09+00:00",
     "name": "Bloom Energy Corporation",
-    "price": 285.0
+    "price": 280.8800048828125
   },
   "BLK": {
     "currency": "USD",
-    "fetched_at": "2026-06-01T04:38:58+00:00",
+    "fetched_at": "2026-06-17T02:05:09+00:00",
     "name": "BlackRock, Inc.",
-    "price": 1046.8800048828125
+    "price": 1052.22998046875
   },
   "CAT": {
     "currency": "USD",
-    "fetched_at": "2026-06-01T04:38:58+00:00",
+    "fetched_at": "2026-06-17T02:05:09+00:00",
     "name": "Caterpillar, Inc.",
-    "price": 875.8699951171875
+    "price": 945.4600219726562
   },
   "CCJ": {
     "currency": "USD",
-    "fetched_at": "2026-06-01T04:38:58+00:00",
+    "fetched_at": "2026-06-17T02:05:09+00:00",
     "name": "Cameco Corporation",
-    "price": 112.69999694824219
+    "price": 107.87999725341797
   },
   "COPX": {
     "currency": "USD",
-    "fetched_at": "2026-06-01T04:38:58+00:00",
-    "name": "Global X Copper Miners ETF",
-    "price": 88.13999938964844
+    "fetched_at": "2026-06-17T02:06:27+00:00",
+    "name": null,
+    "price": 89.79000091552734
   },
   "CRM": {
     "currency": "USD",
-    "fetched_at": "2026-06-01T04:38:58+00:00",
-    "name": "Salesforce, Inc.",
-    "price": 191.10000610351562
+    "fetched_at": "2026-06-17T02:06:27+00:00",
+    "name": null,
+    "price": 161.7100067138672
+  },
+  "CRWV": {
+    "currency": "USD",
+    "fetched_at": "2026-06-17T02:06:27+00:00",
+    "name": null,
+    "price": 117.02999877929688
   },
   "CSCO": {
     "currency": "USD",
-    "fetched_at": "2026-06-01T04:38:59+00:00",
-    "name": "Cisco Systems, Inc.",
-    "price": 120.41999816894531
+    "fetched_at": "2026-06-17T02:06:27+00:00",
+    "name": null,
+    "price": 119.56999969482422
   },
   "CVX": {
     "currency": "USD",
-    "fetched_at": "2026-06-01T04:38:59+00:00",
-    "name": "Chevron Corporation",
-    "price": 182.4600067138672
+    "fetched_at": "2026-06-17T02:06:27+00:00",
+    "name": null,
+    "price": 180.11000061035156
   },
   "DAL": {
     "currency": "USD",
-    "fetched_at": "2026-06-01T04:38:59+00:00",
-    "name": "Delta Air Lines, Inc.",
-    "price": 82.4800033569336
+    "fetched_at": "2026-06-17T02:06:27+00:00",
+    "name": null,
+    "price": 83.13999938964844
   },
   "DASH": {
     "currency": "USD",
-    "fetched_at": "2026-06-01T04:38:59+00:00",
-    "name": "DoorDash, Inc.",
-    "price": 159.2899932861328
+    "fetched_at": "2026-06-17T02:06:27+00:00",
+    "name": null,
+    "price": 170.02999877929688
   },
   "DIS": {
     "currency": "USD",
-    "fetched_at": "2026-06-01T04:38:59+00:00",
-    "name": "Walt Disney Company (The)",
-    "price": 101.83000183105469
+    "fetched_at": "2026-06-17T02:06:27+00:00",
+    "name": null,
+    "price": 101.27999877929688
   },
   "DKS": {
     "currency": "USD",
-    "fetched_at": "2026-06-01T04:38:59+00:00",
+    "fetched_at": "2026-06-17T02:05:10+00:00",
     "name": "Dick's Sporting Goods Inc",
-    "price": 227.57000732421875
+    "price": 225.88999938964844
   },
   "EA": {
     "currency": "USD",
-    "fetched_at": "2026-06-01T04:38:58+00:00",
+    "fetched_at": "2026-06-17T02:05:10+00:00",
     "name": "Electronic Arts Inc.",
-    "price": 201.72000122070312
+    "price": 203.02000427246094
   },
   "FCASH**": {
     "currency": "USD",
@@ -157,321 +169,339 @@
   },
   "GE": {
     "currency": "USD",
-    "fetched_at": "2026-06-01T04:38:59+00:00",
+    "fetched_at": "2026-06-17T02:05:10+00:00",
     "name": "GE Aerospace",
-    "price": 323.760009765625
+    "price": 351.7300109863281
   },
   "GH": {
     "currency": "USD",
-    "fetched_at": "2026-06-01T04:38:59+00:00",
-    "name": "Guardant Health, Inc.",
-    "price": 129.69000244140625
+    "fetched_at": "2026-06-17T02:06:27+00:00",
+    "name": null,
+    "price": 127.33999633789062
   },
   "GOLD": {
     "currency": "USD",
-    "fetched_at": "2026-06-01T04:38:59+00:00",
-    "name": "Gold.com, Inc.",
-    "price": 42.310001373291016
+    "fetched_at": "2026-06-17T02:06:27+00:00",
+    "name": null,
+    "price": 43.72999954223633
   },
   "GOOGL": {
     "currency": "USD",
-    "fetched_at": "2026-06-01T04:38:59+00:00",
-    "name": "Alphabet Inc.",
-    "price": 380.3399963378906
+    "fetched_at": "2026-06-17T02:06:27+00:00",
+    "name": null,
+    "price": 373.25
   },
   "GPRO": {
     "currency": "USD",
-    "fetched_at": "2026-06-01T04:38:59+00:00",
-    "name": "GoPro, Inc.",
-    "price": 1.25
+    "fetched_at": "2026-06-17T02:06:27+00:00",
+    "name": null,
+    "price": 0.7910000085830688
   },
   "GS": {
     "currency": "USD",
-    "fetched_at": "2026-06-01T04:38:59+00:00",
+    "fetched_at": "2026-06-17T02:05:10+00:00",
     "name": "Goldman Sachs Group, Inc. (The)",
-    "price": 1025.56005859375
+    "price": 1090.6700439453125
+  },
+  "HOOD": {
+    "currency": "USD",
+    "fetched_at": "2026-06-17T02:06:27+00:00",
+    "name": null,
+    "price": 96.70999908447266
   },
   "IAU": {
     "currency": "USD",
-    "fetched_at": "2026-06-01T04:38:59+00:00",
-    "name": "iShares Gold Trust Shares",
-    "price": 85.48999786376953
+    "fetched_at": "2026-06-17T02:06:27+00:00",
+    "name": null,
+    "price": 81.5
   },
   "IBN": {
     "currency": "USD",
-    "fetched_at": "2026-06-01T04:38:59+00:00",
-    "name": "ICICI Bank Limited",
-    "price": 26.229999542236328
+    "fetched_at": "2026-06-17T02:06:27+00:00",
+    "name": null,
+    "price": 28.1200008392334
   },
   "INFY": {
     "currency": "USD",
-    "fetched_at": "2026-06-01T04:38:59+00:00",
-    "name": "Infosys Limited",
-    "price": 12.649999618530273
+    "fetched_at": "2026-06-17T02:06:27+00:00",
+    "name": null,
+    "price": 11.970000267028809
   },
   "INTC": {
     "currency": "USD",
-    "fetched_at": "2026-06-01T04:38:59+00:00",
-    "name": "Intel Corporation",
-    "price": 114.68000030517578
+    "fetched_at": "2026-06-17T02:05:11+00:00",
+    "name": null,
+    "price": 117.05000305175781
   },
   "IREN": {
     "currency": "USD",
-    "fetched_at": "2026-06-01T04:38:59+00:00",
+    "fetched_at": "2026-06-17T02:05:11+00:00",
     "name": "IREN LIMITED",
-    "price": 63.540000915527344
+    "price": 59.18000030517578
   },
   "JNJ": {
     "currency": "USD",
-    "fetched_at": "2026-06-01T04:38:59+00:00",
+    "fetched_at": "2026-06-17T02:05:11+00:00",
     "name": "Johnson & Johnson",
-    "price": 225.3300018310547
+    "price": 235.17999267578125
   },
   "JPM": {
     "currency": "USD",
-    "fetched_at": "2026-06-01T04:38:59+00:00",
+    "fetched_at": "2026-06-17T02:05:11+00:00",
     "name": "JP Morgan Chase & Co.",
-    "price": 299.30999755859375
+    "price": 331.1400146484375
   },
   "KTOS": {
     "currency": "USD",
-    "fetched_at": "2026-06-01T04:38:59+00:00",
+    "fetched_at": "2026-06-17T02:05:10+00:00",
     "name": "Kratos Defense & Security Solut",
-    "price": 64.12999725341797
+    "price": 56.34000015258789
   },
   "LEU": {
     "currency": "USD",
-    "fetched_at": "2026-06-01T04:38:59+00:00",
+    "fetched_at": "2026-06-17T02:05:11+00:00",
     "name": "Centrus Energy Corp.",
-    "price": 182.47000122070312
+    "price": 165.47000122070312
   },
   "LMT": {
     "currency": "USD",
-    "fetched_at": "2026-06-01T04:38:59+00:00",
+    "fetched_at": "2026-06-17T02:05:11+00:00",
     "name": "Lockheed Martin Corporation",
-    "price": 530.4500122070312
+    "price": 535.9500122070312
   },
   "LRCX": {
     "currency": "USD",
-    "fetched_at": "2026-06-01T04:38:59+00:00",
+    "fetched_at": "2026-06-17T02:05:11+00:00",
     "name": "Lam Research Corporation",
-    "price": 318.17999267578125
+    "price": 369.3399963378906
   },
   "MA": {
     "currency": "USD",
-    "fetched_at": "2026-06-01T04:38:59+00:00",
-    "name": "Mastercard Incorporated",
-    "price": 493.9800109863281
+    "fetched_at": "2026-06-17T02:05:11+00:00",
+    "name": null,
+    "price": 501.3299865722656
   },
   "MDB": {
     "currency": "USD",
-    "fetched_at": "2026-06-01T04:38:59+00:00",
-    "name": "MongoDB, Inc.",
-    "price": 335.54998779296875
+    "fetched_at": "2026-06-17T02:05:11+00:00",
+    "name": null,
+    "price": 348.80999755859375
   },
   "META": {
     "currency": "USD",
-    "fetched_at": "2026-06-01T04:38:59+00:00",
-    "name": "Meta Platforms, Inc.",
-    "price": 632.510009765625
+    "fetched_at": "2026-06-17T02:05:11+00:00",
+    "name": null,
+    "price": 600.2100219726562
   },
   "MOH": {
     "currency": "USD",
-    "fetched_at": "2026-06-01T04:38:59+00:00",
-    "name": "Molina Healthcare Inc",
-    "price": 173.60000610351562
+    "fetched_at": "2026-06-17T02:05:11+00:00",
+    "name": null,
+    "price": 200.2100067138672
+  },
+  "MRVL": {
+    "currency": "USD",
+    "fetched_at": "2026-06-17T02:05:07+00:00",
+    "name": "Marvell Technology, Inc.",
+    "price": 278.6700134277344
   },
   "MSFT": {
     "currency": "USD",
-    "fetched_at": "2026-06-01T04:39:00+00:00",
+    "fetched_at": "2026-06-17T02:05:11+00:00",
     "name": "Microsoft Corporation",
-    "price": 450.239990234375
+    "price": 393.8299865722656
   },
   "MU": {
     "currency": "USD",
-    "fetched_at": "2026-06-01T04:38:59+00:00",
+    "fetched_at": "2026-06-17T02:05:09+00:00",
     "name": "Micron Technology, Inc.",
-    "price": 971.0
+    "price": 1020.760009765625
   },
   "NBIS": {
     "currency": "USD",
-    "fetched_at": "2026-06-01T04:38:59+00:00",
+    "fetched_at": "2026-06-17T02:05:07+00:00",
     "name": "Nebius Group N.V.",
-    "price": 231.08999633789062
+    "price": 265.1000061035156
   },
   "NFLX": {
     "currency": "USD",
-    "fetched_at": "2026-06-01T04:38:59+00:00",
+    "fetched_at": "2026-06-17T02:05:07+00:00",
     "name": "Netflix, Inc.",
-    "price": 86.0199966430664
+    "price": 78.72000122070312
   },
   "NOC": {
     "currency": "USD",
-    "fetched_at": "2026-06-01T04:39:00+00:00",
+    "fetched_at": "2026-06-17T02:05:07+00:00",
     "name": "Northrop Grumman Corporation",
-    "price": 563.6799926757812
+    "price": 551.2100219726562
   },
   "NOK": {
     "currency": "USD",
-    "fetched_at": "2026-06-01T04:39:00+00:00",
+    "fetched_at": "2026-06-17T02:05:07+00:00",
     "name": "Nokia Corporation Sponsored",
-    "price": 14.84000015258789
+    "price": 13.979999542236328
   },
   "NVDA": {
     "currency": "USD",
-    "fetched_at": "2026-06-01T04:39:00+00:00",
+    "fetched_at": "2026-06-17T02:05:07+00:00",
     "name": "NVIDIA Corporation",
-    "price": 211.13999938964844
+    "price": 207.41000366210938
   },
   "ORCL": {
     "currency": "USD",
-    "fetched_at": "2026-06-01T04:39:00+00:00",
+    "fetched_at": "2026-06-17T02:05:07+00:00",
     "name": "Oracle Corporation",
-    "price": 225.77999877929688
+    "price": 188.3300018310547
   },
   "PEN": {
     "currency": "USD",
-    "fetched_at": "2026-06-01T04:39:00+00:00",
+    "fetched_at": "2026-06-17T02:05:07+00:00",
     "name": "Penumbra, Inc.",
-    "price": 318.29998779296875
+    "price": 318.4599914550781
   },
   "PL": {
     "currency": "USD",
-    "fetched_at": "2026-06-01T04:39:00+00:00",
+    "fetched_at": "2026-06-17T02:05:07+00:00",
     "name": "Planet Labs PBC",
-    "price": 51.13999938964844
+    "price": 28.209999084472656
   },
   "PLTR": {
     "currency": "USD",
-    "fetched_at": "2026-06-01T04:39:00+00:00",
+    "fetched_at": "2026-06-17T02:05:07+00:00",
     "name": "Palantir Technologies Inc.",
-    "price": 156.5399932861328
+    "price": 133.25
   },
   "PYPL": {
     "currency": "USD",
-    "fetched_at": "2026-06-01T04:39:00+00:00",
+    "fetched_at": "2026-06-17T02:05:07+00:00",
     "name": "PayPal Holdings, Inc.",
-    "price": 44.75
+    "price": 43.650001525878906
   },
   "QBTS": {
     "currency": "USD",
-    "fetched_at": "2026-06-01T04:39:00+00:00",
+    "fetched_at": "2026-06-17T02:05:08+00:00",
     "name": "D-Wave Quantum Inc.",
-    "price": 30.139999389648438
+    "price": 23.940000534057617
   },
   "QCOM": {
     "currency": "USD",
-    "fetched_at": "2026-06-01T04:39:00+00:00",
+    "fetched_at": "2026-06-17T02:05:07+00:00",
     "name": "QUALCOMM Incorporated",
-    "price": 251.02000427246094
+    "price": 214.07000732421875
   },
   "QUBT": {
     "currency": "USD",
-    "fetched_at": "2026-06-01T04:39:00+00:00",
+    "fetched_at": "2026-06-17T02:05:03+00:00",
     "name": "Quantum Computing Inc.",
-    "price": 11.960000038146973
+    "price": 10.119999885559082
   },
   "RDDT": {
     "currency": "USD",
-    "fetched_at": "2026-06-01T04:39:00+00:00",
-    "name": "Reddit, Inc.",
-    "price": 176.0
+    "fetched_at": "2026-06-17T02:05:08+00:00",
+    "name": null,
+    "price": 175.38999938964844
   },
   "RGTI": {
     "currency": "USD",
-    "fetched_at": "2026-06-01T04:39:00+00:00",
-    "name": "Rigetti Computing, Inc.",
-    "price": 25.540000915527344
+    "fetched_at": "2026-06-17T02:05:08+00:00",
+    "name": null,
+    "price": 20.639999389648438
   },
   "RIVN": {
     "currency": "USD",
-    "fetched_at": "2026-06-01T04:39:00+00:00",
+    "fetched_at": "2026-06-17T02:05:03+00:00",
     "name": "Rivian Automotive, Inc.",
-    "price": 16.299999237060547
+    "price": 15.930000305175781
   },
   "RKLB": {
     "currency": "USD",
-    "fetched_at": "2026-06-01T04:39:00+00:00",
+    "fetched_at": "2026-06-17T02:05:04+00:00",
     "name": "Rocket Lab Corporation",
-    "price": 143.47999572753906
+    "price": 104.62999725341797
   },
   "RTX": {
     "currency": "USD",
-    "fetched_at": "2026-06-01T04:39:00+00:00",
+    "fetched_at": "2026-06-17T02:05:03+00:00",
     "name": "RTX Corporation",
-    "price": 179.66000366210938
+    "price": 186.77000427246094
   },
   "S": {
     "currency": "USD",
-    "fetched_at": "2026-06-01T04:39:00+00:00",
+    "fetched_at": "2026-06-17T02:05:03+00:00",
     "name": "SentinelOne, Inc.",
-    "price": 16.549999237060547
+    "price": 15.029999732971191
   },
   "SHOP": {
     "currency": "USD",
-    "fetched_at": "2026-06-01T04:39:00+00:00",
+    "fetched_at": "2026-06-17T02:05:03+00:00",
     "name": "Shopify Inc.",
-    "price": 118.70999908447266
+    "price": 113.2300033569336
   },
   "SLAB": {
     "currency": "USD",
-    "fetched_at": "2026-06-01T04:39:00+00:00",
+    "fetched_at": "2026-06-17T02:05:03+00:00",
     "name": "Silicon Laboratories, Inc.",
-    "price": 217.60000610351562
+    "price": 219.5
   },
   "SLB": {
     "currency": "USD",
-    "fetched_at": "2026-06-01T04:39:00+00:00",
+    "fetched_at": "2026-06-17T02:05:03+00:00",
     "name": "SLB Limited",
-    "price": 54.54999923706055
+    "price": 53.06999969482422
   },
   "SLV": {
     "currency": "USD",
-    "fetched_at": "2026-06-01T04:39:00+00:00",
+    "fetched_at": "2026-06-17T02:05:03+00:00",
     "name": "iShares Silver Trust",
-    "price": 68.33000183105469
+    "price": 63.38999938964844
   },
   "SNAP": {
     "currency": "USD",
-    "fetched_at": "2026-06-01T04:39:00+00:00",
+    "fetched_at": "2026-06-17T02:05:03+00:00",
     "name": "Snap Inc.",
-    "price": 5.710000038146973
+    "price": 5.159999847412109
   },
   "SNDK": {
     "currency": "USD",
-    "fetched_at": "2026-06-01T04:39:00+00:00",
+    "fetched_at": "2026-06-17T02:01:16+00:00",
     "name": "Sandisk Corporation",
-    "price": 1694.97998046875
+    "price": 1991.550048828125
+  },
+  "SPCX": {
+    "currency": "USD",
+    "fetched_at": "2026-06-17T02:01:16+00:00",
+    "name": "Space Exploration Technologies ",
+    "price": 201.8000030517578
   },
   "STX": {
     "currency": "USD",
-    "fetched_at": "2026-06-01T04:39:00+00:00",
-    "name": "Seagate Technology Holdings PLC",
-    "price": 879.7999877929688
+    "fetched_at": "2026-06-17T02:06:28+00:00",
+    "name": null,
+    "price": 1031.3399658203125
   },
   "TCGL": {
     "currency": "USD",
-    "fetched_at": "2026-06-01T04:39:00+00:00",
+    "fetched_at": "2026-06-17T02:01:16+00:00",
     "name": "TechCreate Group Ltd.",
     "price": 172.83999633789062
   },
   "TEAM": {
     "currency": "USD",
-    "fetched_at": "2026-06-01T04:39:00+00:00",
+    "fetched_at": "2026-06-17T02:01:16+00:00",
     "name": "Atlassian Corporation",
-    "price": 107.61000061035156
+    "price": 87.94999694824219
   },
   "TSLA": {
     "currency": "USD",
-    "fetched_at": "2026-06-01T04:39:00+00:00",
+    "fetched_at": "2026-06-17T02:01:16+00:00",
     "name": "Tesla, Inc.",
-    "price": 435.7900085449219
+    "price": 404.6600036621094
   },
   "TSM": {
     "currency": "USD",
-    "fetched_at": "2026-06-01T04:39:00+00:00",
+    "fetched_at": "2026-06-17T02:01:16+00:00",
     "name": "Taiwan Semiconductor Manufactur",
-    "price": 418.45001220703125
+    "price": 425.8299865722656
   },
   "TXN": {
     "currency": "USD",
@@ -481,15 +511,15 @@
   },
   "UAL": {
     "currency": "USD",
-    "fetched_at": "2026-06-01T04:39:01+00:00",
+    "fetched_at": "2026-06-17T02:01:16+00:00",
     "name": "United Airlines Holdings, Inc.",
-    "price": 114.80000305175781
+    "price": 118.51000213623047
   },
   "UBER": {
     "currency": "USD",
-    "fetched_at": "2026-06-01T04:39:00+00:00",
+    "fetched_at": "2026-06-17T02:01:16+00:00",
     "name": "Uber Technologies, Inc.",
-    "price": 70.4000015258789
+    "price": 73.25
   },
   "UEC": {
     "currency": "USD",

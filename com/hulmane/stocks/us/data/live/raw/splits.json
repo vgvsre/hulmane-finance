@@ -1,0 +1,70 @@
+{
+"splits": [
+{
+"ticker": "AAPL",
+"quantity": "3.0054",
+"date": "2020-08-31",
+"account_no": "575947536"
+},
+{
+"ticker": "TSLA",
+"quantity": "0.799",
+"date": "2020-08-31",
+"account_no": "575947536"
+},
+{
+"ticker": "NVDA",
+"quantity": "1.3481",
+"date": "2021-07-20",
+"account_no": "575947536"
+},
+{
+"ticker": "AMZN",
+"quantity": "20.773",
+"date": "2022-06-06",
+"account_no": "575947536"
+},
+{
+"ticker": "SHOP",
+"quantity": "0.4157",
+"date": "2022-06-29",
+"account_no": "575947536"
+},
+{
+"ticker": "GOOGL",
+"quantity": "19.102",
+"date": "2022-07-18",
+"account_no": "575947536"
+},
+{
+"ticker": "TSLA",
+"quantity": "4.6059",
+"date": "2022-08-25",
+"account_no": "575947536"
+},
+{
+"ticker": "WMT",
+"quantity": "33.1622",
+"date": "2024-02-26",
+"account_no": "575947536"
+},
+{
+"ticker": "NVDA",
+"quantity": "127.6221",
+"date": "2024-06-10",
+"account_no": "575947536"
+},
+{
+"ticker": "AVGO",
+"quantity": "10.8191",
+"date": "2024-07-15",
+"account_no": "575947536"
+},
+{
+"ticker": "NFLX",
+"quantity": "2.7791",
+"date": "2025-11-17",
+"account_no": "575947536"
+}
+]
+}

@@ -2,12 +2,12 @@
 
 Tabs:
     1. Dashboard            — filters, headline metrics, activity heatmap, charts
-    2. All stocks           — consolidated per-ticker view across every tag/account/broker
-    3. Stocks performance   — best/worst ranking, annualized-return buckets, yearly
-                              returns, vs-S&P500 decision quality, lump-sum vs DCA
-    4. Transactions         — consolidated buy/sell ledger with per-txn tagging
-    5. Single stock         — full buy/sell history + P&L for one ticker
-    6. Pinned tickers       — one tab per pinned ticker (e.g. AVGO). Edit
+    2. Stocks               — consolidated per-ticker holdings, then the performance
+                              analytics: best/worst ranking, annualized-return
+                              buckets, yearly returns, vs-S&P500 decision quality
+    3. Transactions         — consolidated buy/sell ledger with per-txn tagging
+    4. Single stock         — full buy/sell history + P&L for one ticker
+    5. Pinned tickers       — one tab per pinned ticker (e.g. AVGO). Edit
                               data/_pinned.json or use the sidebar to manage.
 
 Sidebar = Live toggle, refresh, optional tag/account/broker filters, upload, pinned.
@@ -126,6 +126,13 @@ st.markdown(
       }}
       .stButton > button[kind="primary"] {{
         background: linear-gradient(135deg, {GRADIENT_START}, {GRADIENT_END});
+      }}
+      [class*="st-key-pick_"] button {{
+        padding: 1px 6px;
+        min-height: 0;
+        font-size: 0.72rem;
+        font-weight: 600;
+        border-radius: 6px;
       }}
       [data-testid="stDataFrame"] {{
         border-radius: 12px;
@@ -280,6 +287,26 @@ def _quotes_for(tickers: list[str], live: bool) -> dict[str, pricing.Quote]:
     return pricing.get_quotes_cached(APP_ROOT, tickers)
 
 
+@st.cache_data(ttl=21600, show_spinner="Updating price history…")
+def _topup_close_history(live: bool, _today: str) -> dict | None:
+    """Extend the stored close history to today — only when Live is on.
+
+    The history is stored permanently in close_prices.csv; this resumes from the
+    last stored close and fetches just the gap (never a full re-pull from 2019).
+    Cached per calendar day (``_today``) so it runs at most once per session/day.
+    Returns the sync status dict, or None when Live is off. The standalone daily
+    job ``python history.py --sync`` does the same thing from the command line.
+    """
+    if not live:
+        return None
+    import history
+    try:
+        return history.sync_close_history(APP_ROOT)
+    except Exception as e:  # network blocked etc. — keep the stored history
+        return {"built": False, "new_days": 0, "new_tickers": [],
+                "last_date": None, "reason": f"error: {type(e).__name__}"}
+
+
 def _apply_filters(df: pd.DataFrame, *, start: date | None, end: date | None,
                    tags: list[str] | None, accounts: list[str] | None,
                    brokers: list[str] | None) -> pd.DataFrame:
@@ -363,6 +390,13 @@ with st.sidebar:
                    f"newest {_format_age(cache_meta['newest'])}")
     else:
         st.caption("Cache: empty")
+
+    # When Live is on, top up the stored close history with just the missing
+    # recent days (never a full re-pull). No-op / cached when Live is off.
+    _hist_status = _topup_close_history(live_mode, date.today().isoformat())
+    if _hist_status and (_hist_status.get("new_days") or _hist_status.get("built")):
+        st.caption(f"History: +{_hist_status['new_days']} day(s) → "
+                   f"{_hist_status['last_date']}")
     if st.button("Refresh", use_container_width=True, type="primary"):
         st.cache_data.clear()
         st.rerun()
@@ -438,15 +472,14 @@ with st.sidebar:
 # ── Tabs ──────────────────────────────────────────────────────────────────────
 pinned_existing = [t for t in _read_pinned() if t in all_tickers]
 pinned_missing = [t for t in _read_pinned() if t not in all_tickers]
-_tab_labels = (["Dashboard", "All stocks", "Stocks performance", "Transactions",
+_tab_labels = (["Dashboard", "Stocks", "Transactions",
                 "Single stock"] + pinned_existing)
 _tabs = st.tabs(_tab_labels)
 tab_dash = _tabs[0]
 tab_stocks = _tabs[1]
-tab_perf = _tabs[2]
-tab_tx = _tabs[3]
-tab_single = _tabs[4]
-pinned_tabs = _tabs[5:]
+tab_tx = _tabs[2]
+tab_single = _tabs[3]
+pinned_tabs = _tabs[4:]
 
 if pinned_missing:
     st.sidebar.caption(
@@ -679,6 +712,102 @@ with tab_dash:
             )
             st.altair_chart(line, use_container_width=True)
 
+            # Portfolio vs the market (S&P 500 / Nasdaq) since 2019
+            st.subheader("Portfolio vs the market, since 2019")
+            st.caption("How your picks did against the S&P 500 (VOO) and Nasdaq-100 "
+                       "(QQQ), two ways. End-of-day history; respects the Tags/"
+                       "Accounts/Brokers filters but always spans the full timeline, "
+                       "not the date range above.")
+            bench_tx = _apply_filters(all_tx, start=None, end=None, tags=flt_tags,
+                                      accounts=flt_accounts, brokers=flt_brokers)
+            close_hist_dash = perf.load_close_history(APP_ROOT)
+            rebased = perf.rebased_growth(bench_tx, close_hist_dash)
+            growth = perf.growth_vs_benchmarks(bench_tx, close_hist_dash)
+            if rebased.empty:
+                st.info("Needs price history including VOO and QQQ — "
+                        "run `python history.py` to (re)build it.")
+            else:
+                MARKET_COLORS = {
+                    perf.PORTFOLIO_LABEL: "#6366f1",    # indigo — your picks
+                    "S&P 500": ORANGE,
+                    "Nasdaq 100": GREEN,
+                    perf.INVESTED_LABEL: "#94a3b8",     # slate — no-growth baseline
+                }
+
+                # Summary: total & annualized return (time-weighted) + $ today.
+                summ = perf.comparison_summary(rebased)
+                dollar_finals = (growth.sort_values("date").groupby("series").tail(1)
+                                 .set_index("series")["value"])
+                summ_show = summ.assign(
+                    final_value=summ["series"].map(dollar_finals)).rename(columns={
+                        "series": "Series", "total_return_pct": "Total return %",
+                        "annualized_pct": "Annualized %/yr",
+                        "alpha_pp": "vs S&P500 (pp/yr)", "final_value": "Your $ today",
+                    })
+                st.dataframe(
+                    summ_show, hide_index=True, use_container_width=True,
+                    column_config={
+                        "Total return %": st.column_config.NumberColumn(format="%.1f%%"),
+                        "Annualized %/yr": st.column_config.NumberColumn(format="%.1f%%"),
+                        "vs S&P500 (pp/yr)": st.column_config.NumberColumn(format="%+.1f"),
+                        "Your $ today": st.column_config.NumberColumn(format="$%.0f"),
+                    },
+                )
+
+                def _market_chart(long_df, y_title):
+                    order = [perf.PORTFOLIO_LABEL, "S&P 500", "Nasdaq 100",
+                             perf.INVESTED_LABEL]
+                    present = [s for s in order if s in set(long_df["series"])]
+                    return (
+                        alt.Chart(long_df[long_df["series"].isin(present)])
+                        .mark_line(interpolate="monotone", strokeWidth=2)
+                        .encode(
+                            x=alt.X("date:T", title=None),
+                            y=alt.Y("value:Q", title=y_title),
+                            color=alt.Color(
+                                "series:N", title=None,
+                                scale=alt.Scale(domain=present,
+                                                range=[MARKET_COLORS[s] for s in present]),
+                                legend=alt.Legend(orient="top")),
+                            tooltip=[alt.Tooltip("date:T", title="Date"),
+                                     alt.Tooltip("series:N", title=None),
+                                     alt.Tooltip("value:Q", title=y_title, format="$,.0f")],
+                        )
+                        .properties(height=300)
+                        .configure_view(strokeWidth=0)
+                        .configure_axis(grid=True, gridColor="#f1f5f9",
+                                        domainColor="#cbd5e1", tickColor="#cbd5e1")
+                    )
+
+                gc1, gc2 = st.columns(2, gap="medium")
+                with gc1:
+                    st.markdown("##### Pure return — growth of $100")
+                    st.caption("Time-weighted: strips out *when* you added money. "
+                               "The fairest read on stock-picking skill.")
+                    st.altair_chart(_market_chart(rebased, "Growth of $100"),
+                                    use_container_width=True)
+                with gc2:
+                    st.markdown("##### Dollar outcome — your contributions")
+                    st.caption("Money-weighted: what your real, dated contributions "
+                               "are worth vs the same dollars in each index.")
+                    st.altair_chart(_market_chart(growth, "Value (USD)"),
+                                    use_container_width=True)
+
+                # Plain-language bottom line, combining both views.
+                ann_map = summ.set_index("series")["annualized_pct"].to_dict()
+                port_now = float(dollar_finals.get(perf.PORTFOLIO_LABEL, float("nan")))
+                bits = []
+                for b in ("S&P 500", "Nasdaq 100"):
+                    bv = float(dollar_finals.get(b, float("nan")))
+                    if pd.notna(port_now) and pd.notna(bv) and b in ann_map:
+                        ann_diff = ann_map[perf.PORTFOLIO_LABEL] - ann_map[b]
+                        diff = port_now - bv
+                        verb = "ahead of" if diff >= 0 else "behind"
+                        bits.append(f"**{ann_diff:+.1f} pp/yr** and "
+                                    f"**${abs(diff):,.0f} {verb} {b}**")
+                if bits:
+                    st.caption("Bottom line — your picks ran " + "; ".join(bits) + ".")
+
             # Distribution: top tickers + by broker / by account
             d1, d2, d3 = st.columns(3, gap="medium")
 
@@ -777,7 +906,7 @@ with tab_dash:
             )
 
 
-# ─── TAB 2: All stocks (consolidated) ─────────────────────────────────────────
+# ─── TAB 2: Stocks (consolidated holdings + performance analytics) ────────────
 with tab_stocks:
     _render_status_badge(live_mode, cache_meta)
 
@@ -797,6 +926,7 @@ with tab_stocks:
                 APP_ROOT, quotes=quotes, transactions=filtered
             )
 
+            st.subheader("Holdings")
             invested = float(holdings["invested"].sum())
             current = float(holdings["current_value"].sum(skipna=True))
             has_live = current > 0 and not pd.isna(current)
@@ -903,8 +1033,8 @@ with tab_stocks:
             )
 
 
-# ─── TAB 3: Stocks performance ───────────────────────────────────────────────
-with tab_perf:
+    # ── Performance analytics (same sidebar filters as the holdings above) ────
+    st.divider()
     st.subheader("Stocks performance")
     st.caption("How each pick has performed, ranked best → worst. "
                "Uses your cost-weighted buy date to today; respects the sidebar "
@@ -967,7 +1097,11 @@ with tab_perf:
                     .mark_bar(cornerRadius=3)
                     .encode(
                         x=alt.X("annualized_pct:Q", title="Annualized return (%/yr)"),
-                        y=alt.Y("ticker:N", sort="-x", title=None),
+                        # labelOverlap=False: keep EVERY ticker label. Vega's
+                        # default greedily hides alternating labels when the
+                        # band is short, leaving half the bars unidentifiable.
+                        y=alt.Y("ticker:N", sort="-x", title=None,
+                                axis=alt.Axis(labelOverlap=False)),
                         color=alt.Color(
                             "category:N",
                             scale=alt.Scale(
@@ -982,7 +1116,7 @@ with tab_perf:
                             alt.Tooltip("current_value:Q", title="Current value", format="$,.0f"),
                         ],
                     )
-                    .properties(height=max(180, 22 * len(chart_df)))
+                    .properties(height=max(180, 28 * len(chart_df)))
                     .configure_view(strokeWidth=0)
                 )
                 st.altair_chart(bars, use_container_width=True)
@@ -1088,77 +1222,6 @@ with tab_perf:
                         use_container_width=True,
                     )
 
-            # ── 5. Lump sum vs monthly DCA (the "9th of every month" question) ─
-            st.markdown("#### Lump sum vs buying monthly")
-            st.caption("Would investing a fixed amount on the same day each month "
-                       "have beaten putting it all in at once? Simulated on actual "
-                       "daily closes.")
-            if close_hist.empty:
-                st.info("Needs price history — run `python history.py` first.")
-            else:
-                sim_tickers = [t for t in (["VOO"] if "VOO" in close_hist.columns else [])
-                               ] + [t for t in priced["ticker"] if t in close_hist.columns
-                                    and t != "VOO"]
-                if not sim_tickers:
-                    st.caption("No held tickers have price history to simulate.")
-                else:
-                    dc1, dc2, dc3, dc4 = st.columns([2, 1, 1, 1])
-                    sim_ticker = dc1.selectbox("Ticker", sim_tickers, key="dca_ticker")
-                    sim_amt = dc2.number_input("Monthly $", min_value=50, value=1000,
-                                               step=50, key="dca_amt")
-                    hist_min = close_hist[sim_ticker].dropna().index.min().date()
-                    default_start = max(hist_min, date(2020, 1, 1))
-                    sim_start = dc3.date_input("Start", value=default_start,
-                                               min_value=hist_min,
-                                               max_value=close_hist.index.max().date(),
-                                               key="dca_start")
-                    sim_day = dc4.number_input("Day of month", min_value=1, max_value=28,
-                                               value=9, key="dca_day")
-                    comp = perf.simulate_lump_vs_dca(
-                        close_hist, sim_ticker, float(sim_amt), sim_start,
-                        day_of_month=int(sim_day))
-                    if comp is None:
-                        st.caption("Not enough price history for that window.")
-                    else:
-                        st.caption(f"{comp.n_buys} monthly buys of ${comp.monthly_amount:,.0f} "
-                                   f"= ${comp.dca.invested:,.0f} total, "
-                                   f"{comp.start} → {comp.end}.")
-                        m1, m2, m3 = st.columns(3)
-                        m1.metric("Lump sum value",
-                                  f"${comp.lump.final_value:,.0f}",
-                                  f"{comp.lump.return_pct:+.1f}%")
-                        m2.metric(f"Monthly (DCA, {comp.day_of_month}th)",
-                                  f"${comp.dca.final_value:,.0f}",
-                                  f"{comp.dca.return_pct:+.1f}%")
-                        diff = comp.dca.final_value - comp.lump.final_value
-                        m3.metric("Winner", comp.winner, f"${diff:+,.0f} vs lump",
-                                  delta_color="normal" if comp.winner == "DCA" else "inverse")
-                        curve = comp.curve.copy()
-                        line = (
-                            alt.Chart(curve)
-                            .mark_line()
-                            .encode(
-                                x=alt.X("date:T", title=None),
-                                y=alt.Y("value:Q", title="Position value (USD)"),
-                                color=alt.Color("strategy:N", title=None,
-                                                scale=alt.Scale(
-                                                    domain=["Lump sum", "DCA"],
-                                                    range=[BLUE, ORANGE]),
-                                                legend=alt.Legend(orient="top")),
-                                tooltip=[
-                                    alt.Tooltip("date:T", title="Date"),
-                                    alt.Tooltip("strategy:N", title="Strategy"),
-                                    alt.Tooltip("value:Q", title="Value", format="$,.0f"),
-                                ],
-                            )
-                            .properties(height=300)
-                            .configure_view(strokeWidth=0)
-                        )
-                        st.altair_chart(line, use_container_width=True)
-                        st.caption("Note: lump sum deploys the full total on the start "
-                                   "date, so in a steadily rising market it usually wins; "
-                                   "monthly buying mainly cuts the risk of a bad entry.")
-
 
 # ─── TAB 4: Single stock detail ──────────────────────────────────────────────
 def _position_metrics(lots: pd.DataFrame, price: float) -> dict:
@@ -1204,6 +1267,34 @@ def _position_metrics(lots: pd.DataFrame, price: float) -> dict:
         "unrealized_pnl": unrealized_pnl, "unrealized_pct": unrealized_pct,
         "total_pnl": total_pnl,
     }
+
+
+def _positions_summary(tickers: list[str], quotes: dict) -> pd.DataFrame:
+    """One row per ticker with the same average-cost metrics as the detail
+    view (holding, invested, unrealized + realized P&L, total). Lets the
+    Single-stock tab show every stock's numbers at a glance before drilling in."""
+    rows = []
+    for tkr in tickers:
+        lots = portfolio.lots_global(APP_ROOT, tkr)
+        if lots.empty:
+            continue
+        q = quotes.get(tkr)
+        price = q.price if q else float("nan")
+        m = _position_metrics(lots, price)
+        rows.append({
+            "Ticker": tkr,
+            "Holding": m["net_qty"],
+            "Avg cost": m["avg_cost"],
+            "Invested": m["invested"],
+            "Last": price,
+            "Value": m["current_value"],
+            "Unrealized P&L": m["unrealized_pnl"],
+            "Unrealized %": m["unrealized_pct"],
+            "Realized P&L": m["realized_pnl"] if m["sold_qty"] > 0 else float("nan"),
+            "Realized %": m["realized_pct"] if m["sold_qty"] > 0 else float("nan"),
+            "Total P&L": m["total_pnl"],
+        })
+    return pd.DataFrame(rows)
 
 
 def _render_single_stock(ticker: str) -> None:
@@ -1484,11 +1575,47 @@ with tab_single:
     if not all_tickers:
         st.info("No data yet.")
     else:
-        picked = st.selectbox(
-            "Pick a stock", all_tickers, key="single_stock",
+        if st.session_state.get("single_stock") not in all_tickers:
+            st.session_state["single_stock"] = all_tickers[0]
+
+        flt = st.text_input(
+            "Filter tickers", key="single_filter", placeholder="Type to narrow…",
             help="Search any ticker held in any account.",
-        )
-        _render_single_stock(picked)
+        ).strip().upper()
+        shown = [t for t in all_tickers if flt in t] if flt else all_tickers
+
+        # Same average-cost math as the detail view; reused for both the gray-out
+        # of fully-sold tickers below and the at-a-glance table further down.
+        summary = _positions_summary(shown, _quotes_for(shown, live_mode))
+        closed = set()
+        if not summary.empty:
+            closed = set(summary.loc[summary["Holding"].abs() < 1e-4, "Ticker"])
+
+        # Gray tile for tickers with 0 holding (fully sold). Scoped to each
+        # button's key class; secondary-only so the selected (primary) tile keeps
+        # its highlight.
+        if closed:
+            rules = "".join(
+                f'[class*="st-key-pick_{t}"] button[kind="secondary"]'
+                '{background:#eceef1;color:#9aa0aa;}'
+                for t in closed
+            )
+            st.markdown(f"<style>{rules}</style>", unsafe_allow_html=True)
+
+        st.caption(f"Click a ticker to see its full details — {len(shown)} shown. "
+                   "Gray = fully sold (0 holding).")
+        per_row = 12
+        for i in range(0, len(shown), per_row):
+            cols = st.columns(per_row)
+            for col, tkr in zip(cols, shown[i:i + per_row]):
+                is_sel = tkr == st.session_state["single_stock"]
+                if col.button(tkr, key=f"pick_{tkr}", use_container_width=True,
+                              type="primary" if is_sel else "secondary"):
+                    st.session_state["single_stock"] = tkr
+                    st.rerun()
+
+        st.divider()
+        _render_single_stock(st.session_state["single_stock"])
 
 
 # ─── Pinned ticker tabs (one per ticker in data/_pinned.json) ────────────────

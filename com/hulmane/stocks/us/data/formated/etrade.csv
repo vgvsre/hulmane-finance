@@ -1,63 +1,63 @@
 txn_id,ticker,quantity,purchase_price,purchase_date,broker,account,account_no,account_desc,account_src,action,row_type,source_file
-6a4ba13b62d779ba,BLK,12.0,827.48,2024-03-11,etrade,E-Trade 511-876829-210,7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,876829,Buy,trade,tradesdownload (3).csv
-bb7ce20ddd8355be,BLK,-12.0,782.02,2024-06-20,etrade,E-Trade 511-876829-210,7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,6829,Sell,trade,DownloadTxnHistory.csv
-bfb971778aad3109,AVGO,3.0,165.07,2024-08-20,etrade,E-Trade 511-876829-210,7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,6829,Buy,trade,DownloadTxnHistory.csv
-ab3547819945e2db,INTC,1.0,20.9,2024-08-20,etrade,E-Trade 511-876829-210,7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,6829,Buy,trade,DownloadTxnHistory.csv
-9ca07d3c6ede950f,INTC,1.0,20.8998,2024-08-20,etrade,E-Trade 511-876829-210,7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,876829,Buy,trade,tradesdownload (3).csv
-509245e7158ab506,WMT,1.0,74.44,2024-08-20,etrade,E-Trade 511-876829-210,7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,6829,Buy,trade,DownloadTxnHistory.csv
-43f2ffadd4d6a6ef,AVGO,4.0,246.305,2025-01-24,etrade,E-Trade 511-876829-210,7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,6829,Buy,trade,DownloadTxnHistory.csv
-f9072b303bf24760,AVGO,4.0,246.3046,2025-01-24,etrade,E-Trade 511-876829-210,7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,876829,Buy,trade,tradesdownload (4).csv
-d241f0a8a1208ba6,NVDA,1.0,143.94,2025-01-24,etrade,E-Trade 511-876829-210,7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,6829,Buy,trade,DownloadTxnHistory.csv
-d5cff328f3152d65,NVDA,1.0,143.9399,2025-01-24,etrade,E-Trade 511-876829-210,7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,876829,Buy,trade,tradesdownload (4).csv
-bdaf12448d544e42,AAPL,0.054,234.102,2025-02-13,etrade,E-Trade 511-876829-210,7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,6829,Buy,trade,DownloadTxnHistory.csv
-a2f3ce485a141470,AAPL,0.054,234.1016,2025-02-13,etrade,E-Trade 511-876829-210,7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,876829,Buy,trade,tradesdownload (4).csv
-beee689fc9fc7d89,MSFT,0.059,380.643,2025-03-13,etrade,E-Trade 511-876829-210,7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,6829,Buy,trade,DownloadTxnHistory.csv
-c7a5ef79e4a5e85a,MSFT,0.059,380.6429,2025-03-13,etrade,E-Trade 511-876829-210,7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,876829,Buy,trade,tradesdownload (4).csv
-03a6f2e4a9f402c2,AVGO,3.546,169.245,2025-03-31,etrade,E-Trade 511-876829-210,7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,6829,Buy,trade,DownloadTxnHistory.csv
-e760867617d06657,AVGO,3.546,169.2449,2025-03-31,etrade,E-Trade 511-876829-210,7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,876829,Buy,trade,tradesdownload (4).csv
-a406ff9221494503,WMT,0.003,86.021,2025-04-07,etrade,E-Trade 511-876829-210,7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,6829,Buy,trade,DownloadTxnHistory.csv
-40e58d8c16d850b9,WMT,0.003,86.0207,2025-04-07,etrade,E-Trade 511-876829-210,7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,876829,Buy,trade,tradesdownload (4).csv
-5c5c3b442a22dcc8,AAPL,0.061,213.016,2025-05-15,etrade,E-Trade 511-876829-210,7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,6829,Buy,trade,DownloadTxnHistory.csv
-39971476cb09fa5e,AAPL,0.061,213.0162,2025-05-15,etrade,E-Trade 511-876829-210,7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,876829,Buy,trade,tradesdownload (4).csv
-27854b4393fc4148,WMT,0.003,95.926,2025-05-27,etrade,E-Trade 511-876829-210,7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,6829,Buy,trade,DownloadTxnHistory.csv
-ef6f418f8c712f9c,MSFT,0.048,474.844,2025-06-12,etrade,E-Trade 511-876829-210,7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,6829,Buy,trade,DownloadTxnHistory.csv
-02da1c185038f829,MSFT,0.048,474.8441,2025-06-12,etrade,E-Trade 511-876829-210,7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,876829,Buy,trade,tradesdownload (4).csv
-2fd5c039927cdd45,AVGO,2.224,270.784,2025-06-30,etrade,E-Trade 511-876829-210,7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,6829,Buy,trade,DownloadTxnHistory.csv
-2ae1f5e8b90c9b66,AVGO,-50.0,275.0,2025-06-30,etrade,E-Trade 511-876829-210,7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,6829,Sell,trade,DownloadTxnHistory.csv
-75a0b80680ea1e82,AVGO,-50.0,280.0,2025-07-10,etrade,E-Trade 511-876829-210,7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,6829,Sell,trade,DownloadTxnHistory.csv
-cfacb4943b20c068,AAPL,0.056,232.759,2025-08-14,etrade,E-Trade 511-876829-210,7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,6829,Buy,trade,DownloadTxnHistory.csv
-179ff4af4f9dc268,AAPL,0.056,232.7586,2025-08-14,etrade,E-Trade 511-876829-210,7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,876829,Buy,trade,tradesdownload (4).csv
-4fe9fe9fa05915fc,WMT,0.003,96.451,2025-09-02,etrade,E-Trade 511-876829-210,7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,6829,Buy,trade,DownloadTxnHistory.csv
-977cd9ad60b8f8e2,WMT,0.003,96.4511,2025-09-02,etrade,E-Trade 511-876829-210,7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,876829,Buy,trade,tradesdownload (4).csv
-c53bc899f4f6bdd3,MSFT,0.045,501.842,2025-09-11,etrade,E-Trade 511-876829-210,7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,6829,Buy,trade,DownloadTxnHistory.csv
-26d9cbae642047dd,MSFT,0.045,501.8424,2025-09-11,etrade,E-Trade 511-876829-210,7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,876829,Buy,trade,tradesdownload (4).csv
-9440ca304b2ceb20,AAPL,-50.0,249.31,2025-10-17,etrade,E-Trade 511-876829-210,7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,6829,Sell,trade,DownloadTxnHistory.csv
-6421aeeb74c184b9,AAPL,-0.171,249.325,2025-10-17,etrade,E-Trade 511-876829-210,7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,6829,Sell,trade,DownloadTxnHistory.csv
-6dc6177b5668e717,AAPL,-50.0,249.3103,2025-10-17,etrade,E-Trade 511-876829-210,7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,876829,Sell,trade,tradesdownload (4).csv
-2d09266a4c97c119,ORCL,43.0,290.205,2025-10-17,etrade,E-Trade 511-876829-210,7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,6829,Buy,trade,DownloadTxnHistory.csv
-8ccc60018a821bd6,NOK,12.0,6.88,2025-11-12,etrade,E-Trade 511-876829-210,7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,6829,Buy,trade,DownloadTxnHistory.csv
-6a8019436ede7269,AAPL,0.111,273.604,2025-11-13,etrade,E-Trade 326-597566-206,5/6,Individual Brokerage link to AAPl / Stock Plan AAPL,7566,Buy,trade,DownloadTxnHistory (1).csv
-2116540a463957f9,AAPL,0.111,273.6039,2025-11-13,etrade,E-Trade 511-876829-210,7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,876829,Buy,trade,tradesdownload (7).csv
-4d02c845c4830ba7,NOK,1.0,6.21,2025-11-19,etrade,E-Trade 511-876829-210,7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,6829,Buy,trade,DownloadTxnHistory.csv
-cc75d4116a742ce7,MSFT,0.051,479.477,2025-12-11,etrade,E-Trade 511-876829-210,7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,6829,Buy,trade,DownloadTxnHistory.csv
-fbd4b59d36f6390d,AVGO,1.616,350.842,2025-12-31,etrade,E-Trade 511-876829-210,7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,6829,Buy,trade,DownloadTxnHistory.csv
-b652b7f3099690ea,AVGO,1.616,350.8421,2025-12-31,etrade,E-Trade 511-876829-210,7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,876829,Buy,trade,tradesdownload (4).csv
-1b2bc80a589e57fa,WMT,0.002,111.824,2026-01-05,etrade,E-Trade 511-876829-210,7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,6829,Buy,trade,DownloadTxnHistory.csv
-44a25b6d32950d08,WMT,0.002,111.8244,2026-01-05,etrade,E-Trade 511-876829-210,7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,876829,Buy,trade,tradesdownload (5).csv
-e891d5c1f6e36391,ORCL,0.12,177.753,2026-01-23,etrade,E-Trade 511-876829-210,7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,6829,Buy,trade,DownloadTxnHistory.csv
-a667a8fb056721d6,ORCL,0.12,177.7532,2026-01-23,etrade,E-Trade 511-876829-210,7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,876829,Buy,trade,tradesdownload (5).csv
-e468f368e012846f,ASML,2.0,1462.685,2026-01-27,etrade,E-Trade 511-876829-210,7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,6829,Buy,trade,DownloadTxnHistory.csv
-ce545ed46a7c475f,ASTS,9.0,111.4,2026-01-27,etrade,E-Trade 511-876829-210,7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,6829,Buy,trade,DownloadTxnHistory.csv
-42a116273e95474c,COPX,12.0,89.78,2026-01-27,etrade,E-Trade 511-876829-210,7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,6829,Buy,trade,DownloadTxnHistory.csv
-1f50b99b9a5f9f5a,COPX,12.0,89.7799,2026-01-27,etrade,E-Trade 511-876829-210,7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,876829,Buy,trade,tradesdownload (5).csv
-0f5ad9e3531ebcb4,GOLD,10.0,51.458,2026-01-27,etrade,E-Trade 511-876829-210,7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,6829,Buy,trade,DownloadTxnHistory.csv
-5317b3c390c31050,GOLD,10.0,51.4576,2026-01-27,etrade,E-Trade 511-876829-210,7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,876829,Buy,trade,tradesdownload (5).csv
-d00bb964b93d85cc,ORCL,-0.12,174.94,2026-01-27,etrade,E-Trade 511-876829-210,7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,6829,Sell,trade,DownloadTxnHistory.csv
-56e949c28f4078de,ORCL,-43.0,174.938,2026-01-27,etrade,E-Trade 511-876829-210,7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,6829,Sell,trade,DownloadTxnHistory.csv
-c4ec933baa658ac3,ORCL,-43.0,174.9381,2026-01-27,etrade,E-Trade 511-876829-210,7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,876829,Sell,trade,tradesdownload (5).csv
-d77d3c63fe7d3bb2,RTX,10.0,201.695,2026-01-27,etrade,E-Trade 511-876829-210,7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,6829,Buy,trade,DownloadTxnHistory.csv
-c8f05f2c7db7526e,RTX,10.0,201.6954,2026-01-27,etrade,E-Trade 511-876829-210,7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,876829,Buy,trade,tradesdownload (5).csv
-da1e1e5c04e35a0a,AAPL,0.163,278.263,2026-02-12,etrade,E-Trade 326-597566-206,5/6,Individual Brokerage link to AAPl / Stock Plan AAPL,7566,Buy,trade,DownloadTxnHistory (1).csv
-e915bc50504e99e4,AAPL,0.163,278.2629,2026-02-12,etrade,E-Trade 511-876829-210,7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,876829,Buy,trade,tradesdownload (6).csv
-af708774ba11021c,AAPL,0.289,295.919,2026-05-14,etrade,E-Trade 326-597566-206,5/6,Individual Brokerage link to AAPl / Stock Plan AAPL,7566,Buy,trade,DownloadTxnHistory (1).csv
-65c293d0626e1788,AAPL,0.289,295.9193,2026-05-14,etrade,E-Trade 511-876829-210,7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,876829,Buy,trade,tradesdownload (6).csv
+6a4ba13b62d779ba,BLK,12.0,827.48,2024-03-11,etrade,E-Trade Self-Directed Account (511-876829-210),7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,876829,Buy,trade,tradesdownload (3).csv
+bb7ce20ddd8355be,BLK,-12.0,782.02,2024-06-20,etrade,E-Trade Self-Directed Account (511-876829-210),7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,6829,Sell,trade,DownloadTxnHistory.csv
+bfb971778aad3109,AVGO,3.0,165.07,2024-08-20,etrade,E-Trade Self-Directed Account (511-876829-210),7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,6829,Buy,trade,DownloadTxnHistory.csv
+ab3547819945e2db,INTC,1.0,20.9,2024-08-20,etrade,E-Trade Self-Directed Account (511-876829-210),7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,6829,Buy,trade,DownloadTxnHistory.csv
+9ca07d3c6ede950f,INTC,1.0,20.8998,2024-08-20,etrade,E-Trade Self-Directed Account (511-876829-210),7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,876829,Buy,trade,tradesdownload (3).csv
+509245e7158ab506,WMT,1.0,74.44,2024-08-20,etrade,E-Trade Self-Directed Account (511-876829-210),7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,6829,Buy,trade,DownloadTxnHistory.csv
+43f2ffadd4d6a6ef,AVGO,4.0,246.305,2025-01-24,etrade,E-Trade Self-Directed Account (511-876829-210),7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,6829,Buy,trade,DownloadTxnHistory.csv
+f9072b303bf24760,AVGO,4.0,246.3046,2025-01-24,etrade,E-Trade Self-Directed Account (511-876829-210),7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,876829,Buy,trade,tradesdownload (4).csv
+d241f0a8a1208ba6,NVDA,1.0,143.94,2025-01-24,etrade,E-Trade Self-Directed Account (511-876829-210),7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,6829,Buy,trade,DownloadTxnHistory.csv
+d5cff328f3152d65,NVDA,1.0,143.9399,2025-01-24,etrade,E-Trade Self-Directed Account (511-876829-210),7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,876829,Buy,trade,tradesdownload (4).csv
+bdaf12448d544e42,AAPL,0.054,234.102,2025-02-13,etrade,E-Trade Self-Directed Account (511-876829-210),7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,6829,Buy,trade,DownloadTxnHistory.csv
+a2f3ce485a141470,AAPL,0.054,234.1016,2025-02-13,etrade,E-Trade Self-Directed Account (511-876829-210),7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,876829,Buy,trade,tradesdownload (4).csv
+beee689fc9fc7d89,MSFT,0.059,380.643,2025-03-13,etrade,E-Trade Self-Directed Account (511-876829-210),7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,6829,Buy,trade,DownloadTxnHistory.csv
+c7a5ef79e4a5e85a,MSFT,0.059,380.6429,2025-03-13,etrade,E-Trade Self-Directed Account (511-876829-210),7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,876829,Buy,trade,tradesdownload (4).csv
+03a6f2e4a9f402c2,AVGO,3.546,169.245,2025-03-31,etrade,E-Trade Self-Directed Account (511-876829-210),7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,6829,Buy,trade,DownloadTxnHistory.csv
+e760867617d06657,AVGO,3.546,169.2449,2025-03-31,etrade,E-Trade Self-Directed Account (511-876829-210),7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,876829,Buy,trade,tradesdownload (4).csv
+a406ff9221494503,WMT,0.003,86.021,2025-04-07,etrade,E-Trade Self-Directed Account (511-876829-210),7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,6829,Buy,trade,DownloadTxnHistory.csv
+40e58d8c16d850b9,WMT,0.003,86.0207,2025-04-07,etrade,E-Trade Self-Directed Account (511-876829-210),7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,876829,Buy,trade,tradesdownload (4).csv
+5c5c3b442a22dcc8,AAPL,0.061,213.016,2025-05-15,etrade,E-Trade Self-Directed Account (511-876829-210),7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,6829,Buy,trade,DownloadTxnHistory.csv
+39971476cb09fa5e,AAPL,0.061,213.0162,2025-05-15,etrade,E-Trade Self-Directed Account (511-876829-210),7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,876829,Buy,trade,tradesdownload (4).csv
+27854b4393fc4148,WMT,0.003,95.926,2025-05-27,etrade,E-Trade Self-Directed Account (511-876829-210),7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,6829,Buy,trade,DownloadTxnHistory.csv
+ef6f418f8c712f9c,MSFT,0.048,474.844,2025-06-12,etrade,E-Trade Self-Directed Account (511-876829-210),7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,6829,Buy,trade,DownloadTxnHistory.csv
+02da1c185038f829,MSFT,0.048,474.8441,2025-06-12,etrade,E-Trade Self-Directed Account (511-876829-210),7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,876829,Buy,trade,tradesdownload (4).csv
+2fd5c039927cdd45,AVGO,2.224,270.784,2025-06-30,etrade,E-Trade Self-Directed Account (511-876829-210),7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,6829,Buy,trade,DownloadTxnHistory.csv
+2ae1f5e8b90c9b66,AVGO,-50.0,275.0,2025-06-30,etrade,E-Trade Self-Directed Account (511-876829-210),7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,6829,Sell,trade,DownloadTxnHistory.csv
+75a0b80680ea1e82,AVGO,-50.0,280.0,2025-07-10,etrade,E-Trade Self-Directed Account (511-876829-210),7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,6829,Sell,trade,DownloadTxnHistory.csv
+cfacb4943b20c068,AAPL,0.056,232.759,2025-08-14,etrade,E-Trade Self-Directed Account (511-876829-210),7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,6829,Buy,trade,DownloadTxnHistory.csv
+179ff4af4f9dc268,AAPL,0.056,232.7586,2025-08-14,etrade,E-Trade Self-Directed Account (511-876829-210),7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,876829,Buy,trade,tradesdownload (4).csv
+4fe9fe9fa05915fc,WMT,0.003,96.451,2025-09-02,etrade,E-Trade Self-Directed Account (511-876829-210),7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,6829,Buy,trade,DownloadTxnHistory.csv
+977cd9ad60b8f8e2,WMT,0.003,96.4511,2025-09-02,etrade,E-Trade Self-Directed Account (511-876829-210),7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,876829,Buy,trade,tradesdownload (4).csv
+c53bc899f4f6bdd3,MSFT,0.045,501.842,2025-09-11,etrade,E-Trade Self-Directed Account (511-876829-210),7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,6829,Buy,trade,DownloadTxnHistory.csv
+26d9cbae642047dd,MSFT,0.045,501.8424,2025-09-11,etrade,E-Trade Self-Directed Account (511-876829-210),7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,876829,Buy,trade,tradesdownload (4).csv
+9440ca304b2ceb20,AAPL,-50.0,249.31,2025-10-17,etrade,E-Trade Self-Directed Account (511-876829-210),7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,6829,Sell,trade,DownloadTxnHistory.csv
+6421aeeb74c184b9,AAPL,-0.171,249.325,2025-10-17,etrade,E-Trade Self-Directed Account (511-876829-210),7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,6829,Sell,trade,DownloadTxnHistory.csv
+6dc6177b5668e717,AAPL,-50.0,249.3103,2025-10-17,etrade,E-Trade Self-Directed Account (511-876829-210),7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,876829,Sell,trade,tradesdownload (4).csv
+2d09266a4c97c119,ORCL,43.0,290.205,2025-10-17,etrade,E-Trade Self-Directed Account (511-876829-210),7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,6829,Buy,trade,DownloadTxnHistory.csv
+8ccc60018a821bd6,NOK,12.0,6.88,2025-11-12,etrade,E-Trade Self-Directed Account (511-876829-210),7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,6829,Buy,trade,DownloadTxnHistory.csv
+6a8019436ede7269,AAPL,0.111,273.604,2025-11-13,etrade,E-Trade Self-Directed Account (326-597566-206),5/6,Individual Brokerage link to AAPl / Stock Plan AAPL,7566,Buy,trade,DownloadTxnHistory (1).csv
+2116540a463957f9,AAPL,0.111,273.6039,2025-11-13,etrade,E-Trade Self-Directed Account (511-876829-210),7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,876829,Buy,trade,tradesdownload (7).csv
+4d02c845c4830ba7,NOK,1.0,6.21,2025-11-19,etrade,E-Trade Self-Directed Account (511-876829-210),7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,6829,Buy,trade,DownloadTxnHistory.csv
+cc75d4116a742ce7,MSFT,0.051,479.477,2025-12-11,etrade,E-Trade Self-Directed Account (511-876829-210),7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,6829,Buy,trade,DownloadTxnHistory.csv
+fbd4b59d36f6390d,AVGO,1.616,350.842,2025-12-31,etrade,E-Trade Self-Directed Account (511-876829-210),7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,6829,Buy,trade,DownloadTxnHistory.csv
+b652b7f3099690ea,AVGO,1.616,350.8421,2025-12-31,etrade,E-Trade Self-Directed Account (511-876829-210),7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,876829,Buy,trade,tradesdownload (4).csv
+1b2bc80a589e57fa,WMT,0.002,111.824,2026-01-05,etrade,E-Trade Self-Directed Account (511-876829-210),7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,6829,Buy,trade,DownloadTxnHistory.csv
+44a25b6d32950d08,WMT,0.002,111.8244,2026-01-05,etrade,E-Trade Self-Directed Account (511-876829-210),7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,876829,Buy,trade,tradesdownload (5).csv
+e891d5c1f6e36391,ORCL,0.12,177.753,2026-01-23,etrade,E-Trade Self-Directed Account (511-876829-210),7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,6829,Buy,trade,DownloadTxnHistory.csv
+a667a8fb056721d6,ORCL,0.12,177.7532,2026-01-23,etrade,E-Trade Self-Directed Account (511-876829-210),7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,876829,Buy,trade,tradesdownload (5).csv
+e468f368e012846f,ASML,2.0,1462.685,2026-01-27,etrade,E-Trade Self-Directed Account (511-876829-210),7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,6829,Buy,trade,DownloadTxnHistory.csv
+ce545ed46a7c475f,ASTS,9.0,111.4,2026-01-27,etrade,E-Trade Self-Directed Account (511-876829-210),7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,6829,Buy,trade,DownloadTxnHistory.csv
+42a116273e95474c,COPX,12.0,89.78,2026-01-27,etrade,E-Trade Self-Directed Account (511-876829-210),7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,6829,Buy,trade,DownloadTxnHistory.csv
+1f50b99b9a5f9f5a,COPX,12.0,89.7799,2026-01-27,etrade,E-Trade Self-Directed Account (511-876829-210),7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,876829,Buy,trade,tradesdownload (5).csv
+0f5ad9e3531ebcb4,GOLD,10.0,51.458,2026-01-27,etrade,E-Trade Self-Directed Account (511-876829-210),7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,6829,Buy,trade,DownloadTxnHistory.csv
+5317b3c390c31050,GOLD,10.0,51.4576,2026-01-27,etrade,E-Trade Self-Directed Account (511-876829-210),7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,876829,Buy,trade,tradesdownload (5).csv
+d00bb964b93d85cc,ORCL,-0.12,174.94,2026-01-27,etrade,E-Trade Self-Directed Account (511-876829-210),7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,6829,Sell,trade,DownloadTxnHistory.csv
+56e949c28f4078de,ORCL,-43.0,174.938,2026-01-27,etrade,E-Trade Self-Directed Account (511-876829-210),7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,6829,Sell,trade,DownloadTxnHistory.csv
+c4ec933baa658ac3,ORCL,-43.0,174.9381,2026-01-27,etrade,E-Trade Self-Directed Account (511-876829-210),7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,876829,Sell,trade,tradesdownload (5).csv
+d77d3c63fe7d3bb2,RTX,10.0,201.695,2026-01-27,etrade,E-Trade Self-Directed Account (511-876829-210),7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,6829,Buy,trade,DownloadTxnHistory.csv
+c8f05f2c7db7526e,RTX,10.0,201.6954,2026-01-27,etrade,E-Trade Self-Directed Account (511-876829-210),7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,876829,Buy,trade,tradesdownload (5).csv
+da1e1e5c04e35a0a,AAPL,0.163,278.263,2026-02-12,etrade,E-Trade Self-Directed Account (326-597566-206),5/6,Individual Brokerage link to AAPl / Stock Plan AAPL,7566,Buy,trade,DownloadTxnHistory (1).csv
+e915bc50504e99e4,AAPL,0.163,278.2629,2026-02-12,etrade,E-Trade Self-Directed Account (511-876829-210),7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,876829,Buy,trade,tradesdownload (6).csv
+af708774ba11021c,AAPL,0.289,295.919,2026-05-14,etrade,E-Trade Self-Directed Account (326-597566-206),5/6,Individual Brokerage link to AAPl / Stock Plan AAPL,7566,Buy,trade,DownloadTxnHistory (1).csv
+65c293d0626e1788,AAPL,0.289,295.9193,2026-05-14,etrade,E-Trade Self-Directed Account (511-876829-210),7/8,Individual Brokerage Link to AVGO / Stock Plan AVGO,876829,Buy,trade,tradesdownload (6).csv

@@ -5,7 +5,7 @@ formatted transaction is linked to one of these accounts so the dashboard can
 slice holdings by which account they belong to.
 
 Registry columns:
-    No, Platform, RHS Account No, Account Type, Account Desc
+    No, Platform, RHS Account No, Account Name, Account Desc
 
 Each broker importer emits a raw ``account`` token derived from its source:
     fidelity  -> the Account Number from the Positions export (e.g. Z30241698)
@@ -45,7 +45,7 @@ class Account:
     no: str          # the registry "No" column (1..N)
     platform: str    # e.g. "Robinhood"
     number: str      # raw "RHS Account No" (e.g. 511-876829-210, Z30241698)
-    acct_type: str
+    name: str        # friendly "Account Name" (e.g. "Hulmane Individual")
     desc: str        # "Account Desc"
     norm: str        # normalized alnum (upper, no separators) for matching
 
@@ -79,7 +79,7 @@ def load_registry(app_root: Path) -> list[Account]:
                 no=str(r.get("No", "")).strip(),
                 platform=str(r.get("Platform", "")).strip(),
                 number=number,
-                acct_type=str(r.get("Account Type", "")).strip(),
+                name=str(r.get("Account Name", "")).strip(),
                 desc=str(r.get("Account Desc", "")).strip(),
                 norm=_norm(number),
             )
@@ -118,10 +118,21 @@ def resolve(token: str, broker: str, registry: list[Account]) -> Resolution:
     if matches:
         number = matches[0].number
         platform = matches[0].platform
+        name = matches[0].name
         descs = " / ".join(sorted({m.desc for m in matches if m.desc}))
         nos = "/".join(sorted({m.no for m in matches if m.no}))
+        # Label by the friendly Account Name so accounts are easy to recognize.
+        # Fall back to the raw number when the name is blank, and append the
+        # number when the same name is shared by several distinct accounts so
+        # two different accounts never collapse into one label.
+        label = name or number
+        if name:
+            shared = {a.number for a in registry
+                      if a.platform == platform and a.name == name}
+            if len(shared) > 1:
+                label = f"{name} ({number})"
         return Resolution(
-            account=f"{platform} {number}",
+            account=f"{platform} {label}",
             account_desc=descs,
             account_no=nos,
             number=number,

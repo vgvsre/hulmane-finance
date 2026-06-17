@@ -113,7 +113,12 @@ def scorecard(
             continue  # cash sweeps / money-market — not a performance pick
         net_qty = float(g["quantity"].sum())
         invested = float(g["cost_basis"].sum())
-        if abs(net_qty) < 1e-9 or invested <= 0:
+        # 1e-4, matching the single-stock view's "fully closed" cutoff: a fully
+        # sold position can leave a tiny rounding remainder (e.g. SHOP nets to
+        # -3.7e-5 sh after a buy + 10:1 split + full sell). A sliver that small
+        # but negative yields a negative current value → total return < -100% →
+        # a phantom -100%/yr rank. Drop these as closed instead.
+        if abs(net_qty) < 1e-4 or invested <= 0:
             continue
         buys = g[g["quantity"] > 0]
         weight = buys["cost_basis"].where(buys["cost_basis"] > 0, other=0.0)
@@ -240,6 +245,226 @@ def yearly_return_matrix(close_df: pd.DataFrame, tickers: list[str] | None = Non
     # Drop the first row (no prior year to compare) and fully-empty rows.
     out = pct.iloc[1:].dropna(how="all")
     return out.T  # rows = ticker, cols = year
+
+
+# Index proxies used to benchmark the whole portfolio over time.
+BENCHMARKS = {"S&P 500": "VOO", "Nasdaq 100": "QQQ"}
+PORTFOLIO_LABEL = "My portfolio"
+INVESTED_LABEL = "Net invested"
+
+
+# Empty long-form shape shared by the comparison builders below.
+_EMPTY_LONG = pd.DataFrame(columns=["date", "series", "value"])
+
+
+def _priced_txns(transactions: pd.DataFrame, close_df: pd.DataFrame) -> pd.DataFrame:
+    """Transactions limited to tickers we have a price series for, with a
+    cost_basis column and a datetime purchase_date guaranteed."""
+    df = transactions.copy()
+    if "cost_basis" not in df.columns:
+        df["cost_basis"] = df["quantity"] * df["purchase_price"]
+    if not pd.api.types.is_datetime64_any_dtype(df["purchase_date"]):
+        df["purchase_date"] = pd.to_datetime(df["purchase_date"])
+    return df[df["ticker"].isin(close_df.columns)]
+
+
+def _cum_asof(per_date: pd.Series, idx: pd.DatetimeIndex) -> pd.Series:
+    """Cumulative running total of dated amounts, as of each trading day in idx."""
+    s = per_date.groupby(level=0).sum().sort_index().cumsum()
+    return s.reindex(idx, method="ffill").fillna(0.0)
+
+
+def _invest_value(price: pd.Series, dated_cash: pd.Series,
+                  idx: pd.DatetimeIndex) -> pd.Series:
+    """Value over time of investing each dated dollar amount into one price series.
+
+    Each cash flow buys ``cash / close(on-or-before that day)`` shares; value is
+    cumulative shares × close. Crucially this is **scale-robust**: because the buy
+    price and the valuation price come from the same series, any constant error in
+    that series' level (e.g. a ticker whose history got back-adjusted for reverse
+    splits to ~3000× its real price) cancels in the ratio, and split adjustments
+    are handled by the adjusted price rather than by counting split shares.
+    """
+    buy_px = price.reindex(dated_cash.index, method="ffill")
+    shares = (dated_cash / buy_px).replace([float("inf"), float("-inf")], float("nan")).dropna()
+    cum = shares.groupby(level=0).sum().sort_index().cumsum()
+    return cum.reindex(idx, method="ffill").fillna(0.0) * price
+
+
+def _portfolio_value(df: pd.DataFrame, prices: pd.DataFrame,
+                     idx: pd.DatetimeIndex) -> pd.Series:
+    """Daily market value of the holdings, each lot valued by its own ticker's
+    return on the dollars invested (scale-robust; see ``_invest_value``)."""
+    port = pd.Series(0.0, index=idx)
+    for tkr, g in df.groupby("ticker"):
+        port = port.add(
+            _invest_value(prices[tkr], g.set_index("purchase_date")["cost_basis"], idx),
+            fill_value=0.0)
+    return port
+
+
+def _resample_long(frame: pd.DataFrame, freq: str | None) -> pd.DataFrame:
+    """Optionally weekly-resample a wide value frame, then melt to long form."""
+    if freq:
+        # Each bucket keeps its last value. resample() labels weekly buckets by
+        # the (future) week-ending Sunday, so relabel the final bucket to the
+        # real last trading day — no future-dated point on the x-axis.
+        sampled = frame.resample(freq).last().dropna(how="all")
+        sampled = sampled.rename(index={sampled.index[-1]: frame.index[-1]})
+        # Anchor the true first observation too (e.g. the rebased base of 100),
+        # which the week-end sampling would otherwise skip past.
+        if frame.index[0] not in sampled.index:
+            sampled.loc[frame.index[0]] = frame.iloc[0]
+        frame = sampled.sort_index()
+    return (frame.reset_index(names="date")
+            .melt(id_vars="date", var_name="series", value_name="value")
+            .dropna(subset=["value"]))
+
+
+def _comparison_window(df: pd.DataFrame, close_df: pd.DataFrame,
+                       start: date | None):
+    """(idx, prices) for the comparison window, or (None, None) if too short."""
+    lo = pd.Timestamp(start) if start is not None else df["purchase_date"].min()
+    idx = close_df.index[close_df.index >= lo]
+    if len(idx) < 2:
+        return None, None
+    return idx, close_df.reindex(idx).ffill()
+
+
+def growth_vs_benchmarks(
+    transactions: pd.DataFrame,
+    close_df: pd.DataFrame,
+    benchmarks: dict[str, str] | None = None,
+    start: date | None = None,
+    freq: str | None = "W",
+) -> pd.DataFrame:
+    """Cumulative market value over time: the actual portfolio vs the SAME dated
+    cash flows invested in each benchmark index instead (money-weighted).
+
+    The idea (same spirit as ``simulate_lump_vs_dca``): every buy/sell is a dated
+    dollar cash flow. The portfolio line is the daily market value of the shares
+    actually held; each benchmark line answers "what if I'd put those exact same
+    dollars into the index on those exact same days?". All lines therefore share
+    one contribution schedule and are directly comparable. ``Net invested`` is the
+    running cost basis (cash in minus proceeds out) — the no-growth baseline.
+
+    Only tickers that have price history are counted (both for the portfolio value
+    and for the cash flows fed to the benchmarks), so neither side is credited
+    money the other can't see. The series is resampled to ``freq`` (weekly by
+    default) so a multi-year chart stays light; pass ``freq=None`` for daily.
+    Long-form output: columns ``date``, ``series``, ``value`` — empty if there's
+    nothing priceable to plot.
+    """
+    benchmarks = benchmarks or BENCHMARKS
+    if transactions.empty or close_df.empty:
+        return _EMPTY_LONG.copy()
+    df = _priced_txns(transactions, close_df)
+    if df.empty:
+        return _EMPTY_LONG.copy()
+    idx, prices = _comparison_window(df, close_df, start)
+    if idx is None:
+        return _EMPTY_LONG.copy()
+
+    out = {PORTFOLIO_LABEL: _portfolio_value(df, prices, idx)}
+
+    # ── Net invested (cost basis still at work): the no-growth baseline. ──────
+    cash = df.set_index("purchase_date")["cost_basis"]
+    out[INVESTED_LABEL] = _cum_asof(cash, idx)
+
+    # ── Each benchmark fed the identical dated cash flows. ────────────────────
+    for name, sym in benchmarks.items():
+        if sym in prices.columns:
+            out[name] = _invest_value(prices[sym], cash, idx)
+
+    return _resample_long(pd.DataFrame(out, index=idx), freq)
+
+
+def rebased_growth(
+    transactions: pd.DataFrame,
+    close_df: pd.DataFrame,
+    benchmarks: dict[str, str] | None = None,
+    start: date | None = None,
+    base: float = 100.0,
+    freq: str | None = "W",
+) -> pd.DataFrame:
+    """Time-weighted "growth of ``base``" (default $100): portfolio vs each index,
+    all starting at ``base`` on the first investment date.
+
+    Unlike ``growth_vs_benchmarks`` (money-weighted dollars), this strips out the
+    effect of WHEN cash was added. Each day's return uses the start-of-day flow
+    convention ``value / (prior_value + cash_flow) − 1`` chained over time, where
+    ``cash_flow`` is the day's REAL money in/out (cost basis). Two reasons that
+    convention matters here: (1) putting the new cash in the denominator stops a
+    big buy on top of tiny prior capital from manufacturing a fake spike; (2)
+    $0-cost stock-split shares carry no cash flow, so the split-day price drop in
+    the unadjusted history is cancelled by the matching share increase (≈0% that
+    day) instead of looking like a crash. Benchmarks are just their price rebased
+    to ``base`` at the same start — a fair "did my picks beat the index per dollar".
+    Long-form output: ``date``, ``series``, ``value`` (index level, not dollars).
+    """
+    benchmarks = benchmarks or BENCHMARKS
+    if transactions.empty or close_df.empty:
+        return _EMPTY_LONG.copy()
+    df = _priced_txns(transactions, close_df)
+    if df.empty:
+        return _EMPTY_LONG.copy()
+    idx, prices = _comparison_window(df, close_df, start)
+    if idx is None:
+        return _EMPTY_LONG.copy()
+
+    port = _portfolio_value(df, prices, idx)
+    invested_cum = _cum_asof(df.set_index("purchase_date")["cost_basis"], idx)
+    net_flow = invested_cum.diff()
+    net_flow.iloc[0] = invested_cum.iloc[0]
+    # Start-of-day convention: today's cash sits in the denominator. Flat (0) when
+    # there's no capital at work (denominator ~0), e.g. before the first buy.
+    denom = port.shift(1) + net_flow
+    ret = (port / denom - 1.0).where(denom > 1e-9, 0.0).fillna(0.0)
+    out = {PORTFOLIO_LABEL: base * (1.0 + ret).cumprod()}
+
+    for name, sym in benchmarks.items():
+        if sym not in prices.columns:
+            continue
+        bp = prices[sym]
+        if pd.isna(bp.iloc[0]) or bp.iloc[0] <= 0:
+            continue
+        out[name] = base * bp / float(bp.iloc[0])
+
+    return _resample_long(pd.DataFrame(out, index=idx), freq)
+
+
+def comparison_summary(rebased_long: pd.DataFrame, base: float = 100.0,
+                       benchmark: str = "S&P 500") -> pd.DataFrame:
+    """Per-series total & annualized (CAGR) return from a ``rebased_growth`` frame.
+
+    Columns: ``series``, ``total_return_pct``, ``annualized_pct``, ``alpha_pp``
+    (annualized return minus ``benchmark``'s, in percentage points; NaN for the
+    benchmark row). Ordered portfolio first, then by annualized return.
+    """
+    if rebased_long.empty:
+        return pd.DataFrame(columns=["series", "total_return_pct",
+                                     "annualized_pct", "alpha_pp"])
+    span_days = (rebased_long["date"].max() - rebased_long["date"].min()).days
+    years = max(span_days / 365.25, 1e-9)
+    finals = rebased_long.sort_values("date").groupby("series")["value"].last()
+
+    rows = []
+    for series, final in finals.items():
+        total = final / base - 1.0
+        ann = (final / base) ** (1.0 / years) - 1.0
+        rows.append({"series": series,
+                     "total_return_pct": round(total * 100.0, 1),
+                     "annualized_pct": round(ann * 100.0, 1)})
+    out = pd.DataFrame(rows)
+    bench_ann = out.loc[out["series"] == benchmark, "annualized_pct"]
+    base_ann = float(bench_ann.iloc[0]) if not bench_ann.empty else float("nan")
+    out["alpha_pp"] = (out["annualized_pct"] - base_ann).round(1)
+    out.loc[out["series"] == benchmark, "alpha_pp"] = float("nan")
+    # Portfolio pinned first, then best annualized return downward.
+    out["_rank"] = out["series"].map(lambda s: (0 if s == PORTFOLIO_LABEL else 1))
+    out = (out.sort_values(["_rank", "annualized_pct"], ascending=[True, False])
+           .drop(columns="_rank").reset_index(drop=True))
+    return out
 
 
 @dataclass

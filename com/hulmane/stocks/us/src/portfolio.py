@@ -170,3 +170,46 @@ def all_tickers(app_root: Path) -> list[str]:
     if df.empty:
         return []
     return sorted(df["ticker"].unique().tolist())
+
+
+# ── Live snapshot (current holdings w/ Robinhood avg cost) ──────────────────────
+def live_dir(app_root: Path) -> Path:
+    return Path(app_root) / "data" / "live"
+
+
+def load_positions(app_root: Path) -> pd.DataFrame:
+    """Current holdings from the live Robinhood snapshot (data/live/positions.json).
+
+    Columns: account_no, nickname, ticker, quantity, average_buy_price, cost_basis.
+    These come straight from Robinhood and are correct even for transferred-in
+    shares that have no buy transaction in the ledger — use this (not the ledger)
+    for holdings totals and return-on-holdings math. Excluded tickers are dropped.
+    """
+    cols = ["account_no", "nickname", "ticker", "quantity",
+            "average_buy_price", "cost_basis"]
+    path = live_dir(app_root) / "positions.json"
+    if not path.exists():
+        return pd.DataFrame(columns=cols)
+    raw = json.loads(path.read_text())
+    if not raw:
+        return pd.DataFrame(columns=cols)
+    df = pd.DataFrame(raw).rename(columns={"symbol": "ticker"})
+    df["ticker"] = df["ticker"].str.upper().str.strip()
+    excluded = excluded_tickers(app_root)
+    if excluded:
+        df = df[~df["ticker"].isin(excluded)].reset_index(drop=True)
+    df["quantity"] = pd.to_numeric(df["quantity"])
+    df["average_buy_price"] = pd.to_numeric(df["average_buy_price"])
+    df["cost_basis"] = df["quantity"] * df["average_buy_price"]
+    return df[cols]
+
+
+def refreshed_meta(app_root: Path) -> dict:
+    """Read the snapshot refresh metadata (timestamp + per-account counts)."""
+    path = live_dir(app_root) / "_refreshed_at.json"
+    if not path.exists():
+        return {}
+    try:
+        return json.loads(path.read_text())
+    except (json.JSONDecodeError, OSError):
+        return {}

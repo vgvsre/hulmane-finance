@@ -7,3 +7,11 @@ font = "sans serif"
 
 [browser]
 gatherUsageStats = false
+
+[client]
+toolbarMode = "minimal"
+
+[server]
+port = 8182
+address = "0.0.0.0"
+headless = true

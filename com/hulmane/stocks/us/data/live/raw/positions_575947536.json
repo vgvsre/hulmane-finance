@@ -1,0 +1,346 @@
+{
+"data": {
+"positions": [
+{
+"symbol": "INTC",
+"quantity": "12.010187",
+"average_buy_price": "45.49"
+},
+{
+"symbol": "AMD",
+"quantity": "29.010961",
+"average_buy_price": "296.79"
+},
+{
+"symbol": "MSFT",
+"quantity": "27.120823",
+"average_buy_price": "370.72"
+},
+{
+"symbol": "AMAT",
+"quantity": "2.728408",
+"average_buy_price": "191.87"
+},
+{
+"symbol": "VRTX",
+"quantity": "1.000000",
+"average_buy_price": "245.14"
+},
+{
+"symbol": "GOOGL",
+"quantity": "0.579106",
+"average_buy_price": "362.63"
+},
+{
+"symbol": "META",
+"quantity": "0.183276",
+"average_buy_price": "277.50"
+},
+{
+"symbol": "NFLX",
+"quantity": "11.085127",
+"average_buy_price": "68.56"
+},
+{
+"symbol": "MDB",
+"quantity": "0.133022",
+"average_buy_price": "375.88"
+},
+{
+"symbol": "JPM",
+"quantity": "0.223518",
+"average_buy_price": "310.44"
+},
+{
+"symbol": "CSCO",
+"quantity": "1.785835",
+"average_buy_price": "61.11"
+},
+{
+"symbol": "WMT",
+"quantity": "76.266449",
+"average_buy_price": "61.13"
+},
+{
+"symbol": "ORCL",
+"quantity": "0.302791",
+"average_buy_price": "165.13"
+},
+{
+"symbol": "NVDA",
+"quantity": "1.001246",
+"average_buy_price": "144.02"
+},
+{
+"symbol": "JNJ",
+"quantity": "0.426803",
+"average_buy_price": "163.87"
+},
+{
+"symbol": "GS",
+"quantity": "0.432879",
+"average_buy_price": "741.73"
+},
+{
+"symbol": "RTX",
+"quantity": "11.692027",
+"average_buy_price": "191.84"
+},
+{
+"symbol": "EA",
+"quantity": "1.021214",
+"average_buy_price": "140.69"
+},
+{
+"symbol": "NOC",
+"quantity": "0.155934",
+"average_buy_price": "648.80"
+},
+{
+"symbol": "BRK.B",
+"quantity": "0.207963",
+"average_buy_price": "480.85"
+},
+{
+"symbol": "VOO",
+"quantity": "0.169918",
+"average_buy_price": "594.23"
+},
+{
+"symbol": "BLK",
+"quantity": "0.378595",
+"average_buy_price": "1121.30"
+},
+{
+"symbol": "UNH",
+"quantity": "1.767555",
+"average_buy_price": "343.47"
+},
+{
+"symbol": "PLTR",
+"quantity": "0.333108",
+"average_buy_price": "150.10"
+},
+{
+"symbol": "ASML",
+"quantity": "4.480512",
+"average_buy_price": "1440.34"
+},
+{
+"symbol": "ASTS",
+"quantity": "13.926961",
+"average_buy_price": "107.89"
+},
+{
+"symbol": "RKLB",
+"quantity": "6.767116",
+"average_buy_price": "90.14"
+},
+{
+"symbol": "PL",
+"quantity": "4.059628",
+"average_buy_price": "24.63"
+},
+{
+"symbol": "KTOS",
+"quantity": "1.717020",
+"average_buy_price": "116.48"
+},
+{
+"symbol": "SNDK",
+"quantity": "3.344696",
+"average_buy_price": "1064.37"
+},
+{
+"symbol": "ATRO",
+"quantity": "2.615801",
+"average_buy_price": "63.22"
+},
+{
+"symbol": "BE",
+"quantity": "1.000000",
+"average_buy_price": "148.15"
+},
+{
+"symbol": "IREN",
+"quantity": "1.805110",
+"average_buy_price": "55.40"
+},
+{
+"symbol": "HOOD",
+"quantity": "1.140514",
+"average_buy_price": "96.45"
+},
+{
+"symbol": "RDDT",
+"quantity": "0.220123",
+"average_buy_price": "227.15"
+},
+{
+"symbol": "QBTS",
+"quantity": "3.696174",
+"average_buy_price": "27.06"
+},
+{
+"symbol": "RGTI",
+"quantity": "1.000000",
+"average_buy_price": "24.96"
+},
+{
+"symbol": "SLV",
+"quantity": "8.177929",
+"average_buy_price": "74.59"
+},
+{
+"symbol": "IAU",
+"quantity": "5.331016",
+"average_buy_price": "93.79"
+},
+{
+"symbol": "COPX",
+"quantity": "28.307759",
+"average_buy_price": "89.28"
+},
+{
+"symbol": "URA",
+"quantity": "9.440783",
+"average_buy_price": "52.96"
+},
+{
+"symbol": "CAT",
+"quantity": "2.509199",
+"average_buy_price": "682.93"
+},
+{
+"symbol": "TCGL",
+"quantity": "0.050625",
+"average_buy_price": "192.00"
+},
+{
+"symbol": "CCJ",
+"quantity": "0.826468",
+"average_buy_price": "121.00"
+},
+{
+"symbol": "LEU",
+"quantity": "0.748685",
+"average_buy_price": "267.14"
+},
+{
+"symbol": "UUUU",
+"quantity": "2.350540",
+"average_buy_price": "21.27"
+},
+{
+"symbol": "UEC",
+"quantity": "3.079765",
+"average_buy_price": "16.24"
+},
+{
+"symbol": "CVX",
+"quantity": "1.687658",
+"average_buy_price": "180.71"
+},
+{
+"symbol": "SLB",
+"quantity": "1.048038",
+"average_buy_price": "48.30"
+},
+{
+"symbol": "VLO",
+"quantity": "0.561759",
+"average_buy_price": "180.40"
+},
+{
+"symbol": "ADPT",
+"quantity": "2.727768",
+"average_buy_price": "18.33"
+},
+{
+"symbol": "GH",
+"quantity": "0.435990",
+"average_buy_price": "114.68"
+},
+{
+"symbol": "WDC",
+"quantity": "1.238790",
+"average_buy_price": "331.21"
+},
+{
+"symbol": "MU",
+"quantity": "4.961349",
+"average_buy_price": "647.05"
+},
+{
+"symbol": "STX",
+"quantity": "0.820230",
+"average_buy_price": "500.51"
+},
+{
+"symbol": "GOLD",
+"quantity": "14.639060",
+"average_buy_price": "49.82"
+},
+{
+"symbol": "LRCX",
+"quantity": "0.712588",
+"average_buy_price": "294.85"
+},
+{
+"symbol": "TSM",
+"quantity": "1.689313",
+"average_buy_price": "355.91"
+},
+{
+"symbol": "NOK",
+"quantity": "14.579485",
+"average_buy_price": "6.83"
+},
+{
+"symbol": "PEN",
+"quantity": "0.139731",
+"average_buy_price": "357.83"
+},
+{
+"symbol": "MOH",
+"quantity": "0.276717",
+"average_buy_price": "180.69"
+},
+{
+"symbol": "RIVN",
+"quantity": "1.187655",
+"average_buy_price": "16.84"
+},
+{
+"symbol": "SLAB",
+"quantity": "0.194908",
+"average_buy_price": "207.79"
+},
+{
+"symbol": "NBIS",
+"quantity": "22.296305",
+"average_buy_price": "263.58"
+},
+{
+"symbol": "MRVL",
+"quantity": "3.537318",
+"average_buy_price": "282.70"
+},
+{
+"symbol": "SPCX",
+"quantity": "4.480276",
+"average_buy_price": "177.44"
+},
+{
+"symbol": "ALAB",
+"quantity": "1.189189",
+"average_buy_price": "370.00"
+},
+{
+"symbol": "CRWV",
+"quantity": "1.061673",
+"average_buy_price": "103.61"
+}
+]
+}
+}

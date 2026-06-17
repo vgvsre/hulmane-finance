@@ -1,0 +1,576 @@
+{
+"data": {
+"orders": [
+{
+"symbol": "GOOGL",
+"side": "buy",
+"cumulative_quantity": "0.031924",
+"quantity": "0.031924",
+"average_price": "351.140000",
+"price": "351.140000",
+"dollar_based_amount": {
+"amount": "11.21"
+},
+"placed_agent": "drip",
+"last_transaction_at": "2026-06-11T14:00:00Z",
+"created_at": "2026-06-11T14:00:00Z",
+"id": ""
+},
+{
+"symbol": "NVDA",
+"side": "buy",
+"cumulative_quantity": "0.187880",
+"quantity": "0.187880",
+"average_price": "210.240000",
+"price": "210.240000",
+"dollar_based_amount": {
+"amount": "39.50"
+},
+"placed_agent": "drip",
+"last_transaction_at": "2026-06-09T14:00:00Z",
+"created_at": "2026-06-09T14:00:00Z",
+"id": ""
+},
+{
+"symbol": "GS",
+"side": "buy",
+"cumulative_quantity": "0.002367",
+"quantity": "0.002367",
+"average_price": "1060.199300",
+"price": "1060.199300",
+"dollar_based_amount": {
+"amount": "2.51"
+},
+"placed_agent": "drip",
+"last_transaction_at": "2026-06-04T14:00:00Z",
+"created_at": "2026-06-04T14:00:00Z",
+"id": ""
+},
+{
+"symbol": "MSFT",
+"side": "buy",
+"cumulative_quantity": "0.056730",
+"quantity": "0.056730",
+"average_price": "412.830000",
+"price": "412.830000",
+"dollar_based_amount": {
+"amount": "23.42"
+},
+"placed_agent": "drip",
+"last_transaction_at": "2026-05-27T14:00:00Z",
+"created_at": "2026-05-27T14:00:00Z",
+"id": ""
+},
+{
+"symbol": "AAPL",
+"side": "buy",
+"cumulative_quantity": "0.041699",
+"quantity": "0.041699",
+"average_price": "298.082600",
+"price": "298.082600",
+"dollar_based_amount": {
+"amount": "12.43"
+},
+"placed_agent": "drip",
+"last_transaction_at": "2026-05-14T14:00:00Z",
+"created_at": "2026-05-14T14:00:00Z",
+"id": ""
+},
+{
+"symbol": "JPM",
+"side": "buy",
+"cumulative_quantity": "0.060828",
+"quantity": "0.060828",
+"average_price": "313.337600",
+"price": "313.337600",
+"dollar_based_amount": {
+"amount": "19.06"
+},
+"placed_agent": "drip",
+"last_transaction_at": "2026-05-01T14:00:00Z",
+"created_at": "2026-05-01T14:00:00Z",
+"id": ""
+},
+{
+"symbol": "NVDA",
+"side": "buy",
+"cumulative_quantity": "0.009091",
+"quantity": "0.009091",
+"average_price": "173.785000",
+"price": "173.785000",
+"dollar_based_amount": {
+"amount": "1.58"
+},
+"placed_agent": "drip",
+"last_transaction_at": "2026-04-02T14:00:00Z",
+"created_at": "2026-04-02T14:00:00Z",
+"id": ""
+},
+{
+"symbol": "AVGO",
+"side": "buy",
+"cumulative_quantity": "0.039661",
+"quantity": "0.039661",
+"average_price": "312.900000",
+"price": "312.900000",
+"dollar_based_amount": {
+"amount": "12.41"
+},
+"placed_agent": "drip",
+"last_transaction_at": "2026-04-01T14:00:00Z",
+"created_at": "2026-04-01T14:00:00Z",
+"id": ""
+},
+{
+"symbol": "GS",
+"side": "buy",
+"cumulative_quantity": "0.002383",
+"quantity": "0.002383",
+"average_price": "822.306100",
+"price": "822.306100",
+"dollar_based_amount": {
+"amount": "1.96"
+},
+"placed_agent": "drip",
+"last_transaction_at": "2026-03-31T14:00:00Z",
+"created_at": "2026-03-31T14:00:00Z",
+"id": ""
+},
+{
+"symbol": "BLK",
+"side": "buy",
+"cumulative_quantity": "0.032774",
+"quantity": "0.032774",
+"average_price": "980.650000",
+"price": "980.650000",
+"dollar_based_amount": {
+"amount": "32.14"
+},
+"placed_agent": "drip",
+"last_transaction_at": "2026-03-25T14:00:00Z",
+"created_at": "2026-03-25T14:00:00Z",
+"id": ""
+},
+{
+"symbol": "GOOGL",
+"side": "buy",
+"cumulative_quantity": "0.034817",
+"quantity": "0.034817",
+"average_price": "307.028800",
+"price": "307.028800",
+"dollar_based_amount": {
+"amount": "10.69"
+},
+"placed_agent": "drip",
+"last_transaction_at": "2026-03-17T14:00:00Z",
+"created_at": "2026-03-17T14:00:00Z",
+"id": ""
+},
+{
+"symbol": "MSFT",
+"side": "buy",
+"cumulative_quantity": "0.056335",
+"quantity": "0.056335",
+"average_price": "402.765300",
+"price": "402.765300",
+"dollar_based_amount": {
+"amount": "22.69"
+},
+"placed_agent": "drip",
+"last_transaction_at": "2026-03-13T14:00:00Z",
+"created_at": "2026-03-13T14:00:00Z",
+"id": ""
+},
+{
+"symbol": "AMZN",
+"side": "buy",
+"cumulative_quantity": "0.459601",
+"quantity": "0.459601",
+"average_price": "217.580000",
+"price": "217.580000",
+"dollar_based_amount": {
+"amount": "100.00"
+},
+"placed_agent": "recurring",
+"last_transaction_at": "2026-03-05T14:00:00Z",
+"created_at": "2026-03-05T14:00:00Z",
+"id": ""
+},
+{
+"symbol": "BLK",
+"side": "buy",
+"cumulative_quantity": "0.097491",
+"quantity": "0.097491",
+"average_price": "1025.735000",
+"price": "1025.735000",
+"dollar_based_amount": {
+"amount": "100.00"
+},
+"placed_agent": "recurring",
+"last_transaction_at": "2026-03-05T14:00:00Z",
+"created_at": "2026-03-05T14:00:00Z",
+"id": ""
+},
+{
+"symbol": "MSFT",
+"side": "buy",
+"cumulative_quantity": "0.244872",
+"quantity": "0.244872",
+"average_price": "408.375700",
+"price": "408.375700",
+"dollar_based_amount": {
+"amount": "100.00"
+},
+"placed_agent": "recurring",
+"last_transaction_at": "2026-03-05T14:00:00Z",
+"created_at": "2026-03-05T14:00:00Z",
+"id": ""
+},
+{
+"symbol": "GOOGL",
+"side": "buy",
+"cumulative_quantity": "0.335192",
+"quantity": "0.335192",
+"average_price": "298.336200",
+"price": "298.336200",
+"dollar_based_amount": {
+"amount": "100.00"
+},
+"placed_agent": "recurring",
+"last_transaction_at": "2026-03-05T14:00:00Z",
+"created_at": "2026-03-05T14:00:00Z",
+"id": ""
+},
+{
+"symbol": "GS",
+"side": "buy",
+"cumulative_quantity": "0.119807",
+"quantity": "0.119807",
+"average_price": "834.674900",
+"price": "834.674900",
+"dollar_based_amount": {
+"amount": "100.00"
+},
+"placed_agent": "recurring",
+"last_transaction_at": "2026-03-05T14:00:00Z",
+"created_at": "2026-03-05T14:00:00Z",
+"id": ""
+},
+{
+"symbol": "BLK",
+"side": "buy",
+"cumulative_quantity": "0.092889",
+"quantity": "0.092889",
+"average_price": "1076.550000",
+"price": "1076.550000",
+"dollar_based_amount": {
+"amount": "100.00"
+},
+"placed_agent": "recurring",
+"last_transaction_at": "2026-02-26T14:00:00Z",
+"created_at": "2026-02-26T14:00:00Z",
+"id": ""
+},
+{
+"symbol": "AMZN",
+"side": "buy",
+"cumulative_quantity": "0.482509",
+"quantity": "0.482509",
+"average_price": "207.250000",
+"price": "207.250000",
+"dollar_based_amount": {
+"amount": "100.00"
+},
+"placed_agent": "recurring",
+"last_transaction_at": "2026-02-26T14:00:00Z",
+"created_at": "2026-02-26T14:00:00Z",
+"id": ""
+},
+{
+"symbol": "MSFT",
+"side": "buy",
+"cumulative_quantity": "0.249239",
+"quantity": "0.249239",
+"average_price": "401.220000",
+"price": "401.220000",
+"dollar_based_amount": {
+"amount": "100.00"
+},
+"placed_agent": "recurring",
+"last_transaction_at": "2026-02-26T14:00:00Z",
+"created_at": "2026-02-26T14:00:00Z",
+"id": ""
+},
+{
+"symbol": "GOOGL",
+"side": "buy",
+"cumulative_quantity": "0.326115",
+"quantity": "0.326115",
+"average_price": "306.640000",
+"price": "306.640000",
+"dollar_based_amount": {
+"amount": "100.00"
+},
+"placed_agent": "recurring",
+"last_transaction_at": "2026-02-26T14:00:00Z",
+"created_at": "2026-02-26T14:00:00Z",
+"id": ""
+},
+{
+"symbol": "GS",
+"side": "buy",
+"cumulative_quantity": "0.107479",
+"quantity": "0.107479",
+"average_price": "930.410000",
+"price": "930.410000",
+"dollar_based_amount": {
+"amount": "100.00"
+},
+"placed_agent": "recurring",
+"last_transaction_at": "2026-02-26T14:00:00Z",
+"created_at": "2026-02-26T14:00:00Z",
+"id": ""
+},
+{
+"symbol": "BLK",
+"side": "buy",
+"cumulative_quantity": "0.093237",
+"quantity": "0.093237",
+"average_price": "1072.526800",
+"price": "1072.526800",
+"dollar_based_amount": {
+"amount": "100.00"
+},
+"placed_agent": "recurring",
+"last_transaction_at": "2026-02-19T14:00:00Z",
+"created_at": "2026-02-19T14:00:00Z",
+"id": ""
+},
+{
+"symbol": "GOOGL",
+"side": "buy",
+"cumulative_quantity": "0.328806",
+"quantity": "0.328806",
+"average_price": "304.130000",
+"price": "304.130000",
+"dollar_based_amount": {
+"amount": "100.00"
+},
+"placed_agent": "recurring",
+"last_transaction_at": "2026-02-19T14:00:00Z",
+"created_at": "2026-02-19T14:00:00Z",
+"id": ""
+},
+{
+"symbol": "AMZN",
+"side": "buy",
+"cumulative_quantity": "0.487806",
+"quantity": "0.487806",
+"average_price": "204.999200",
+"price": "204.999200",
+"dollar_based_amount": {
+"amount": "100.00"
+},
+"placed_agent": "recurring",
+"last_transaction_at": "2026-02-19T14:00:00Z",
+"created_at": "2026-02-19T14:00:00Z",
+"id": ""
+},
+{
+"symbol": "GS",
+"side": "buy",
+"cumulative_quantity": "0.109974",
+"quantity": "0.109974",
+"average_price": "909.303000",
+"price": "909.303000",
+"dollar_based_amount": {
+"amount": "100.00"
+},
+"placed_agent": "recurring",
+"last_transaction_at": "2026-02-19T14:00:00Z",
+"created_at": "2026-02-19T14:00:00Z",
+"id": ""
+},
+{
+"symbol": "MSFT",
+"side": "buy",
+"cumulative_quantity": "0.251474",
+"quantity": "0.251474",
+"average_price": "397.655000",
+"price": "397.655000",
+"dollar_based_amount": {
+"amount": "100.00"
+},
+"placed_agent": "recurring",
+"last_transaction_at": "2026-02-19T14:00:00Z",
+"created_at": "2026-02-19T14:00:00Z",
+"id": ""
+},
+{
+"symbol": "NVDA",
+"side": "buy",
+"cumulative_quantity": "0.063482",
+"quantity": "0.063482",
+"average_price": "188.555000",
+"price": "188.555000",
+"dollar_based_amount": {
+"amount": "11.97"
+},
+"placed_agent": "user",
+"last_transaction_at": "2026-02-18T14:00:00Z",
+"created_at": "2026-02-18T14:00:00Z",
+"id": ""
+},
+{
+"symbol": "MSFT",
+"side": "buy",
+"cumulative_quantity": "0.247800",
+"quantity": "0.247800",
+"average_price": "403.550000",
+"price": "403.550000",
+"dollar_based_amount": {
+"amount": "100.00"
+},
+"placed_agent": "recurring",
+"last_transaction_at": "2026-02-13T14:00:00Z",
+"created_at": "2026-02-13T14:00:00Z",
+"id": ""
+},
+{
+"symbol": "GOOGL",
+"side": "buy",
+"cumulative_quantity": "0.325446",
+"quantity": "0.325446",
+"average_price": "307.270000",
+"price": "307.270000",
+"dollar_based_amount": {
+"amount": "100.00"
+},
+"placed_agent": "recurring",
+"last_transaction_at": "2026-02-13T14:00:00Z",
+"created_at": "2026-02-13T14:00:00Z",
+"id": ""
+},
+{
+"symbol": "AMZN",
+"side": "buy",
+"cumulative_quantity": "0.500881",
+"quantity": "0.500881",
+"average_price": "199.648100",
+"price": "199.648100",
+"dollar_based_amount": {
+"amount": "100.00"
+},
+"placed_agent": "recurring",
+"last_transaction_at": "2026-02-13T14:00:00Z",
+"created_at": "2026-02-13T14:00:00Z",
+"id": ""
+},
+{
+"symbol": "GS",
+"side": "buy",
+"cumulative_quantity": "0.110733",
+"quantity": "0.110733",
+"average_price": "903.070000",
+"price": "903.070000",
+"dollar_based_amount": {
+"amount": "100.00"
+},
+"placed_agent": "recurring",
+"last_transaction_at": "2026-02-13T14:00:00Z",
+"created_at": "2026-02-13T14:00:00Z",
+"id": ""
+},
+{
+"symbol": "BLK",
+"side": "buy",
+"cumulative_quantity": "0.093532",
+"quantity": "0.093532",
+"average_price": "1069.143900",
+"price": "1069.143900",
+"dollar_based_amount": {
+"amount": "100.00"
+},
+"placed_agent": "recurring",
+"last_transaction_at": "2026-02-13T14:00:00Z",
+"created_at": "2026-02-13T14:00:00Z",
+"id": ""
+},
+{
+"symbol": "GS",
+"side": "buy",
+"cumulative_quantity": "0.107647",
+"quantity": "0.107647",
+"average_price": "928.961800",
+"price": "928.961800",
+"dollar_based_amount": {
+"amount": "100.00"
+},
+"placed_agent": "recurring",
+"last_transaction_at": "2026-02-06T14:00:00Z",
+"created_at": "2026-02-06T14:00:00Z",
+"id": ""
+},
+{
+"symbol": "BLK",
+"side": "buy",
+"cumulative_quantity": "0.094764",
+"quantity": "0.094764",
+"average_price": "1055.250000",
+"price": "1055.250000",
+"dollar_based_amount": {
+"amount": "100.00"
+},
+"placed_agent": "recurring",
+"last_transaction_at": "2026-02-06T14:00:00Z",
+"created_at": "2026-02-06T14:00:00Z",
+"id": ""
+},
+{
+"symbol": "GOOGL",
+"side": "buy",
+"cumulative_quantity": "0.307753",
+"quantity": "0.307753",
+"average_price": "324.935000",
+"price": "324.935000",
+"dollar_based_amount": {
+"amount": "100.00"
+},
+"placed_agent": "recurring",
+"last_transaction_at": "2026-02-06T14:00:00Z",
+"created_at": "2026-02-06T14:00:00Z",
+"id": ""
+},
+{
+"symbol": "AMZN",
+"side": "buy",
+"cumulative_quantity": "0.484779",
+"quantity": "0.484779",
+"average_price": "206.279300",
+"price": "206.279300",
+"dollar_based_amount": {
+"amount": "100.00"
+},
+"placed_agent": "recurring",
+"last_transaction_at": "2026-02-06T14:00:00Z",
+"created_at": "2026-02-06T14:00:00Z",
+"id": ""
+},
+{
+"symbol": "MSFT",
+"side": "buy",
+"cumulative_quantity": "0.250337",
+"quantity": "0.250337",
+"average_price": "399.461200",
+"price": "399.461200",
+"dollar_based_amount": {
+"amount": "100.00"
+},
+"placed_agent": "recurring",
+"last_transaction_at": "2026-02-06T14:00:00Z",
+"created_at": "2026-02-06T14:00:00Z",
+"id": ""
+}
+]
+}
+}

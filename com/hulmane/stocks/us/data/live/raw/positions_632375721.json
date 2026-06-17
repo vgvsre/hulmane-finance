@@ -1,0 +1,51 @@
+{
+"data": {
+"positions": [
+{
+"symbol": "GOOGL",
+"quantity": "50.990215",
+"average_buy_price": "131.64"
+},
+{
+"symbol": "AMZN",
+"quantity": "52.828052",
+"average_buy_price": "145.75"
+},
+{
+"symbol": "AAPL",
+"quantity": "46.094306",
+"average_buy_price": "166.79"
+},
+{
+"symbol": "MSFT",
+"quantity": "25.796648",
+"average_buy_price": "294.56"
+},
+{
+"symbol": "AVGO",
+"quantity": "19.133857",
+"average_buy_price": "168.33"
+},
+{
+"symbol": "NVDA",
+"quantity": "158.185771",
+"average_buy_price": "34.89"
+},
+{
+"symbol": "BLK",
+"quantity": "5.642094",
+"average_buy_price": "773.15"
+},
+{
+"symbol": "JPM",
+"quantity": "12.770093",
+"average_buy_price": "201.33"
+},
+{
+"symbol": "GS",
+"quantity": "0.560390",
+"average_buy_price": "900.21"
+}
+]
+}
+}

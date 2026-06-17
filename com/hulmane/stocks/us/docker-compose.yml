@@ -1,0 +1,12 @@
+services:
+  hulmane-stocks:
+    build: .
+    image: hulmane-stocks-us
+    container_name: hulmane-stocks-us
+    ports:
+      - "8182:8182"
+    volumes:
+      # Bind-mount data so the agent-refreshed snapshot (python app.py snapshot)
+      # is picked up by the running container without a rebuild.
+      - ./data:/app/data
+    restart: unless-stopped
